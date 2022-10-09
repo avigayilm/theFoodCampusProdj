@@ -1,0 +1,228 @@
+﻿@using theFoodCampus.Models
+@model theFoodCampus.Models.Recipe
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Recipe</h4>
+<hr />
+<div class="col-11 mx-auto pt-0">
+    <div class="card">
+        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
+            <h4>Create Applicant</h4>
+        </div>
+
+        <form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Create">
+          <div class="row">
+                <div class=col-md-6>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="RKashrut" class="control-label"></label>
+                    <select asp-for="RKashrut" class="form-control" asp-items="Html.GetEnumSelectList<Kashrut>()">
+                        <option value="">Choose out of following options</option>
+                    </select>
+                    <span asp-validation-for="RKashrut" class="text-danger"></span>
+                </div>
+            </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Rdifficulty" class="control-label"></label>
+                <select asp-for="Rdifficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="Rdifficulty" class="text-danger"></span>
+            </div>
+           </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RPrepTime" class="control-label"></label>
+                <select asp-for="RPrepTime" class="form-control" asp-items="Html.GetEnumSelectList<PrepTime>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RPrepTime" class="text-danger"></span>
+            </div>
+           </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RHoliday" class="control-label"></label>
+                <select asp-for="RHoliday" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RHoliday" class="text-danger"></span>
+            </div>
+           </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="REvent" class="control-label"></label>
+                <select asp-for="REvent" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="REvent" class="text-danger"></span>
+            </div>
+        </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RWeather" class="control-label"></label>
+                <select asp-for="RWeather" class="form-control" asp-items="Html.GetEnumSelectList<Weather>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RWeather" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RType" class="control-label"></label>
+                <select asp-for="RType" class="form-control" asp-items="Html.GetEnumSelectList<Category>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RType" class="text-danger"></span>
+            </div>
+        </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RDiet" class="control-label"></label>
+                <select asp-for="RDiet" class="form-control" asp-items="Html.GetEnumSelectList<Diet>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RDiet" class="text-danger"></span>
+            </div>
+        </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RBudget" class="control-label"></label>
+                <select asp-for="RBudget" class="form-control" asp-items="Html.GetEnumSelectList<Budget>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RBudget" class="text-danger"></span>
+            </div>
+        </div>
+                <div class="col-md-6 group">
+                    <div class="form-group col-8 p-0">
+                        <label asp-for="ProfilePhoto" class="control-label"></label>
+                        <div class="customfile"></div>
+                        <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile"
+                               onchange="document.getElementById('PreviewPhoto').src=window.URL.createObjectURL(this.files[0])" />
+                        <label class="custome-file-label" for="customFile">ChooseFile</label>
+                        <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-4">
+                        <img id="PreviewPhoto" src="~/Images/images.png" alt="Logo Image"
+                             width="125" height="125" style="border:1px; margin-top:20px; " />
+                    </div>
+                </div>
+
+     @*       <div class="form-group">
+                <label asp-for="PhotoUrl" class="control-label"></label>
+                <input asp-for="PhotoUrl" class="form-control" />
+                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+            </div>*@
+
+
+                <div class="col-md-12 p-0 m-0 bg-light" @*style="height:200px; overflow-y:auto;"*@>
+                    <table id="ExpTable" class="table table-sm CodesTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Ingredient Name
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    MeasurementType
+                                </th>
+                                <th style="width:75px;">
+                                    <button id="btnaddExperiences" type="button" class="btn btn-sm btn-secondary visible"
+                                            onclick="AddItem(this)">
+                                        Add
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (var item in Model.Experiences)*@
+                            @for (int i = 0; i < Model.Ingredients.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @*@Html.EditorFor(x=>x.Experiences[i].CompanyName,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                        <input asp-for="@Model.Ingredients[i].Name" class="form-control" />
+                                        <span asp-validation-for="@Model.Ingredients[i].Name" class="text-danger"></span>
+
+                                        @*<input asp-for="@item.CompanyName" class="form-control" />*@
+                                    </td>
+                                    <td>
+                                        @*@Html.EditorFor(x=>x.Experiences[i].Designation,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                        <input asp-for="@Model.Ingredients[i].Amount" class="form-control" />
+
+                                        @*<input asp-for="@item.Designation" class="form-control" />*@
+                                    </td>
+                                    <td>
+                                       @* <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />*@
+                                        @*@Html.EditorFor(x=>x.Experiences[i].YearsWorked,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                        <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />
+                                        <select asp-for="@Model.Ingredients[i].MeasurementUnit" class="form-control" asp-items="Html.GetEnumSelectList<MeasurementType>()">
+                                             <option value="">Choose out of following options</option>
+                                            </select>
+                                         @*<input asp-for="@item.YearsWorked" class="form-control" />*@
+                                    </td>
+                                    <td style="width:60px">
+                                        @* <button id="btndummy-@i" type="button" class="btn btn-sm invisible">
+                                    Dummy
+                                    </button>*@
+
+                                        <button id="btnremove-@i" type="button" class="btn btn-sm btn-danger visible"
+                                            onclick="DeleteItem(this)">
+                                            Delete
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+                @*to fix issue that last column is cloned*@
+                @*here we will store the index of the last row*@
+
+                <input type="hidden" id="hdnLastIndex" value="0" />
+
+                <div class="col-12 btn-group">
+                    <div class="col-6 form-check-group text-right p-2">
+                        <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
+                    </div>
+                </div>
+                <div class="col-6 form-check group text-left p-2">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

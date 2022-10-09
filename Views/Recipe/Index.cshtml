@@ -1,0 +1,95 @@
+﻿@model IEnumerable<theFoodCampus.Models.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RKashrut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rdifficulty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RPrepTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RHoliday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.REvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RWeather)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RDiet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RBudget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RKashrut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rdifficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RPrepTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RHoliday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.REvent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RWeather)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RDiet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RBudget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoUrl)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

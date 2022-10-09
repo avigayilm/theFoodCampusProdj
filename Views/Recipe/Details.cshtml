@@ -1,0 +1,182 @@
+﻿@using theFoodCampus.Models
+@model theFoodCampus.Models.Recipe
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="col-11 mx-auto pt-0">
+    <div class="card">
+        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
+            <h4>View Applicant</h4>
+        </div>
+
+        <form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Details">
+          <div class="row">
+                <div class=col-md-6>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="RKashrut" class="control-label"></label>
+                    <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+                </div>
+            </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Rdifficulty" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+           </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RPrepTime" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+           </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RHoliday" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+           </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="REvent" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+        </div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RWeather" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+        </div>
+         <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RType" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+        </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RDiet" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+        </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RBudget" class="control-label"></label>
+                <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+            </div>
+        </div>
+
+                <div class="col-md-6 group">
+                    <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                </div>
+
+     @*       <div class="form-group">
+                <label asp-for="PhotoUrl" class="control-label"></label>
+                <input asp-for="PhotoUrl" class="form-control" />
+                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+            </div>*@
+
+
+                <div class="col-md-12 p-0 m-0 bg-light" @*style="height:200px; overflow-y:auto;"*@>
+                    <table id="ExpTable" class="table table-sm CodesTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Ingredient Name
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    MeasurementType
+                                </th>
+                                <th style="width:75px;">
+                                    <button id="btnaddExperiences" type="button" class="btn btn-sm btn-secondary visible"
+                                            onclick="AddItem(this)">
+                                        Add
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (var item in Model.Experiences)*@
+                            @for (int i = 0; i < Model.Ingredients.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @*@Html.EditorFor(x=>x.Experiences[i].CompanyName,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                        <input asp-for="@Model.Ingredients[i].Name" class="form-control-plaintext" readonly />
+                                        <span asp-validation-for="@Model.Ingredients[i].Name" class="text-danger"></span>
+
+                                        @*<input asp-for="@item.CompanyName" class="form-control" />*@
+                                    </td>
+                                    <td>
+                                        @*@Html.EditorFor(x=>x.Experiences[i].Designation,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                        <input asp-for="@Model.Ingredients[i].Amount" class="form-control-plaintext" readonly />
+
+                                        @*<input asp-for="@item.Designation" class="form-control" />*@
+                                    </td>
+                                    <td>
+                                       @* <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />*@
+                                        @*@Html.EditorFor(x=>x.Experiences[i].YearsWorked,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                        <input asp-for="@Model.Ingredients[i].MeasurementUnit" class="form-control-plaintext" readonly/>
+                                             
+                                         @*<input asp-for="@item.YearsWorked" class="form-control" />*@
+                                    </td>
+                                    <td style="width:60px">
+                                        @* <button id="btndummy-@i" type="button" class="btn btn-sm invisible">
+                                    Dummy
+                                    </button>*@
+
+                                        <button id="btnremove-@i" type="button" class="btn btn-sm btn-danger visible"
+                                            onclick="DeleteItem(this)">
+                                            Delete
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+                @*to fix issue that last column is cloned*@
+                @*here we will store the index of the last row*@
+
+                <input type="hidden" id="hdnLastIndex" value="0" />
+
+                <div class="col-12 btn-group">
+                    <div class="col-6 form-check-group text-right p-2">
+                        <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
+                    </div>
+                </div>
+            
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>S
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
