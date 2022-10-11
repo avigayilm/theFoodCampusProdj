@@ -243,6 +243,7 @@
                                         <div>0@(i+1)</div>
                                     </td>
                                     <td>
+                                        <input type="hidden" asp-for="@Model.Instructions[i].IsHidden"/>
                                         <input asp-for="@Model.Instructions[i].Step" class="form-control" />
                                     </td>
                                     <td style="width:60px">

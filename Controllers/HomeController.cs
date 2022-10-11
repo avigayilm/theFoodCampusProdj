@@ -12,7 +12,7 @@ namespace theFoodCampus.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHost;
 
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
         public HomeController(ApplicationDbContext context, IWebHostEnvironment webHost)
         {
@@ -24,7 +24,9 @@ namespace theFoodCampus.Controllers
         {
             ShowHoliday();
             ShowWeather();
-            return View();
+            List<Recipe> recipes;
+            recipes = _context.Recipes.ToList();
+            return View(recipes);
         }
 
         public void ShowHoliday()
@@ -66,9 +68,14 @@ namespace theFoodCampus.Controllers
         [HttpGet]
         public IActionResult Recipepost(int Id)
         {
-            Recipe recipe = _context.Recipes.Include(e => e.Ingredients)
+            // get me the exprencies from the detail table together with header table.
+            // thi is called eager loading
+            // there is eager lazy and explicit loading.
+            Recipe recipe = _context.Recipes
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
                 .Where(e => e.Id == Id).FirstOrDefault();
-            return View(recipe);
+            return View("RecipePost",recipe);
         }
 
         [HttpPost]

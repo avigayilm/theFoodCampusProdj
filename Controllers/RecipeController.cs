@@ -101,7 +101,9 @@ namespace theFoodCampus.Controllers
             // get me the exprencies from the detail table together with header table.
             // thi is called eager loading
             // there is eager lazy and explicit loading.
-            Recipe recipe= _context.Recipes.Include(e => e.Ingredients)
+            Recipe recipe= _context.Recipes
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
                 .Where(e => e.Id == Id).FirstOrDefault();
             return View(recipe);
         }

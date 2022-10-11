@@ -49,10 +49,10 @@ function DeleteItem(btn) {
     if (btn.id.indexOf("Inst") > 0)
         btnIdx = btn.id.replaceAll('btnRemoveInst-', '');
 
-    var idOdIsDeleted = btnIdx + "__IsDeleted";
+    var idOfIsDeleted = btnIdx + "__IsDeleted";
 
     if (btn.id.indexOf("Inst") > 0)
-        idOfIsDeleted = btn + "__IsHidden";
+        idOfIsDeleted = btnIdx + "__IsHidden";
 
 
     var hidIsDelId = document.querySelector("[id$='" + idOfIsDeleted + "']").id;

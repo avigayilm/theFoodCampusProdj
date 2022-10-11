@@ -12,5 +12,7 @@ namespace theFoodCampus.Models
         [ForeignKey("Recipe")]//very important
         public int ReceipeId { get; set; }
         public virtual Recipe Recipes { get; private set; } //very important 
+        [NotMapped]
+        public bool IsHidden { get; set; } = false;
     }
 }
