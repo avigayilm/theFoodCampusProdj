@@ -102,14 +102,13 @@
 
         <div class="row">
             <!-- Single Best Receipe Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="single-best-receipe-area mb-30">
                     @for (int i = 0; i < @Model.Count() ; i++)
                     {
+              <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
                     <img src="~/images/@Model[i].PhotoUrl" alt="">
                     <div class="receipe-content">
                         <a href="@Url.Action("RecipePost", "Home",new {id = Model[i].Id})">
-                       @* <a asp-action="RecipePost" asp-controller="Home" asp-route-id="@Model[i].Id">*@
                             <h5>@Model[i].Name</h5>
                         </a>
                         <div class="ratings">
@@ -120,9 +119,10 @@
                             <i class="fa fa-star-o" aria-hidden="true"></i>
                         </div>
                     </div>
-                    }
                 </div>
             </div>
+                    }
+           
 
 
 
