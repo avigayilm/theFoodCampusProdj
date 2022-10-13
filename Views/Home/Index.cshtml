@@ -112,11 +112,19 @@
                             <h5>@Model[i].Name</h5>
                         </a>
                         <div class="ratings">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
+                            @for (var j = 1; j <= @Model[i].Rating; j++)
+                           { 
+                               <i class="fa fa-star" aria-hidden="true"></i>
+                           }
+                            @for (var j = (@Model[i].Rating + 1); j <= 5; j++)
+                            {
                             <i class="fa fa-star-o" aria-hidden="true"></i>
+                            }
+                 @*         <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>*@
                         </div>
                     </div>
                 </div>
@@ -274,7 +282,7 @@
                     <!-- Receipe Content -->
                     <div class="receipe-content">
                         <span>January 04, 2018</span>
-                        <a href= href="@Url.Action("RecipePost", "Home")">
+                        <a href="@Url.Action("RecipePost", "Home")">
                             <h5>Homemade italian pasta</h5>
                         </a>
                         <div class="ratings">

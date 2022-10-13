@@ -129,3 +129,49 @@ function rebindvalidators() {
     $form.validate($form.data("unobtrusiveValidation").options); // rebind it to the js ploding
 }
 
+// in order for stars review to work
+function SubmitComment() {
+    if ($("#Rating").val() == "0") {
+        alert("Please rate this service provider.");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+function CRate(r) {
+    $("#Rating").val(r);
+    for (var i = 1; i <= r; i++) {
+        $("#Rate" + i).attr('class', 'starGlow');
+    }
+    // unselect remaining
+    for (var i = r + 1; i <= 5; i++) {
+        $("#Rate" + i).attr('class', 'starFade');
+    }
+}
+function CRateOver(r) {
+    for (var i = 1; i <= r; i++) {
+        $("#Rate" + i).attr('class', 'starGlow');
+    }
+}
+function CRateOut(r) {
+    for (var i = 1; i <= r; i++) {
+        $("#Rate" + i).attr('class', 'starFade');
+    }
+}
+function CRateSelected() {
+    var setRating = $("#Rating").val();
+    for (var i = 1; i <= setRating; i++) {
+        $("#Rate" + i).attr('class', 'starGlow');
+    }
+}
+
+function SCRate() {
+    for (var i = 1; i <= @totalRating; i++) {
+        $("#sRate" + i).attr('class', 'starGlowN');
+    }
+}
+$(function () {
+    SCRate();
+});
+

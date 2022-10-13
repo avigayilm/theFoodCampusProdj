@@ -1,5 +1,4 @@
 ﻿@using theFoodCampus.Models
-@*@model theFoodCampus.ViewModel.CommentViewModel*@
 @model theFoodCampus.Models.Recipe
 @{
     ViewData["Title"] = "Recipepost";
@@ -25,7 +24,7 @@
 @*<!-- Core Stylesheet -->
 <link rel="stylesheet" href="style.css">*@
 
-<!-- ##### Breadcumb Area Start ##### -->f
+<!-- ##### Breadcumb Area Start ##### -->
 <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
@@ -81,7 +80,7 @@
             <div class="col-12">
                 <div class="receipe-slider owl-carousel">
                     <img src="~/images/@Model.PhotoUrl" alt="">
-@*                    <img src="~/img/bg-img/bg5.jpg" alt="">
+                    @*                    <img src="~/img/bg-img/bg5.jpg" alt="">
                     <img src="~/img/bg-img/bg5.jpg" alt="">*@
                 </div>
             </div>
@@ -96,7 +95,7 @@
                 <div class="col-12 col-md-8">
                     <div class="receipe-headline my-5">
                         <span>April 05, 2018</span>
-                        <h2>@Model.Name</h2>
+                        <h2>@ViewBag.Title</h2>
                         <div class="receipe-duration">
                             <h6>Prep: @ViewBag.PrepTime</h6>
                             <h6>Cook: @ViewBag.CookTime</h6>
@@ -108,15 +107,15 @@
                 <div class="col-12 col-md-4">
                     <div class="receipe-ratings text-right my-5">
                         <div class="ratings">
-                            @for (var i = 1; i <= @ViewBag.RatingAverage; i++)
-                                    {
-                                        <span class="starGlowN"></span>
-                                    }
-                            @for (var i = (@ViewBag.RatingAverage + 1); i <= 5; i++)
-                                    {
-                                        <span class="starFadeN"></span>
-                                    }
-@*                            <i class="fa fa-star" aria-hidden="true"></i>
+                            @for (var i = 1; i <= Model.Rating; i++)
+                            {
+                                <span class="starGlowN"></span>
+                            }
+                            @for (var i = (Model.Rating + 1); i <= 5; i++)
+                            {
+                                <span class="starFadeN"></span>
+                            }
+                            @*                            <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -133,16 +132,16 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     @for (int i = 0; i < @Model.Instructions.Count; i++)
-@*                        @foreach (var item in @Model.Instructions)*@
-                        {
-                            <div class="single-preparation-step d-flex">
+                    @*                        @foreach (var item in @Model.Instructions)*@
+                    {
+                        <div class="single-preparation-step d-flex">
                             <h4>@i</h4>
                             <p>@Model.Instructions[i].Step </p>
-                            </div>
-                        }
+                        </div>
+                    }
                 </div>
 
-                    @* <!-- Single Preparation Step -->
+                @* <!-- Single Preparation Step -->
                 <div class="single-preparation-step d-flex">
                 <h4>01.</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
@@ -169,15 +168,15 @@
                 <div class="ingredients">
                     <h4>Ingredients</h4>
                     @foreach (Ingredient item in @Model.Ingredients)
-                        {
+                    {
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id=@item.IngredientId>
                             <label class="custom-control-label" for=@item.RecipeId>@item.Amount @item.MeasurementUnit @item.Name</label>
                         </div>
-                        }
+                    }
 
                     <!-- Custom Checkbox -->
-                        @*<div class="custom-control custom-checkbox">
+                    @*<div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck1">
                     <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
                     </div>
@@ -235,15 +234,7 @@
             </div>
         </div>
 
-@*        <div>
-            <span class="starFadeN" id="sRate1"></span>
-            <span class="starFadeN" id="sRate2"></span>
-            <span class="starFadeN" id="sRate3"></span>
-            <span class="starFadeN" id="sRate4"></span>
-            <span class="starFadeN" id="sRate5"></span>
-        </div>*@
-
-        @foreach (var c in @Model.Comments)
+        @foreach (var c in Model.Comments)
         {
             <hr />
             <div class="row">
@@ -264,19 +255,15 @@
                 </div>
             </div>
         }
-        <hr />
 
-        <dl class="dl-horizontal">
-            <dt>
-                Comment
-            </dt>
-
-            <dd>
-                <div class="commentBox">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-area">
+                    @*<form action="#" method="post">*@
                     @using (Html.BeginForm("Add", "Home", FormMethod.Post, new { onsubmit = "return SubmitComment()" }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="form-horizontal">
+                        <div class="row">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">
                                     Your rating <span style="font-weight:normal;">(1 start is bad, 5 star is good)</span>
@@ -291,31 +278,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <textarea asp-for="CommentText" id="Comment" required rows="5" style="width:100%;" class="form-control"></textarea>
-                                </div>
+                            <div class="col-12 col-lg-6">
+                                <input type="text" class="form-control" id="name" placeholder="Name">
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <input type="hidden" asp-for="Id" />
-                                    <input type="hidden" name="Rating" id="Rating" value="0" />
-                                    <input type="submit" id="btnRegister" name="btnRegister" value="Submit Comment" class="btn btn-warning" />
-                                </div>
+                            <div class="col-12 col-lg-6">
+                                <input type="email" class="form-control" id="email" placeholder="E-mail">
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="subject" placeholder="Subject">
+                            </div>
+                            <div class="col-12">
+                                <textarea asp-for="CommentText" name="message" class="form-control" id="Comment" cols="30" rows="10" placeholder="Message"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" name="Rating" id="Rating" value="0" />
+                                <input type="submit" id="btnRegister" name="btnRegister" value="Submit Comment" class="btn delicious-btn mt-30" />
+                                @*<button class="btn delicious-btn mt-30" type="submit">Post Comments</button>*@
                             </div>
                         </div>
                     }
+                    @* </form>*@
                 </div>
-            </dd>
-
-        </dl>
+            </div>
+        </div>
     </div>
 </div>
-
-
-
-
-
 
 <script>
 
@@ -364,7 +352,7 @@
         SCRate();
     });
 
-        
+
 </script>
 
 <style>
@@ -375,8 +363,8 @@
     }
 
     /* Override the default bootstrap behavior where horizontal description lists
-           will truncate terms that are too long to fit in the left column
-        */
+               will truncate terms that are too long to fit in the left column
+            */
     .dl-horizontal dt {
         white-space: normal;
     }

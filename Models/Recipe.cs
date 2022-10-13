@@ -17,7 +17,7 @@ namespace theFoodCampus.Models
         [StringLength(150)]
         public string Name { get; set; }
 
-        public int Rating { get;set; }
+        public int Rating { get; set; } = 0;
 
         //tags
         public Kashrut RKashrut { get; set; }
@@ -39,6 +39,17 @@ namespace theFoodCampus.Models
         [Display(Name = "Profile Photo")]
         [NotMapped]
         public IFormFile ProfilePhoto { get; set; }
+
+        // used to save the text just for the page
+        [NotMapped]
+        public string CommentText { get; set; }
+
+        [NotMapped]
+        public int RatingCount { get; set; }
+        [NotMapped]
+        public int RatingSum { get; set; }
+        [NotMapped]
+        public int TempRating { get; set; }
 
     }
 }
