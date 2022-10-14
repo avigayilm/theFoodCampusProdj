@@ -5,11 +5,11 @@ namespace theFoodCampus.Models.Adapter
 {
     public class UsdaAdapter
     {
-        public string Check(string ingredients, string keyword)
+        public string Check(string ingredients/*, string keyword*/)
         {
-            if (keyword == " ")
-                keyword = "-";
-            string Url = $"http://localhost:5202/api/usda?ingredients={ingredients}&keyword=d{keyword}";
+            //if (keyword == " ")
+            //    keyword = "-";
+            string Url = $"http://localhost:5202/api/usda?ingredients={ingredients}";
 
             var client = new RestClient(Url);
 
@@ -19,7 +19,7 @@ namespace theFoodCampus.Models.Adapter
 
             // here we have to connect to the gateway and
             //get information about the weather
-            return $"Here we write the weather we got from gateway";
+            return response.Content;
         }
     }
 }

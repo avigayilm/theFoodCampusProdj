@@ -30,6 +30,8 @@ namespace theFoodCampus.Models
         public Diet RDiet { get; set; }
         public Budget RBudget { get; set; }
 
+        public string Tag { get; set; }
+
         //list of ingredients
         public virtual List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public virtual List<Instruction> Instructions { get; set; } = new List<Instruction>();

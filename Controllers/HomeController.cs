@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Xml.Linq;
@@ -7,6 +8,7 @@ using theFoodCampus.Data;
 using theFoodCampus.Models;
 using theFoodCampus.Models.Adapter;
 using theFoodCampus.ViewModel;
+using static theFoodCampus.Models.Nutrient;
 
 namespace theFoodCampus.Controllers
 {
@@ -79,6 +81,12 @@ namespace theFoodCampus.Controllers
                 .Include(e => e.Instructions)
                 .Include(e => e.Comments)
                 .Where(e => e.Id == Id).FirstOrDefault();
+
+            var UsdaModel = new UsdaAdapter();
+            var myJsonNutrients = UsdaModel.Check(recipe.Tag);// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
+            var list = JsonConvert.DeserializeObject<List<Root>>(myJsonNutrients);
+            ViewBag.Nutrients = list;
+
             var comments = recipe.Comments;
 
             if (comments.Count() > 0)

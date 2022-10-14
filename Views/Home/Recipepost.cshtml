@@ -227,6 +227,157 @@
             </div>
         </div>
 
+@*         <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-left">
+                    <h3>Nutrients</h3>
+                </div>
+            </div>
+        </div>
+
+        This is if we would do a for loop for the nutrients table
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                @for (int i = 1; i < @ViewBag.Nutrients.Count; i++)
+                {
+                    <div class="single-preparation-step d-flex">
+                        <p>@ViewBag.Nutrients[i].Value @ViewBag.Nutrients[i].UnitName @ViewBag.Nutrients[i].Name  </p>
+                    </div>
+                }
+            </div>
+*@
+        <div class="col-12 col-lg-4">
+        <section class="performance-facts">
+            <header class="performance-facts__header">
+                <h1 class="performance-facts__title">Nutrition Facts</h1>
+                <p>Serving Size 1/2 cup (about 82g)
+                <p>Serving Per Container 8</p>
+            </header>
+            <table class="performance-facts__table">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="small-info">
+                            Amount Per Serving
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="thick-row">
+                        <td colspan="3" class="small-info">
+                            <b>% Daily Value*</b>
+                        </td>
+                    </tr>
+                    @foreach (Nutrient.Root item in ViewBag.Nutrients)
+                        {
+                            <tr>
+                                <th colspan="2">
+                                    @if (item.Name.IndexOf("Carbohydrate")>0)
+                                    {
+                                        <b>Carbohydrate</b>
+                                    }
+                                    @if(item.Name.IndexOf("Sugar")>0)
+                                    {
+                                         <b>Sugar</b>
+                                    }
+                                    @if (!(item.Name.IndexOf("Sugar") > 0) && !( item.Name.IndexOf("Carbohydrate") > 0))
+                                    {
+                                    <b>@item.Name </b>
+                                    }
+                                    
+                                    @item.Value @item.UnitName
+                                </th>
+                                <td>
+                                    @if(item.DailyPercent!=null)
+                                    {
+                                        <b>@item.DailyPercent %</b>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    @*<tr>
+                        <th colspan="2">
+                            <b>Calories</b>
+                            200
+                        </th>
+                    </tr>
+                   
+                       <tr>
+                        <th colspan="2">
+                            <b>Total Fat</b>
+                            14g
+                        </th>
+                        <td>
+                            <b>22%</b>
+                        </td>
+                    </tr>
+                   
+                    <tr>
+                        <th colspan="2">
+                            <b>Cholesterol</b>
+                            55mg
+                        </th>
+                        <td>
+                            <b>18%</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Sodium</b>
+                            40mg
+                        </th>
+                        <td>
+                            <b>2%</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Total Carbohydrate</b>
+                            17g
+                        </th>
+                        <td>
+                            <b>6%</b>
+                        </td>
+                    </tr>
+                    <tr class="thick-end">
+                        <th colspan="2">
+                            <b>Protein</b>
+                            3g
+                        </th>
+                        <td>
+                        </td>
+                    </tr>*@
+                </tbody>
+            </table>
+
+           @* <table class="performance-facts__table--grid">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            Vitamin A
+                            10%
+                        </td>
+                        <td>
+                            Vitamin C
+                            0%
+                        </td>
+                    </tr>
+                    <tr class="thin-end">
+                        <td colspan="2">
+                            Calcium
+                            10%
+                        </td>
+                        <td>
+                            Iron
+                            6%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>*@
+
+        </section>
+
+       
+
         <div class="row">
             <div class="col-12">
                 <div class="section-heading text-left">
@@ -234,7 +385,7 @@
                 </div>
             </div>
         </div>
-
+       </div>
 @*        <div>
             <span class="starFadeN" id="sRate1"></span>
             <span class="starFadeN" id="sRate2"></span>
@@ -318,6 +469,7 @@
 
 
 <script>
+     src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
 
     function SubmitComment() {
         if ($("#Rating").val() == "0") {
