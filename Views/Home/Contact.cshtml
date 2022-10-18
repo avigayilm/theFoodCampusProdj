@@ -1,0 +1,409 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- ##### About Area Start ##### -->
+<!-- ##### Title About Start ##### -->
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: Arial;
+        margin: 0;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    /* Position the image container (needed to position the left and right arrows) */
+    .container {
+        position: relative;
+    }
+
+    /* Hide the images by default */
+    .mySlides {
+        display: none;
+    }
+
+    /* Add a pointer when hovering over the thumbnail images */
+    .cursor {
+        cursor: pointer;
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 40%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    /* Container for image text */
+    .caption-container {
+        text-align: center;
+        background-color: #222;
+        padding: 2px 16px;
+        color: white;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Six columns side by side */
+    .column {
+        float: left;
+        width: 16.66%;
+    }
+
+    /* Add a transparency effect for thumnbail images */
+    .demo {
+        opacity: 0.6;
+    }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+</style>
+<body>
+   <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>About us</h3>
+                </div>
+         </div>
+   </div>
+    <div class="container">
+        <div class="mySlides">
+            <div class="numbertext">1 / 6</div>
+            <img src="/img/bg-img/bg5.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">2 / 6</div>
+            <img src="/img/bg-img/bg2.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">3 / 6</div>
+            <img src="/img/bg-img/bg5.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">4 / 6</div>
+            <img src="/img/bg-img/bg2.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">5 / 6</div>
+            <img src="/img/bg-img/bg5.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+            <div class="numbertext">6 / 6</div>
+            <img src="/img/bg-img/bg2.jpg" style="width:100%">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+
+        <div class="caption-container">
+            <p id="caption"></p>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <img class="demo cursor" src="/img/bg-img/bg5.jpg" style="width:100%" onclick="currentSlide(1)" alt="About us :))">
+            </div>
+            <div class="column">
+                <img class="demo cursor" src="/img/bg-img/bg2.jpg" style="width:100%" onclick="currentSlide(2)" alt="About us :))">
+            </div>
+            <div class="column">
+                <img class="demo cursor" src="/img/bg-img/bg5.jpg" style="width:100%" onclick="currentSlide(3)" alt="About us :))">
+            </div>
+            <div class="column">
+                <img class="demo cursor" src="/img/bg-img/bg2.jpg" style="width:100%" onclick="currentSlide(4)" alt="About us :))">
+            </div>
+            <div class="column">
+                <img class="demo cursor" src="/img/bg-img/bg5.jpg" style="width:100%" onclick="currentSlide(5)" alt="About us :))">
+            </div>
+            <div class ="column">
+                <img class="demo cursor" src="/img/bg-img/bg2.jpg" style="width:100%" onclick="currentSlide(6)" alt="About us :))">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("demo");
+            let captionText = document.getElementById("caption");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            captionText.innerHTML = dots[slideIndex - 1].alt;
+        }
+    </script>
+
+</body>
+</html>
+
+@*<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb2.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-text text-center">
+                    <h2>About us :))</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+<!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-->
+<!-- ##### Title About End ##### -->
+
+<!-- ##### About Area Start ##### -->
+<section class="about-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>Who we are and what we do?</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h6 class="sub-heading pb-5">Donec quis metus ac arcu luctus accumsan. Nunc in justo tincidunt, sodales nunc id, finibus nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae</h6>
+                <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin malesuada et mauris ut lobortis. Sed eu iaculis sapien, eget luctus quam. Aenean hendrerit varius massa quis laoreet. Donec quis metus ac arcu luctus accumsan. Nunc in justo tincidunt, sodales nunc id, finibus nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+            </div>
+        </div>
+        <div class="row align-items-center mt-70">
+            <!-- Single Cool Fact -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-cool-fact">
+                    <img src="~/img/core-img/salad.png" alt="">
+                    <h3><span class="counter">1287</span></h3>
+                    <h6>Amazing receipies</h6>
+                </div>
+            </div>
+
+            <!-- Single Cool Fact -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-cool-fact">
+                    <img src="~/img/core-img/rib.png" alt="">
+                    <h3><span class="counter">25</span></h3>
+                    <h6>Meat receipies</h6>
+                </div>
+            </div>
+
+            <!-- Single Cool Fact -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-cool-fact">
+                    <img src="~/img/core-img/pancake.png" alt="">
+                    <h3><span class="counter">471</span></h3>
+                    <h6>Desert receipies</h6>
+                </div>
+            </div>
+
+            <!-- Single Cool Fact -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-cool-fact">
+                    <img src="~/img/core-img/ice_cream_cone90px.png" alt="">
+                    <h3><span class="counter">326</span></h3>
+                    <h6>In difficult times</h6>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <img class="mb-70" src="~img/bg-img/about.png" alt="">
+                <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin malesuada et mauris ut lobortis. Sed eu iaculis sapien, eget luctus quam. Aenean hendrerit varius massa quis laoreet. Donec quis metus ac arcu luctus accumsan. Nunc in justo tincidunt, sodales nunc id, finibus nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### About Area End ##### -->
+
+<!-- ##### Contact Area Start ##### -->
+<p id="open_here"></p>
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb2.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-text text-center">
+                    <h2>Contact us :))</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Contact Information Area Start ##### -->
+<div class="contact-information-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="logo mb-80">
+                    @*   <img src="~/img/core-img/logo.png" alt="">*@
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Contact Text -->
+            <div class="col-12 col-lg-5">
+                <div class="contact-text">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus.</p>
+                    <p>Orci varius natoque penatibus et magnis dis ac pellentesque tortor. Aenean congue parturient montes, nascetur ridiculus mus.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3">
+                <!-- Email Contact Information -->
+                <div class="single-contact-information mb-30">
+                    <h6>Email us:</h6>
+                    <p> <a href="mailto:thefoodcampus.recipe@gmail.com" style="color:blue">thefoodcampus.recipe@gmail.com</a></p>
+                </div>
+                <!-- Single Contact Information -->
+                <div class="single-contact-information mb-30">
+                    <h6>Visit our Instagram:</h6>
+                    <p><a href="https://www.instagram.com/thefoodcampus.recipes/" style="color:blue">Instagram 🔗</a></p>
+                </div>
+            </div>
+
+            <!-- Newsletter Area -->
+            <div class="col-12 col-lg-4">
+                <div class="newsletter-form bg-img bg-overlay" style="background-image: url(/img/bg-img/bg4.jpg);">
+                    <form action="http://formsubmit.co/thefoodcampus.recipe@gmail.com" method="post" enctype="multipart/form-data">
+                        <!-- Honeypot -->
+                        <input type="text" name="_honey" style="display: none;">
+
+                        <!-- Disable Captcha -->
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <!-- Thank you Page-->
+                        <input type="hidden" name="_next" value="http://localhost:5049/home/thankyou">
+
+                        <p style="font-size:larger">Share with us ur fav food campus :)))</p>
+                        <p style="font-size:large"></p>
+
+                        <input type="email" name="email" placeholder="ur email address" required>
+
+                        <input type="file" class="form-control" id="file" name="File" placeholder="File" required>
+
+                        <button type="submit" class="btn delicious-btn w-100">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Contact Information Area End ##### -->
+
+<!-- ##### Contact Form Area Start ##### -->
+<div class="contact-area section-padding-0-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>Get In Touch</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-area">
+                    <form action="http://formsubmit.co/thefoodcampus.recipe@gmail.com" method="post">
+                        <!-- Honeypot -->
+                        <input type="text" name="_honey" style="display: none;">
+
+                        <!-- Disable Captcha -->
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <!-- Thank you Page-->
+                        <input type="hidden" name="_next" value="http://localhost:5049/home/thankyou">
+
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <input type="text" class="form-control" id="name" name="Name" placeholder="Name" required>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <input type="email" class="form-control" id="email" name="Email" placeholder="E-mail" required>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="subject" name="Subject" placeholder="Subject">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="Message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn delicious-btn mt-30" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Contact Form Area End ##### -->

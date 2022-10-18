@@ -7,6 +7,9 @@ using theFoodCampus.Data;
 using theFoodCampus.Models;
 using theFoodCampus.Models.Adapter;
 using theFoodCampus.ViewModel;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace theFoodCampus.Controllers
 {
@@ -37,6 +40,7 @@ namespace theFoodCampus.Controllers
             //    arrayOfRecipesNames[i++]=recipe.Name;
             //ViewData["Recipes"] = arrayOfRecipesNames;
             //ViewBag.Array = arrayOfRecipesNames;
+            ViewBag.Recipes = recipes.ToArray();
             return View(recipes);
         }
 
@@ -67,6 +71,11 @@ namespace theFoodCampus.Controllers
         }
 
         public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult thankyou()
         {
             return View();
         }
