@@ -27,6 +27,7 @@ namespace theFoodCampus.Controllers
         {
             ShowHoliday();
             ShowWeather();
+
             List<Recipe> recipes;
             recipes = _context.Recipes.ToList();
             return View(recipes);

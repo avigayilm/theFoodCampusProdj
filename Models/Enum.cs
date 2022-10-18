@@ -2,7 +2,7 @@
 
 namespace theFoodCampus.Models
 {
-        public enum MeasurementType { Cup, TableSpoon, Teaspoon, Grams, Pinch, None }
+        public enum MeasurementType { Cup, TableSpoon, Teaspoon, Grams, Pinch,Ounces, None }
         public enum Kashrut { Dairy, Pareve, Meaty }
         public enum Difficulty { Easy, Intermediate, Difficult }
         public enum PrepTime { Quick, Medium, Long }
