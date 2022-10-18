@@ -12,8 +12,8 @@ using theFoodCampus.Data;
 namespace theFoodCampus.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221014134943_database")]
-    partial class database
+    [Migration("20221018124115_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

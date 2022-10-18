@@ -5,7 +5,6 @@ namespace theFoodCampus.Models
 {
     public class SeedData
     {
-
         public static void Intitialize(IServiceProvider serviceProvider)
         {
             using (var context = new ApplicationDbContext(

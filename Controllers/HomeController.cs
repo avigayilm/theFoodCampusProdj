@@ -30,6 +30,13 @@ namespace theFoodCampus.Controllers
 
             List<Recipe> recipes;
             recipes = _context.Recipes.ToList();
+            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //string[] arrayOfRecipesNames =new string[recipes.Count()];
+            //int i = 0;
+            //foreach (var recipe in recipes)
+            //    arrayOfRecipesNames[i++]=recipe.Name;
+            //ViewData["Recipes"] = arrayOfRecipesNames;
+            //ViewBag.Array = arrayOfRecipesNames;
             return View(recipes);
         }
 
