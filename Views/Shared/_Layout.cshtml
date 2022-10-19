@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/theFoodCampus.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
+
+
 </head>
 <body>
     <!-- ##### Header Area Start ##### -->
@@ -32,6 +35,7 @@
                                     <li><a href="#">Welcome to the Food Campus family.</a></li>
                                     <li><a href="#">Hello Delicious!</a></li>
                                     <li><a href="#">Wake up! IT'S FOOD o'clock</a></li>
+                                    <li><a href="#">@ViewBag.Hebdate</a></li>
 
                                 </ul>
                             </div>
@@ -45,6 +49,9 @@
                             <a href="https://he-il.facebook.com/homee.co.il/"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <a href="https://twitter.com/?lang=he"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                             <a href="https://www.linkedin.com/home"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="top-social-info text-center">
+                            <div> @ViewBag.Hebdate</div>
                         </div>
                     </div>
                 </div>
@@ -175,9 +182,12 @@
                                 </ul>
 
                                 <!-- Newsletter Form -->
-                                <div class="search-btn">
+                             @*   <div class="search-btn">
                                     <i class="fa fa-search" aria-hidden="true"></i>
-                                </div>
+                                </div>*@
+
+                        
+
 
                             </div>
                             <!-- Nav End -->
@@ -302,9 +312,11 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <!-- ##### All Javascript Files ##### -->
+    <!-- ##### All Javascript 
+    Files ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="~/js/jquery/jquery-2.2.4.min.js"></script>
+@*    for some reason when adding this script than the automatino doesn't work'*@
+@*    <script src="~/js/jquery/jquery-2.2.4.min.js"></script>*@
     <!-- Popper js -->
     <script src="~/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->

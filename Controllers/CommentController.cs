@@ -20,6 +20,38 @@ namespace theFoodCampus.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult AutoComplete(string Prefix)
+        {
+            //Note : you can bind same list from database  
+            List<Person> ObjList = new List<Person>()
+            {
+
+                new Person {FirstName="hi", LastName="You" },
+                new Person {FirstName="avigayil", LastName="mandel" },
+                new Person {FirstName="shira", LastName="segal" },
+                new Person {FirstName="yehudit", LastName="flax" },
+
+
+        };
+            //Searching records from list using LINQ query  
+            var Name = (from N in ObjList
+                        where N.FirstName.StartsWith(Prefix)
+                        select new
+                        {
+                            label = N.FirstName,
+                            val = N.FirstName
+                        });
+            return Json(Name);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string personName)
+        {
+            ViewBag.Message = "Selected Person Name: " + personName;
+            return View();
+        }
+
         // GET: CommentController/Details/5
         public ActionResult Details(int id)
         {

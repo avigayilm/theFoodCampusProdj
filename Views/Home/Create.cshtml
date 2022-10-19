@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Favicon -->
+@*<!-- Favicon -->
 <link rel="icon" href="~/img/core-img/favicon.ico">
 
 <!-- Core Stylesheet -->
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">*@
 
 <!-- ##### Breadcumb Area Start ##### -->
 <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
@@ -231,7 +231,6 @@
                                 <th style="width:60px">
                                     <button id="btnAddInstruction" type="button" class="btn btn-sm btn-secondary visible"
                                     onclick="AddItem(this)"> Add</button>
-
                                 </th>
                             </tr>
                         </thead>
@@ -278,18 +277,19 @@
     
     </div>
 </form>
-    </div>
-</div>
 
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+
     }
 
 

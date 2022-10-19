@@ -27,31 +27,80 @@ namespace theFoodCampus.Controllers
 
         public IActionResult Index()
         {
-            ShowHoliday();
-            ShowWeather();
+            HebCalData.Root HebCal=ShowHoliday();
+            WeatherData.Root Weather=ShowWeather();
             List<Recipe> recipes;
+            List<Recipe> WeatherRecipes = _context.Recipes
+    .Include(e => e.Ingredients)
+    .Include(e => e.Instructions)
+    .Include(e => e.Comments)
+    .Where(e => e.RWeather == Weather.WeatherFeel).ToList();
+            List<Recipe> HolidayRecipes;
+            List<Recipe> HeaderRecipes;
+            if (HebCal.Holiday!=Holiday.None)
+            {
+               HolidayRecipes= _context.Recipes
+               .Include(e => e.Ingredients)
+               .Include(e => e.Instructions)
+               .Include(e => e.Comments)
+               .Where(e => e.RHoliday == HebCal.Holiday).ToList();
+                HeaderRecipes = HolidayRecipes;
+            }
+            else
+            {
+                HeaderRecipes = WeatherRecipes;
+            }
             recipes = _context.Recipes.ToList();
+            ViewBag.Hebdate=HebCal.HebrewDate;
+            ViewBag.HeaderList=HeaderRecipes;
             return View(recipes);
         }
 
-        public void ShowHoliday()
+        [HttpPost]
+        public JsonResult AutoComplete(string Prefix)
+        {
+            //Note : you can bind same list from database  
+
+            //Searching records from list using LINQ query  
+            var Name = (from N in _context.Recipes
+                        where N.Name.Contains(Prefix)
+                        select new
+                        {
+                            label = N.Name,
+                            //val = N.FirstName
+                        }).ToList();
+            return Json(Name);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string personName)
+        {
+            Recipe recipe = _context.Recipes
+    .Include(e => e.Ingredients)
+    .Include(e => e.Instructions)
+    .Include(e => e.Comments)
+    .Where(e => e.Name == personName).FirstOrDefault();
+            return RedirectToAction("RecipePost", "Home", new { id = recipe.Id });
+            //ViewBag.Message = "Selected Person Name: " + personName;
+            //return View();
+        }
+        public HebCalData.Root ShowHoliday()
         {
             var HebCalModel = new HebCalAdapter();// this gets the string from the gateway.
             var holiday = HebCalModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            // give approopiate message
-            //if (holiday == "Rosh Hashana")
-            //    GetRoshHashana();
-            //if (holiday == "sukkot")
-            //    GetSukkot();
-            //if(holiday==)
-            ViewBag.holiday = holiday;
+            var result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
+            List<Recipe> HeaderRecipes;
+            ViewBag.holiday = result;
+            return result;
         }
 
-        public void ShowWeather()
+        public WeatherData.Root ShowWeather()
         {
             var WeatherModel = new WeatherAdapter();
             var weather = WeatherModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            ViewBag.weather = weather;
+            var result = JsonConvert.DeserializeObject<WeatherData.Root>(weather);
+            ViewBag.weather = result;
+            return result;
         }
 
 
@@ -84,7 +133,7 @@ namespace theFoodCampus.Controllers
 
             var UsdaModel = new UsdaAdapter();
             var myJsonNutrients = UsdaModel.Check(recipe.Tag);// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            var list = JsonConvert.DeserializeObject<List<Root>>(myJsonNutrients);
+            var list = JsonConvert.DeserializeObject<List<Nutrient.Root>>(myJsonNutrients);
             ViewBag.Nutrients = list;
 
             var comments = recipe.Comments;

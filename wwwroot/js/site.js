@@ -9,23 +9,24 @@ $(".custom-file-input").on("change", function () {
     $(this).siblings("custom-file-label").addClass(selected).html(fileName);
 });
 
-function CalcTotalExperiences() {
-    var x = document.getElementsByClassName('YearsWorked');
-    var totalExp = 0;
-    var i;
-    for (i = 0; i < x.length(); i++) {
-        totalExp = totalExp + eval(x[i].value);
-    }
-    document.getElementById('TotalExperience').ariaValueMax = totalExp;
-    return;
-}
+//function CalcTotalExperiences() {
+//    var x = document.getElementsByClassName('YearsWorked');
+//    var totalExp = 0;
+//    var i;
+//    for (i = 0; i < x.length(); i++) {
+//        totalExp = totalExp + eval(x[i].value);
+//    }
+//    document.getElementById('TotalExperience').ariaValueMax = totalExp;
+//    return;
+//}
 
-document.addEventListener('change', function (e) {
-    if (e.target.classList.contains('YearsWorked')) {
-        CalcTotalExperiences();
-    }
-}
-    , false);
+//document.addEventListener('change', function (e)
+//{
+//    if (e.target.classList.contains('YearsWorked')) {
+//        CalcTotalExperiences();
+//    }
+//}
+//    , false);
 
 
 function DeleteItem(btn) {
