@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using theFoodCampus.Data;
+using theFoodCampus.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     ));
 
 var app = builder.Build();
+// if recipes DB is not initialized, initialize now
+using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    SeedData.Intitialize(services);
+}
 
 
 // Configure the HTTP request pipeline.
@@ -25,8 +33,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+var rules = new RewriteOptions()
+    .AddRedirect(@"^.{0}$", "/home/index");
+app.UseRewriter(rules);
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller}/{action}/{id?}");
 
 app.Run();

@@ -8,6 +8,9 @@ using theFoodCampus.Data;
 using theFoodCampus.Models;
 using theFoodCampus.Models.Adapter;
 using theFoodCampus.ViewModel;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
 using static theFoodCampus.Models.Nutrient;
 
 namespace theFoodCampus.Controllers
@@ -110,6 +113,11 @@ namespace theFoodCampus.Controllers
         }
 
         public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult thankyou()
         {
             return View();
         }
