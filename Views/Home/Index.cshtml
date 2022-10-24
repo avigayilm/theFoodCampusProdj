@@ -2,12 +2,73 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
 
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <input type="text" id="textPerson" name="personName" />
 
+    <br />
+    <input type="submit" id="btnSubmit" value="Submit" />
+    <br />
+    <br />
+    @ViewBag.Message
+}
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#textPerson").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Home/AutoComplete/',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    //get selected value
+                    //$("#personNameValue").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+}
 
 <!-- ##### Hero Area Start ##### -->
 <section class="hero-area">
     <div class="hero-slides owl-carousel">
+        <!-- Single Hero Slide -->
+        @foreach (Recipe item in @ViewBag.HeaderList)
+        {
+         <div class="single-hero-slide bg-img" style="background-image: url(images/@item.PhotoUrl);">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">@item.Name</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">The best recipes for @item.RHoliday</p>
+                            <a href="#" class="btn delicious-btn" data-animation="fadeInUp" data-delay="1000ms">See Receipe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+        }
+
+   @* <div class="hero-slides owl-carousel">
         <!-- Single Hero Slide -->
         <div class="single-hero-slide bg-img" style="background-image: url(img/bg-img/bg1.jpg);">
             <div class="container h-100">
@@ -52,7 +113,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </section>
 <!-- ##### Hero Area End ##### -->
 <!-- ##### Top Catagory Area Start ##### -->
@@ -65,8 +126,8 @@
                     <img src="~/img/bg-img/bg2.jpg" alt="">
                     <!-- Content -->
                     <div class="top-cta-content">
-                        <h3>Strawberry Cake</h3>
-                        <h6>Simple &amp; Delicios</h6>
+                        <h3>@ViewBag.holiday.Holiday</h3>
+                        <h6>@ViewBag.Hebdate</h6>
                         <a href="@Url.Action("RecipePost", "Home")" class="btn delicious-btn">See Full Receipe</a>
                     </div>
                 </div>
@@ -77,8 +138,8 @@
                     <img src="~/img/bg-img/bg3.jpg" alt="">
                     <!-- Content -->
                     <div class="top-cta-content">
-                        <h3>Chinesse Noodles</h3>
-                        <h6>Simple &amp; Delicios</h6>
+                        <h3>Recipes for @ViewBag.weather.WeatherFeel weather</h3>
+                        <h6>It's @ViewBag.weather.Temp ° </h6>
                         <a href="@Url.Action("RecipePost", "Home")" class="btn delicious-btn">See Full Receipe</a>
                     </div>
                 </div>
@@ -541,3 +602,5 @@
         </div>
     </div>
 </section>
+
+                            

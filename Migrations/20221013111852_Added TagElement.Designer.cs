@@ -12,14 +12,14 @@ using theFoodCampus.Data;
 namespace theFoodCampus.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221014134943_database")]
-    partial class database
+    [Migration("20221013111852_Added TagElement")]
+    partial class AddedTagElement
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -150,6 +150,10 @@ namespace theFoodCampus.Migrations
 
                     b.Property<int>("Rdifficulty")
                         .HasColumnType("int");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
