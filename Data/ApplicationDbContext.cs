@@ -12,6 +12,7 @@ namespace theFoodCampus.Data
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
         public virtual DbSet<Instruction> Instructions { get; set; }
+        public virtual DbSet<RecipeImage> Images { get; set; }
 
     }
 

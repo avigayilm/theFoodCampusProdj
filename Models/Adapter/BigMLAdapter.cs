@@ -1,13 +1,13 @@
-﻿//using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
-using RestSharp;
+﻿using RestSharp;
 
 namespace theFoodCampus.Models.Adapter
 {
-    public class HebCalAdapter
+    public class BigMLAdapter
     {
-        public string Check()
+        public string Check(BigMLData data)
         {
-            string Url = $"http://localhost:5202/api/HebCal";
+
+            string Url = $"http://localhost:5202/api/ML?Weather={data.Weather}&Holiday={data.Holiday}&LastCategory={data.LastCategory}";
 
             var client = new RestClient(Url);
 
@@ -17,8 +17,9 @@ namespace theFoodCampus.Models.Adapter
 
             return response.Content;
             // here we have to connect to the gateway and
-            //get information about the HebrewCalander
-            //return $"Here we write the Hebrew calander we got from gateway";
+            //get information for the imagga
+            //return $"Here we write the weather we got from gateway";
         }
+
     }
 }
