@@ -12,6 +12,9 @@ using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using static theFoodCampus.Models.Nutrient;
+using System.Text.RegularExpressions;
+using RestSharp;
+using FireSharp.Extensions;
 
 namespace theFoodCampus.Controllers
 {
