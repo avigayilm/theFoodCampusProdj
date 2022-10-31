@@ -412,23 +412,21 @@
                 </table>*@
             </section>
 
-            <!-- Receipe Slider -->
+            <!-- users images Slider -->
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="receipe-slider owl-carousel">
                             @foreach (var item in @Model.Images)
                             {
-                                //       "~/images/0f5a4cf0-e5b1-4495-b1d8-b045eb72be19_bb91210bd6185d7119aaa54d4ca2f6c4.jpg"
-                                //<img src="~/images/0f5a4cf0-e5b1-4495-b1d8-b045eb72be19_bb91210bd6185d7119aaa54d4ca2f6c4.jpg">
-        @*                        if (@item.image.StartsWith("Http") == true)
+                                if(item.isUrl==true)
                                 {
                                     <img src=@item.image>
                                 }
                                 else
                                 {
-                                    <img src="~/images/"@item.image>
-                                }*@
+                                    <img src="~/images/@item.image">
+                                }
                             }                          
                         </div>
                     </div>
