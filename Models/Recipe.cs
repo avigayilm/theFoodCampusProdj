@@ -36,6 +36,8 @@ namespace theFoodCampus.Models
         public virtual List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public virtual List<Instruction> Instructions { get; set; } = new List<Instruction>();
         public virtual List<Comment> Comments { get; set; } = new List<Comment>();
+        public virtual List<RecipeImage> Images { get; set; } = new List<RecipeImage>();
+
 
         public string? PhotoUrl { get; set; }
         [Display(Name = "Profile Photo")]
@@ -52,6 +54,10 @@ namespace theFoodCampus.Models
         public int RatingSum { get; set; }
         [NotMapped]
         public int TempRating { get; set; }
+        [NotMapped]
+        public string ImageString { get; set; }
+        [NotMapped]
+        public IFormFile ImageForm { get; set; }
 
     }
 }

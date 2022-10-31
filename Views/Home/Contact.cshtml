@@ -1,11 +1,12 @@
-﻿@{
+﻿@model List<theFoodCampus.Models.Recipe>
+@{
     ViewData["Title"] = "Contact";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- ##### About Area Start ##### -->
 <!-- ##### Title About Start ##### -->
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+@*<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
     body {
         font-family: Arial;
@@ -202,10 +203,10 @@
         }
     </script>
 
-</body>
+</body>*@
 </html>
 
-@*<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb2.jpg);">
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb2.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
@@ -215,8 +216,8 @@
             </div>
         </div>
     </div>
-</div>*@
-<!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-->
+</div>
+
 <!-- ##### Title About End ##### -->
 
 <!-- ##### About Area Start ##### -->
@@ -240,7 +241,7 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-cool-fact">
                     <img src="~/img/core-img/salad.png" alt="">
-                    <h3><span class="counter">1287</span></h3>
+                    <h3><span class="counter">@ViewBag.allRecipes</span></h3>
                     <h6>Amazing receipies</h6>
                 </div>
             </div>
@@ -249,7 +250,7 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-cool-fact">
                     <img src="~/img/core-img/rib.png" alt="">
-                    <h3><span class="counter">25</span></h3>
+                    <h3><span class="counter">@ViewBag.allMeat</span></h3>
                     <h6>Meat receipies</h6>
                 </div>
             </div>
@@ -258,7 +259,7 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-cool-fact">
                     <img src="~/img/core-img/pancake.png" alt="">
-                    <h3><span class="counter">471</span></h3>
+                    <h3><span class="counter">@ViewBag.allDesert</span></h3>
                     <h6>Desert receipies</h6>
                 </div>
             </div>
@@ -267,7 +268,7 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="single-cool-fact">
                     <img src="~/img/core-img/ice_cream_cone90px.png" alt="">
-                    <h3><span class="counter">326</span></h3>
+                    <h3><span class="counter">@ViewBag.countDif</span></h3>
                     <h6>In difficult times</h6>
                 </div>
             </div>
@@ -371,7 +372,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-30">
                 <div class="contact-form-area">
                     <form action="http://formsubmit.co/thefoodcampus.recipe@gmail.com" method="post">
                         <!-- Honeypot -->

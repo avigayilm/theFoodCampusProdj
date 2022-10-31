@@ -1,5 +1,4 @@
 ﻿@using theFoodCampus.Models
-@*@model theFoodCampus.ViewModel.CommentViewModel*@
 @model theFoodCampus.Models.Recipe
 @{
     ViewData["Title"] = "Recipepost";
@@ -15,7 +14,6 @@
         rating = ratingSum / ratingCount;
     }
     var totalRating = decimal.Parse(rating.ToString());
-
 }
 
 <!-- Favicon -->
@@ -25,7 +23,14 @@
 @*<!-- Core Stylesheet -->
 <link rel="stylesheet" href="style.css">*@
 
-<!-- ##### Breadcumb Area Start ##### -->f
+@if (ViewBag.alert == "true")
+{
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Error!</strong> The image was detected as an inappropriate image, please try again
+    </div>
+}
+<!-- ##### Breadcumb Area Start ##### -->
 <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
@@ -79,14 +84,29 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="receipe-slider owl-carousel">
-                    <img src="~/images/@Model.PhotoUrl" alt="">
-@*                    <img src="~/img/bg-img/bg5.jpg" alt="">
-                    <img src="~/img/bg-img/bg5.jpg" alt="">*@
+                <div class="single-mega cn-col-4">
+                    <div class="receipe-slider owl-carousel">
+                        <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
+                        <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @* <div class="container">
+    <div class="row">
+    <!-- Top Catagory Area -->
+    <div class="col-12 col-lg-6">
+    <div class="single-top-catagory">
+    <img src="~/images/@Model.PhotoUrl" alt="">
+    <!-- Content -->
+    <div class="top-cta-content">
+    <h3>@Model.Name Recipe</h3>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
 
     <!-- Receipe Content Area -->
     <div class="receipe-content-area">
@@ -105,27 +125,26 @@
                     </div>
                 </div>
 
+                <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                 <div class="col-12 col-md-4">
                     <div class="receipe-ratings text-right my-5">
                         <div class="ratings">
                             @for (var i = 1; i <= @ViewBag.RatingAverage; i++)
-                                    {
-                                        <span class="starGlowN"></span>
-                                    }
+                            {
+                                <span class="starGlowN"></span>
+                            }
                             @for (var i = (@ViewBag.RatingAverage + 1); i <= 5; i++)
-                                    {
-                                        <span class="starFadeN"></span>
-                                    }
-@*                            <i class="fa fa-star" aria-hidden="true"></i>
+                            {
+                                <span class="starFadeN"></span>
+                            }
+                            @* <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star-o" aria-hidden="true"></i>*@
                         </div>
-                        <a href="#" class="btn delicious-btn">For Begginers</a>
                     </div>
                 </div>
-
 
 
             </div>
@@ -133,16 +152,16 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     @for (int i = 0; i < @Model.Instructions.Count; i++)
-@*                        @foreach (var item in @Model.Instructions)*@
-                        {
-                            <div class="single-preparation-step d-flex">
+                    @*                        @foreach (var item in @Model.Instructions)*@
+                    {
+                        <div class="single-preparation-step d-flex">
                             <h4>@i</h4>
                             <p>@Model.Instructions[i].Step </p>
-                            </div>
-                        }
+                        </div>
+                    }
                 </div>
 
-                    @* <!-- Single Preparation Step -->
+                @* <!-- Single Preparation Step -->
                 <div class="single-preparation-step d-flex">
                 <h4>01.</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
@@ -169,15 +188,15 @@
                 <div class="ingredients">
                     <h4>Ingredients</h4>
                     @foreach (Ingredient item in @Model.Ingredients)
-                        {
+                    {
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id=@item.IngredientId>
                             <label class="custom-control-label" for=@item.RecipeId>@item.Amount @item.MeasurementUnit @item.Name</label>
                         </div>
-                        }
+                    }
 
                     <!-- Custom Checkbox -->
-                        @*<div class="custom-control custom-checkbox">
+                    @*<div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck1">
                     <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
                     </div>
@@ -227,173 +246,260 @@
             </div>
         </div>
 
-@*         <div class="row">
-            <div class="col-12">
-                <div class="section-heading text-left">
-                    <h3>Nutrients</h3>
-                </div>
-            </div>
+        @*         <div class="row">
+        <div class="col-12">
+        <div class="section-heading text-left">
+        <h3>Nutrients</h3>
+        </div>
+        </div>
         </div>
 
         This is if we would do a for loop for the nutrients table
         <div class="row">
-            <div class="col-12 col-lg-8">
-                @for (int i = 1; i < @ViewBag.Nutrients.Count; i++)
-                {
-                    <div class="single-preparation-step d-flex">
-                        <p>@ViewBag.Nutrients[i].Value @ViewBag.Nutrients[i].UnitName @ViewBag.Nutrients[i].Name  </p>
+        <div class="col-12 col-lg-8">
+        @for (int i = 1; i < @ViewBag.Nutrients.Count; i++)
+        {
+        <div class="single-preparation-step d-flex">
+        <p>@ViewBag.Nutrients[i].Value @ViewBag.Nutrients[i].UnitName @ViewBag.Nutrients[i].Name  </p>
+        </div>
+        }
+        </div>
+        *@
+        <div class="container">
+            <div class="row">
+                <div class="col-60">
+                    <div class="receipe-slider owl-carousel">
+                        @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
+                        {
+                            var a = ViewBag.nextRecipes[imgIndex].PhotoUrl;
+                            <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt="" width="20" height="20">
+                        }
+                        @*<img src="~/images/@Model.PhotoUrl" alt="">*@
+                        @*                    <img src="~/img/bg-img/bg5.jpg" alt=""> here i want to have the recommended recipes picture meanin take the model.PhotoUrl and display if clicked go to recipe post of pic- it will call the action of post
+                        <img src="~/img/bg-img/bg5.jpg" alt="">*@
                     </div>
-                }
+                </div>
             </div>
-*@
+        </div>
+
+
         <div class="col-12 col-lg-4">
-        <section class="performance-facts">
-            <header class="performance-facts__header">
-                <h1 class="performance-facts__title">Nutrition Facts</h1>
-                <p>Serving Size 1/2 cup (about 82g)
-                <p>Serving Per Container 8</p>
-            </header>
-            <table class="performance-facts__table">
-                <thead>
-                    <tr>
-                        <th colspan="3" class="small-info">
-                            Amount Per Serving
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="thick-row">
-                        <td colspan="3" class="small-info">
-                            <b>% Daily Value*</b>
-                        </td>
-                    </tr>
-                    @foreach (Nutrient.Root item in ViewBag.Nutrients)
+            <section class="performance-facts">
+                <header class="performance-facts__header">
+                    <h1 class="performance-facts__title">Nutrition Facts</h1>
+                    <p>Serving Size 1/2 cup (about 82g)
+                    <p>Serving Per Container 8</p>
+                </header>
+                <table class="performance-facts__table">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="small-info">
+                                Amount Per Serving
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="thick-row">
+                            <td colspan="3" class="small-info">
+                                <b>% Daily Value*</b>
+                            </td>
+                        </tr>
+                        @foreach (Nutrient.Root item in ViewBag.Nutrients)
                         {
                             <tr>
                                 <th colspan="2">
-                                    @if (item.Name.IndexOf("Carbohydrate")>0)
+                                    @if (item.Name.IndexOf("Carbohydrate") > 0)
                                     {
                                         <b>Carbohydrate</b>
                                     }
-                                    @if(item.Name.IndexOf("Sugar")>0)
+                                    @if (item.Name.IndexOf("Sugar") > 0)
                                     {
-                                         <b>Sugar</b>
+                                        <b>Sugar</b>
                                     }
-                                    @if (!(item.Name.IndexOf("Sugar") > 0) && !( item.Name.IndexOf("Carbohydrate") > 0))
+                                    @if (!(item.Name.IndexOf("Sugar") > 0) && !(item.Name.IndexOf("Carbohydrate") > 0))
                                     {
-                                    <b>@item.Name </b>
+                                        <b>@item.Name </b>
                                     }
-                                    
+
                                     @item.Value @item.UnitName
                                 </th>
                                 <td>
-                                    @if(item.DailyPercent!=null)
+                                    @if (item.DailyPercent != null)
                                     {
                                         <b>@item.DailyPercent %</b>
                                     }
                                 </td>
                             </tr>
                         }
-                    @*<tr>
+                        @*<tr>
                         <th colspan="2">
-                            <b>Calories</b>
-                            200
+                        <b>Calories</b>
+                        200
                         </th>
-                    </tr>
-                   
-                       <tr>
-                        <th colspan="2">
-                            <b>Total Fat</b>
-                            14g
-                        </th>
-                        <td>
-                            <b>22%</b>
-                        </td>
-                    </tr>
-                   
-                    <tr>
-                        <th colspan="2">
-                            <b>Cholesterol</b>
-                            55mg
-                        </th>
-                        <td>
-                            <b>18%</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            <b>Sodium</b>
-                            40mg
-                        </th>
-                        <td>
-                            <b>2%</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            <b>Total Carbohydrate</b>
-                            17g
-                        </th>
-                        <td>
-                            <b>6%</b>
-                        </td>
-                    </tr>
-                    <tr class="thick-end">
-                        <th colspan="2">
-                            <b>Protein</b>
-                            3g
-                        </th>
-                        <td>
-                        </td>
-                    </tr>*@
-                </tbody>
-            </table>
+                        </tr>
 
-           @* <table class="performance-facts__table--grid">
+                        <tr>
+                        <th colspan="2">
+                        <b>Total Fat</b>
+                        14g
+                        </th>
+                        <td>
+                        <b>22%</b>
+                        </td>
+                        </tr>
+
+                        <tr>
+                        <th colspan="2">
+                        <b>Cholesterol</b>
+                        55mg
+                        </th>
+                        <td>
+                        <b>18%</b>
+                        </td>
+                        </tr>
+                        <tr>
+                        <th colspan="2">
+                        <b>Sodium</b>
+                        40mg
+                        </th>
+                        <td>
+                        <b>2%</b>
+                        </td>
+                        </tr>
+                        <tr>
+                        <th colspan="2">
+                        <b>Total Carbohydrate</b>
+                        17g
+                        </th>
+                        <td>
+                        <b>6%</b>
+                        </td>
+                        </tr>
+                        <tr class="thick-end">
+                        <th colspan="2">
+                        <b>Protein</b>
+                        3g
+                        </th>
+                        <td>
+                        </td>
+                        </tr>*@
+                    </tbody>
+                </table>
+
+                @* <table class="performance-facts__table--grid">
                 <tbody>
-                    <tr>
-                        <td colspan="2">
-                            Vitamin A
-                            10%
-                        </td>
-                        <td>
-                            Vitamin C
-                            0%
-                        </td>
-                    </tr>
-                    <tr class="thin-end">
-                        <td colspan="2">
-                            Calcium
-                            10%
-                        </td>
-                        <td>
-                            Iron
-                            6%
-                        </td>
-                    </tr>
+                <tr>
+                <td colspan="2">
+                Vitamin A
+                10%
+                </td>
+                <td>
+                Vitamin C
+                0%
+                </td>
+                </tr>
+                <tr class="thin-end">
+                <td colspan="2">
+                Calcium
+                10%
+                </td>
+                <td>
+                Iron
+                6%
+                </td>
+                </tr>
                 </tbody>
-            </table>*@
+                </table>*@
+            </section>
 
-        </section>
-
-       
-
-        <div class="row">
-            <div class="col-12">
-                <div class="section-heading text-left">
-                    <h3>Leave a comment</h3>
+            <!-- Receipe Slider -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="receipe-slider owl-carousel">
+                            @foreach (var item in @Model.Images)
+                            {
+                                //       "~/images/0f5a4cf0-e5b1-4495-b1d8-b045eb72be19_bb91210bd6185d7119aaa54d4ca2f6c4.jpg"
+                                //<img src="~/images/0f5a4cf0-e5b1-4495-b1d8-b045eb72be19_bb91210bd6185d7119aaa54d4ca2f6c4.jpg">
+        @*                        if (@item.image.StartsWith("Http") == true)
+                                {
+                                    <img src=@item.image>
+                                }
+                                else
+                                {
+                                    <img src="~/images/"@item.image>
+                                }*@
+                            }                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+            <div class="col-md-14">
+                <form asp-action="Imagga" asp-controller="Home" enctype="multipart/form-data" method="post">
+                        <p class="control-p">We would like u to add ur own image:))</p>
+            
+                    <div class="form-group" hidden>
+                        <input asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageString" class="control-label">Upload url</label>
+                        <input asp-for="ImageString" class="form-control"pattern="https?://.+[a-z0-9._%+-]+[.jpg/.png]$" title="The link must be in url form. Must be of jpg or png type only!"/>
+                        <span asp-validation-for="ImageString" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageForm" class="control-label">Upload File</label>
+                        <input asp-for="ImageForm" type="file" class="form-control" />
+                        <span asp-validation-for="ImageForm" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <input asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <input asp-for="Tag" class="form-control" />
+                        <span asp-validation-for="Tag" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="submit" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading text-left">
+                        <h3>Leave a comment</h3>
+                    </div>
                 </div>
             </div>
         </div>
-       </div>
-@*        <div>
-            <span class="starFadeN" id="sRate1"></span>
-            <span class="starFadeN" id="sRate2"></span>
-            <span class="starFadeN" id="sRate3"></span>
-            <span class="starFadeN" id="sRate4"></span>
-            <span class="starFadeN" id="sRate5"></span>
+        @*        <div>
+        <span class="starFadeN" id="sRate1"></span>
+        <span class="starFadeN" id="sRate2"></span>
+        <span class="starFadeN" id="sRate3"></span>
+        <span class="starFadeN" id="sRate4"></span>
+        <span class="starFadeN" id="sRate5"></span>
         </div>*@
 
+
+        @*        <div class="btn delicious-btn">
+        @using (Html.BeginForm("Imagga", "Home", FormMethod.Post))
+        {
+        @Html.AntiForgeryToken()
+        <p>we would love u to upload ur Campuse-Made :))</p>
+        <input asp-for="ImageString" type="url" placeholder="enter image url" required />
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Name" />
+        <input type="hidden" asp-for="Tag" />
+        <input type="submit" id="btnImagga" />
+        }
+        </div>
+        *@
+        
+        </div>
+        <!--PICTURE OF CUSTOMER DISPLAY-->
         @foreach (var c in @Model.Comments)
         {
             <hr />
@@ -469,7 +575,7 @@
 
 
 <script>
-     //src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+    //src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
 
     function SubmitComment() {
         if ($("#Rating").val() == "0") {
@@ -516,7 +622,7 @@
         SCRate();
     });
 
-        
+
 </script>
 
 <style>
@@ -527,8 +633,8 @@
     }
 
     /* Override the default bootstrap behavior where horizontal description lists
-           will truncate terms that are too long to fit in the left column
-        */
+                           will truncate terms that are too long to fit in the left column
+                        */
     .dl-horizontal dt {
         white-space: normal;
     }
@@ -576,5 +682,28 @@
         min-height: 30px;
         display: inline-block;
     }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .closebtn:hover {
+            color: black;
+        }
 </style>
 

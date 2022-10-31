@@ -12,6 +12,14 @@ using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using static theFoodCampus.Models.Nutrient;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Data.SqlClient.Server;
+using System.IO;
+using RestSharp;
+using Nancy.Json;
+using Nancy;
+using NuGet.Protocol;
 
 namespace theFoodCampus.Controllers
 {
@@ -43,10 +51,10 @@ namespace theFoodCampus.Controllers
             if (HebCal.Holiday!=Holiday.None)
             {
                HolidayRecipes= _context.Recipes
-               .Include(e => e.Ingredients)
-               .Include(e => e.Instructions)
-               .Include(e => e.Comments)
-               .Where(e => e.RHoliday == HebCal.Holiday).ToList();
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
+                .Include(e => e.Comments)
+                .Where(e => e.RHoliday == HebCal.Holiday).ToList();
                 HeaderRecipes = HolidayRecipes;
             }
             else
@@ -114,7 +122,15 @@ namespace theFoodCampus.Controllers
 
         public IActionResult Contact()
         {
-            return View();
+            List<Recipe> recipes = _context.Recipes.ToList();
+            ViewBag.allRecipes = recipes.Count();
+            var countDesert = recipes.FindAll(e => e.RType == Category.Desert || e.RType == Category.CakeAndCookies).Count();
+            ViewBag.allDesert = countDesert;
+            var countMeat = recipes.FindAll(e => e.RType == Category.Meat).Count();
+            ViewBag.allMeat = countMeat;
+            var countDif = recipes.FindAll(e => e.RType == Category.CakeAndCookies).Count();
+            ViewBag.allDif = countDif;
+            return View(recipes);
         }
 
         public IActionResult thankyou()
@@ -128,7 +144,7 @@ namespace theFoodCampus.Controllers
         }
 
         [HttpGet]
-        public IActionResult Recipepost(int Id)
+        public IActionResult Recipepost(int Id, string alert="false")
         {
             // get me the exprencies from the detail table together with header table.
             // thi is called eager loading
@@ -137,19 +153,22 @@ namespace theFoodCampus.Controllers
                 .Include(e => e.Ingredients)
                 .Include(e => e.Instructions)
                 .Include(e => e.Comments)
+                .Include(e => e.Images)
                 .Where(e => e.Id == Id).FirstOrDefault();
 
             var UsdaModel = new UsdaAdapter();
             var myJsonNutrients = UsdaModel.Check(recipe.Tag);// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            var list = JsonConvert.DeserializeObject<List<Nutrient.Root>>(myJsonNutrients);
+            List<Nutrient.Root> list = null;
+            if (myJsonNutrients != null)
+                list = JsonConvert.DeserializeObject<List<Nutrient.Root>>(myJsonNutrients);
             ViewBag.Nutrients = list;
 
             var comments = recipe.Comments;
 
             if (comments.Count() > 0)
             {
-                var sum= comments.Sum(d => d.Rating);
-                var count= comments.Count();
+                var sum = comments.Sum(d => d.Rating);
+                var count = comments.Count();
                 ViewBag.RatingSum = sum;
                 ViewBag.RatingCount = count; ;
                 ViewBag.RatingAverage = recipe.Rating;
@@ -163,10 +182,76 @@ namespace theFoodCampus.Controllers
                 ViewBag.RatingSum = 0;
                 ViewBag.RatingCount = 0;
             }
+           ViewBag.alert = alert;
             return View(recipe);
             // return View("RecipePost",recipe);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Imagga([Bind("Id,Name,Tag,ImageForm,ImageString")] Recipe recipe)
+        {
+            ImaggaData data;
+            if (recipe.ImageForm != null || recipe.ImageString != null)
+            {
+                if (recipe.ImageForm != null)
+                {
+                    string pathToImagga = @"wwwroot/images/";
+                    string nameImage = uploadImage(recipe.ImageForm);
+                    recipe.ImageString =nameImage;
+                    string imageId = uploadImagga(pathToImagga + nameImage);
+                    data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
+
+                }
+                else
+                {
+                    data = new ImaggaData() { ImageUrl = recipe.ImageString, Title = recipe.Tag };
+                }
+                var currentModel = new ImaggaAdapter();
+                string ImaggaResult = currentModel.Check(data);
+                if (ImaggaResult == "true")
+                    return RedirectToAction("AddImage", "Home", recipe);
+                else
+                {
+                    return RedirectToAction("RecipePost", "Home", new { recipe.Id, alert = "true" });
+                }
+            }
+            return RedirectToAction("RecipePost", "Home", new { recipe.Id, alert = "true" });
+        }
+
+        private string uploadImagga(string path)
+        {
+            string apiKey = "acc_4858251230dcb88";
+            string apiSecret = "c2f19534f3e9c73697368ef9cfe0cae1";
+
+            string basicAuthValue = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", apiKey, apiSecret)));
+
+            var client = new RestClient("https://api.imagga.com/v2/uploads");
+
+            var request = new RestRequest(new Uri("https://api.imagga.com/v2/uploads"), Method.Post);
+            request.AddHeader("Authorization", String.Format("Basic {0}", basicAuthValue));
+            request.AddFile("image", path);
+
+            RestResponse response = client.Execute(request);
+            String[] spearator = { "{", "}", "," ,":{", "},","}}",":",@"\" ,@"'\","\""};
+            var json = response.Content.ToJson();
+            var result = json.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
+            return result[2];           
+        }
+
+        public ActionResult AddImage(Recipe recipe)
+        {
+            RecipeImage image = new()
+            {
+                RecipeId = recipe.Id,
+                image = recipe.ImageString
+                //file
+
+            };
+            _context.Images.Add(image);
+            _context.SaveChanges();
+            return RedirectToAction("RecipePost", "Home", new { id = recipe.Id });
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -198,8 +283,8 @@ namespace theFoodCampus.Controllers
             sum = sum + recipe.Rating;
             count++;
             recipe.Rating = sum / count;
-                _context.Attach(recipe);
-                _context.Entry(recipe).State = EntityState.Modified;
+            _context.Attach(recipe);
+            _context.Entry(recipe).State = EntityState.Modified;
 
             _context.Comments.Add(artComment);
             _context.SaveChanges();
@@ -210,8 +295,6 @@ namespace theFoodCampus.Controllers
         [HttpPost]
         public IActionResult RecipePost(Recipe recipe)
         {
-
-
 
             //This is for editing
 
@@ -247,13 +330,20 @@ namespace theFoodCampus.Controllers
 
             if (recipe.ProfilePhoto != null)
             {
-                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + recipe.ProfilePhoto.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    recipe.ProfilePhoto.CopyTo(fileStream);
-                }
+                uniqueFileName = uploadImage(recipe.ProfilePhoto);
+            }
+            return uniqueFileName;
+        }
+
+        private string uploadImage(IFormFile image)
+        {
+            string uniqueFileName;
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "images");
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                image.CopyTo(fileStream);
             }
             return uniqueFileName;
         }
@@ -261,7 +351,7 @@ namespace theFoodCampus.Controllers
         [HttpGet]// emtpy structure so that the user can fill in the details
         public IActionResult Create()
         {
-            Recipe recipe = new Recipe();
+            Recipe recipe = new();
             recipe.Ingredients.Add(new Ingredient() { IngredientId = 1 });
             recipe.Instructions.Add(new Instruction() { Id = 1, });
             return View(recipe);
@@ -282,9 +372,6 @@ namespace theFoodCampus.Controllers
             return RedirectToAction("index");
 
         }
-
-      
-
 
         public IActionResult Privacy()
         {
