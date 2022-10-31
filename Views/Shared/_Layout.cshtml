@@ -243,10 +243,10 @@
                                             </div>*@
                                         </div>
                                     </li>
-                                    <li><a href="@Url.Action("RecipePost", "Home")">Receipies</a></li>
-                                    <li><a href="@Url.Action("RecipePost", "Home")">4 Vegans</a></li>
+                                    <li><a href="@Url.Action("Recipes", "Home")">Recipes</a></li>
                                     <li><a href="@Url.Action("Contact", "Home")#open_here">Contact</a></li>
                                     <li><a href="@Url.Action("Contact", "Home")">About</a></li>
+                                    <li><a href="@Url.Action("Index", "Login")">Admin</a></li>
                                 </ul>
 
                                 <!-- Newsletter Form -->
@@ -513,13 +513,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 
     <!-- ##### All Javascript 
     Files ##### -->
     <!-- jQuery-2.2.4 js -->
 @*    for some reason when adding this script than the automatino doesn't work'*@
-@*    <script src="~/js/jquery/jquery-2.2.4.min.js"></script>*@
+    <script src="~/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="~/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->

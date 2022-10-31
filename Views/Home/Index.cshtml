@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Post))
 {
@@ -13,8 +13,8 @@
     <br />
     <br />
     @ViewBag.Message
-}
-@section scripts{
+}*@
+@*@section scripts{
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -46,7 +46,7 @@
         });
     </script>
 }
-
+*@
 <!-- ##### Hero Area Start ##### -->
 <section class="hero-area">
     <div class="hero-slides owl-carousel">
@@ -329,7 +329,45 @@
 </section>
 <!-- ##### CTA Area End ##### -->
 <!-- ##### Small Receipe Area Start ##### -->
+
 <section class="small-receipe-area section-padding-80-0">
+    <div class="container">
+        <div class="row">
+            <p>@ViewBag.Category</p>
+            @for (int i = 0; i < @Model.Count(); i++)
+            {
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="~/images/@Model[i].PhotoUrl" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>@Model[i].Rdifficulty</span>
+                            <a href="@Url.Action("RecipePost", "Home",new {id = Model[i].Id})">
+                                <h5>@Model[i].Name</h5>
+                            </a>
+                            <div class="ratings">
+                                @for (var j = 1; j <= @Model[i].Rating; j++)
+                                {
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                }
+                                @for (var j = (@Model[i].Rating + 1); j <= 5; j++)
+                                {
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                }
+                            </div>
+                            <p>@Model[i].Comments.Count() Comments</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+@*<section class="small-receipe-area section-padding-80-0">
     <div class="container">
         <div class="row">
 
@@ -559,7 +597,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- ##### Small Receipe Area End ##### -->
 <!-- ##### Quote Subscribe Area Start ##### -->
 <section class="quote-subscribe-adds">
@@ -578,25 +616,21 @@
                 </div>
             </div>
 
-            <!-- send a recipe -->
+            <!-- Advertizment -->
             <div class="col-12 col-lg-4">
-                <div class="newsletter-area">
-                    <h4>Send us a recipe :) </h4>
-                    <!-- Form -->
-                    <div class="newsletter-form bg-img bg-overlay" style="background-image: url(img/bg-img/bg1.jpg);">
-                        <form action="http://formsubmit.co/foodcampuse.recipe@gmail.com" method="POST">
-                            <input type="file" id="txt" name="txt" placeholder="type here ur amazing recipe" cols="30" rows="10">
-                            <button type="submit" class="btn delicious-btn w-100">SEND</button>
-                        </form>
-                        <p>Send us recipes and our team will review and upload them to the Food Campus</p>
-                    </div>
+                <div class="delicious-add">
+                    <a href="https://milgapo.co.il/">
+                        <img src="~/img/bg-img/milgaA.jpg" alt="">
+                    </a>
                 </div>
             </div>
 
-            <!-- Adds -->
+            <!-- Advertizment -->
             <div class="col-12 col-lg-4">
                 <div class="delicious-add">
-                    <img src="~/img/bg-img/add.png" alt="">
+                    <a href="https://www.bookdepository.com/Grokking-Algorithms-Aditya-Bhargava/9781617292231?redirected=true&utm_medium=Google&utm_campaign=Base1&utm_source=IL&utm_content=Grokking-Algorithms&selectCurrency=ILS&w=AFF9AU96SQH6ZVA8VTKG&gclid=Cj0KCQjwnvOaBhDTARIsAJf8eVNrhiuKGgMkD1R8em08DL1BmZNQcQPQr6f3XD6BGwyU1edC05VJlY8aAkAOEALw_wcB">
+                        <img src="~/img/bg-img/algorithm!.jpg" alt="">
+                    </a>
                 </div>
             </div>
         </div>

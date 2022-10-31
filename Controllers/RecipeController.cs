@@ -27,7 +27,7 @@ namespace theFoodCampus.Controllers
         {
             Recipe recipe = new Recipe();
             recipe.Ingredients.Add(new Ingredient() { IngredientId = 1 });
-            recipe.Instructions.Add(new Instruction() { Id= 1, });
+            recipe.Instructions.Add(new Instruction() { Id = 1, });
             return View(recipe);
         }
 
@@ -39,7 +39,7 @@ namespace theFoodCampus.Controllers
             recipe.Ingredients.RemoveAll(n => n.IsDeleted == true);
 
             string uniqueFileName = GetUploadedFileName(recipe);
-           recipe.PhotoUrl = uniqueFileName;
+            recipe.PhotoUrl = uniqueFileName;
 
             _context.Add(recipe);
             _context.SaveChanges();
@@ -70,8 +70,10 @@ namespace theFoodCampus.Controllers
             // get me the exprencies from the detail table together with header table.
             // thi is called eager loading
             // there is eager lazy and explicit loading.
-            Recipe recipe = _context.Recipes.Include(e => e.Ingredients)
-                .Where(e => e.Id == Id).FirstOrDefault();
+            Recipe recipe = _context.Recipes
+               .Include(e => e.Ingredients)
+               .Include(e => e.Instructions)
+               .Where(e => e.Id == Id).FirstOrDefault();
             return View(recipe);
         }
 
@@ -81,9 +83,11 @@ namespace theFoodCampus.Controllers
             // get me the exprencies from the detail table together with header table.
             // thi is called eager loading
             // there is eager lazy and explicit loading.
-            Recipe recipes = _context.Recipes.Include(e => e.Ingredients)
-                .Where(e => e.Id == Id).FirstOrDefault();
-            return View(recipes);
+            Recipe recipe = _context.Recipes
+               .Include(e => e.Ingredients)
+               .Include(e => e.Instructions)
+               .Where(e => e.Id == Id).FirstOrDefault();
+            return View(recipe);
         }
 
         [HttpPost]
@@ -117,10 +121,17 @@ namespace theFoodCampus.Controllers
             _context.Ingredients.RemoveRange(expDetials);
             _context.SaveChanges();
 
+
+            List<Instruction> instDetails = _context.Instructions.Where(d => d.ReceipeId == recipe.Id).ToList();
+            _context.Instructions.RemoveRange(instDetails); // we delete it from the  list
+            _context.SaveChanges();//update to database.
+
             // not to save double ingredients when editing
             recipe.Ingredients.RemoveAll(n => n.Name == "");
             // in order not to delete all lines when delteing lower rows
             recipe.Ingredients.RemoveAll(n => n.IsDeleted == true);
+            recipe.Instructions.RemoveAll(n => n.IsHidden == true);
+
             if (recipe.ProfilePhoto != null) // he updates the image so therefore we update it to the root
             {
 
@@ -133,7 +144,9 @@ namespace theFoodCampus.Controllers
             // this in is inorder not to save twice.
             _context.Attach(recipe);
             _context.Entry(recipe).State = EntityState.Modified;
+
             _context.Ingredients.AddRange(recipe.Ingredients);
+            _context.Instructions.AddRange(recipe.Instructions);
             _context.SaveChanges();
             return RedirectToAction("index");
 

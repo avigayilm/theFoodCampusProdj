@@ -1,42 +1,53 @@
 ﻿@using theFoodCampus.Models
 @model theFoodCampus.Models.Recipe
-
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+@*<!-- Favicon -->
+<link rel="icon" href="~/img/core-img/favicon.ico">
 
-<h4>Recipe</h4>
-<hr />
-<div class="col-11 mx-auto pt-0">
-    <div class="card">
-        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
-            <h4>Create Applicant</h4>
-        </div>
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">*@
 
-        <form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Create">
-          <div class="row">
-                <div class=col-md-6>
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="RKashrut" class="control-label"></label>
-                    <select asp-for="RKashrut" class="form-control" asp-items="Html.GetEnumSelectList<Kashrut>()">
-                        <option value="">Choose out of following options</option>
-                    </select>
-                    <span asp-validation-for="RKashrut" class="text-danger"></span>
+<!-- ##### Breadcumb Area Start ##### -->
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-text text-center">
+                    <h2>Add Recipe</h2>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcumb Area End ##### -->
 
-          <div class="col-md-6">
+
+<form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Create">
+    <div class="row">
+        <div class=col-md-6>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RKashrut" class="control-label"></label>
+                <select asp-for="RKashrut" class="form-control" asp-items="Html.GetEnumSelectList<Kashrut>()">
+                    <option value="">Choose out of following options</option>
+                </select>
+                <span asp-validation-for="RKashrut" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Rdifficulty" class="control-label"></label>
                 <select asp-for="Rdifficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
@@ -44,9 +55,9 @@
                 </select>
                 <span asp-validation-for="Rdifficulty" class="text-danger"></span>
             </div>
-           </div>
+        </div>
 
-          <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="RPrepTime" class="control-label"></label>
                 <select asp-for="RPrepTime" class="form-control" asp-items="Html.GetEnumSelectList<PrepTime>()">
@@ -54,8 +65,8 @@
                 </select>
                 <span asp-validation-for="RPrepTime" class="text-danger"></span>
             </div>
-           </div>
-          <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="RHoliday" class="control-label"></label>
                 <select asp-for="RHoliday" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
@@ -63,8 +74,8 @@
                 </select>
                 <span asp-validation-for="RHoliday" class="text-danger"></span>
             </div>
-           </div>
-          <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="REvent" class="control-label"></label>
                 <select asp-for="REvent" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
@@ -73,7 +84,7 @@
                 <span asp-validation-for="REvent" class="text-danger"></span>
             </div>
         </div>
-          <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="RWeather" class="control-label"></label>
                 <select asp-for="RWeather" class="form-control" asp-items="Html.GetEnumSelectList<Weather>()">
@@ -82,7 +93,7 @@
                 <span asp-validation-for="RWeather" class="text-danger"></span>
             </div>
         </div>
-         <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="RType" class="control-label"></label>
                 <select asp-for="RType" class="form-control" asp-items="Html.GetEnumSelectList<Category>()">
@@ -92,7 +103,7 @@
             </div>
         </div>
 
-          <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="RDiet" class="control-label"></label>
                 <select asp-for="RDiet" class="form-control" asp-items="Html.GetEnumSelectList<Diet>()">
@@ -102,7 +113,7 @@
             </div>
         </div>
 
-          <div class="col-md-6">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="RBudget" class="control-label"></label>
                 <select asp-for="RBudget" class="form-control" asp-items="Html.GetEnumSelectList<Budget>()">
@@ -111,28 +122,40 @@
                 <span asp-validation-for="RBudget" class="text-danger"></span>
             </div>
         </div>
-                <div class="col-md-6 group">
-                    <div class="form-group col-8 p-0">
-                        <label asp-for="ProfilePhoto" class="control-label"></label>
-                        <div class="customfile"></div>
-                        <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile"
-                               onchange="document.getElementById('PreviewPhoto').src=window.URL.createObjectURL(this.files[0])" />
-                        <label class="custome-file-label" for="customFile">ChooseFile</label>
-                        <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
-                    </div>
 
-                    <div class="form-group col-4">
-                        <img id="PreviewPhoto" src="~/Images/images.png" alt="Logo Image"
-                             width="125" height="125" style="border:1px; margin-top:20px; " />
-                    </div>
-                </div>
+        <div class=col-md-6>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tag" class="control-label"></label>
+                <input asp-for="Tag" class="form-control" />
+                <span asp-validation-for="Tag" class="text-danger"></span>
+            </div>
+        </div>
 
-     @*       <div class="form-group">
-                <label asp-for="PhotoUrl" class="control-label"></label>
-                <input asp-for="PhotoUrl" class="form-control" />
-                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
-            </div>*@
+        <div class="col-md-6 group">
+            <div class="form-group col-8 p-0">
+                <label asp-for="ProfilePhoto" class="control-label"></label>
+                <div class="customfile"></div>
+                <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile"
+                       onchange="document.getElementById('PreviewPhoto').src=window.URL.createObjectURL(this.files[0])" />
+                <label class="custome-file-label" for="customFile">ChooseFile</label>
+                <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
+            </div>
 
+            <div class="form-group col-4">
+                <img id="PreviewPhoto" src="~/Images/noimage.png" alt="Logo Image"
+                     width="200" height="200" style="border:1px; margin-top:20px; " />
+            </div>
+        </div>
+
+        @*       <div class="form-group">
+        <label asp-for="PhotoUrl" class="control-label"></label>
+        <input asp-for="PhotoUrl" class="form-control" />
+        <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+        </div>*@
+
+        <div class="container col-12 btn-group">
+            <div class="container col-6 pl-0 lm-0">
 
                 <div class="col-md-12 p-0 m-0 bg-light" @*style="height:200px; overflow-y:auto;"*@>
                     <table id="ExpTable" class="table table-sm CodesTable">
@@ -174,13 +197,13 @@
                                         @*<input asp-for="@item.Designation" class="form-control" />*@
                                     </td>
                                     <td>
-                                       @* <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />*@
+                                        @* <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />*@
                                         @*@Html.EditorFor(x=>x.Experiences[i].YearsWorked,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
                                         <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />
                                         <select asp-for="@Model.Ingredients[i].MeasurementUnit" class="form-control" asp-items="Html.GetEnumSelectList<MeasurementType>()">
-                                             <option value="">Choose out of following options</option>
-                                            </select>
-                                         @*<input asp-for="@item.YearsWorked" class="form-control" />*@
+                                            <option value="">Choose out of following options</option>
+                                        </select>
+                                        @*<input asp-for="@item.YearsWorked" class="form-control" />*@
                                     </td>
                                     <td style="width:60px">
                                         @* <button id="btndummy-@i" type="button" class="btn btn-sm invisible">
@@ -198,31 +221,217 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
 
+            @* add empty colum in the middle in order to have space in the middle*@
+            <div class="container col-1">
+            </div>
 
-                @*to fix issue that last column is cloned*@
-                @*here we will store the index of the last row*@
-
-                <input type="hidden" id="hdnLastIndex" value="0" />
-
-                <div class="col-12 btn-group">
-                    <div class="col-6 form-check-group text-right p-2">
-                        <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
-                    </div>
-                </div>
-                <div class="col-6 form-check group text-left p-2">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="container col-5">
+                <div class="col-md-12 p-0 m-0 bg-light">
+                    <table id="InstructionTable" class="table table-sm CodesTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Step
+                                </th>
+                                <th>
+                                    Instruction
+                                </th>
+                                <th style="width:60px">
+                                    <button id="btnAddInstruction" type="button" class="btn btn-sm btn-secondary visible"
+                                            onclick="AddItem(this)">
+                                        Add
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Instructions.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <div>0@(i + 1)</div>
+                                    </td>
+                                    <td>
+                                        <input type="hidden" asp-for="@Model.Instructions[i].IsHidden" />
+                                        <input asp-for="@Model.Instructions[i].Step" class="form-control" />
+                                    </td>
+                                    <td style="width:60px">
+                                        <button id="btnRemoveInst-@i" type="button" class="btn btn-sm btn-danger visible"
+                                            onclick="DeleteItem(this)">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </form>
+
+        </div>
+
+
+
+
+        @*to fix issue that last column is cloned*@
+        @*here we will store the index of the last row*@
+
+        <input type="hidden" id="hdnLastIndex" value="0" />
+
+        <div class="col-12 btn-group">
+            <div class="col-6 form-check-group text-right p-2">
+                <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
+            </div>
+        </div>
+        <div class="col-6 form-check group text-left p-2">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+
     </div>
-</div>
+</form>
 
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
+
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings("custom-file-label").addClass(selected).html(fileName);
+        });
+
+        //function CalcTotalExperiences() {
+        //    var x = document.getElementsByClassName('YearsWorked');
+        //    var totalExp = 0;
+        //    var i;
+        //    for (i = 0; i < x.length(); i++) {
+        //        totalExp = totalExp + eval(x[i].value);
+        //    }
+        //    document.getElementById('TotalExperience').ariaValueMax = totalExp;
+        //    return;
+        //}
+
+        //document.addEventListener('change', function (e)
+        //{
+        //    if (e.target.classList.contains('YearsWorked')) {
+        //        CalcTotalExperiences();
+        //    }
+        //}
+        //    , false);
+
+
+        function DeleteItem(btn) {
+            //to prevent user from deleting first row
+            var table = document.getElementById('ExpTable');
+
+            if (btn.id.indexOf("Inst") > 0)
+                table = document.getElementById('InstructionTable');
+            else
+                table = document.getElementById('ExpTable');
+
+            var rows = table.getElementsByTagName('tr');
+            if (rows.length == 2)// 2 because header is also considered a row
+            {
+                alert("This row Cannot be Deleted ");
+                return;
+            }
+            var btnIdx = btn.id.replaceAll('btnremove-', '');
+            /* var idOfIsDeleted = btnIdx + "__IsDeleted";*/
+
+            if (btn.id.indexOf("Inst") > 0)
+                btnIdx = btn.id.replaceAll('btnRemoveInst-', '');
+
+            var idOfIsDeleted = btnIdx + "__IsDeleted";
+
+            if (btn.id.indexOf("Inst") > 0)
+                idOfIsDeleted = btnIdx + "__IsHidden";
+
+
+            var hidIsDelId = document.querySelector("[id$='" + idOfIsDeleted + "']").id;
+            document.getElementById(hidIsDelId).value = "true";
+
+            //  $(btn).closest('tr').remove();
+            $(btn).closest('tr').hide(); // we dont actually delete the row but it will hide
+            CalcTotalExperiences()
+        }
+
+        function AddItem(btn) {
+
+            var table = document.getElementById('ExpTable');// we gave the table an id
+
+            if (btn.id == 'btnAddInstruction')
+                table = document.getElementById('InstructionTable');
+            else
+                table = document.getElementById('ExpTable');
+
+
+            var rows = table.getElementsByTagName('tr'); //we get the rows of the table
+
+            var rowOuterHtml = rows[rows.length - 1].outerHTML; //the last row, but we are clonign last row, whci gives them all same id
+
+            // teh follwing lines save the solution
+            var lastrowIdx = rows.length - 2//document.getElementById('hdnLastIndex').value;
+
+            var nextrowIdx = eval(lastrowIdx) + 1;// incrementing the index so that it won't stay by the last row
+
+            //document.getElementById('hdnLastIndex').value = nextrowIdx;
+
+            // rowouterHtml holds the source of the last row of the table
+            // so we are replacing the old index with the new index
+            rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+            rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+            rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+            // then we attach the new row to the table
+            var newRow = table.insertRow();
+            newRow.innerHTML = rowOuterHtml;
+
+            //// this will show the add and delete buttons at the right time
+            //var btnAddID=btn.id;
+            //var btnDeleteid=btnAddID.replace('btnadd', 'btnremove');
+
+            //var delbtn=document.getElementById(btnDeleteid);
+            //delbtn.classList.add("visible");
+            //delbtn.classList.remove("invisible");
+
+            //var addbtn=document.getElementById(btnAddID);
+            //addbtn.classList.remove("visible");
+            //addbtn.classList.add("invisible");
+
+            // in order when cloning, that the cloned line is empty
+            var x = document.getElementsByTagName("input");
+
+            for (var cnt = 0; cnt < x.length; cnt++) {
+                if (x[cnt].type == "text" && x[cnt].id.indexOf('_' + nextRowIdx + '_') > 0)// check if it is a textcontorl
+                    x[cnt].value = ' ';
+                else if (x[cnt].type == "number" && x[cnt].id.indexOf('_' + nextrowIdx + '_') > 0)// check if it is a textcontorl
+                    x[cnt].value = ' ';
+            }
+
+            rebindvalidators(); // in order to add validation to dynaimcally added buttons.
+
+        }
+
+        // in order for validation to work on dynamically made fields by javascript
+        function rebindvalidators() {
+            var $form = $("#ApplicantForm"); // reference of form by id
+            $form.unbind();// reomve all contorls
+            $form.data("validator", null); // clear all validator
+            $.validator.unobtrusive.parse($form);// add validators again
+            $form.validate($form.data("unobtrusiveValidation").options); // rebind it to the js ploding
+        }
+
+    </script>
+
+    }
+

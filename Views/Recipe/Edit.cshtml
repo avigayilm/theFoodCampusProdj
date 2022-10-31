@@ -113,6 +113,17 @@
                 <span asp-validation-for="RBudget" class="text-danger"></span>
             </div>
         </div>
+
+        <div class=col-md-6>
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag" class="control-label"></label>
+                <input asp-for="Tag" class="form-control" />
+                <span asp-validation-for="Tag" class="text-danger"></span>
+            </div>
+        </div>
                 <div class="col-md-6 group">
                     <div class="form-group col-8 p-0">
                         <label asp-for="ProfilePhoto" class="control-label"></label>
@@ -123,9 +134,10 @@
                         <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group col-4">
+                    <div class="col-4"></div>
+                    <div class="form-group col-12 justify-content-center align middle"">
                         <img id="PreviewPhoto" src="~/Images/@Model.PhotoUrl" alt="Logo Image"
-                             width="125" height="125" style="border:1px; margin-top:20px; " />
+                             width="200" height="200" style="border:1px; margin-top:20px; " />
                     </div>
                 </div>
 
@@ -136,81 +148,134 @@
             </div>*@
 
 
-                <div class="col-md-12 p-0 m-0 bg-light" @*style="height:200px; overflow-y:auto;"*@>
-                    <table id="ExpTable" class="table table-sm CodesTable">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Ingredient Name
-                                </th>
-                                <th>
-                                    Amount
-                                </th>
-                                <th>
-                                    MeasurementType
-                                </th>
-                                <th style="width:75px;">
-                                    <button id="btnaddExperiences" type="button" class="btn btn-sm btn-secondary visible"
-                                            onclick="AddItem(this)">
-                                        Add
-                                    </button>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*@foreach (var item in Model.Experiences)*@
-                            @for (int i = 0; i < Model.Ingredients.Count; i++)
-                            {
+            <div class="container col-12 btn-group">
+                <div class="container col-6 pl-0 lm-0">
+
+                    <div class="col-md-12 p-0 m-0 bg-light" @*style="height:200px; overflow-y:auto;"*@>
+                        <table id="ExpTable" class="table table-sm CodesTable">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @*@Html.EditorFor(x=>x.Experiences[i].CompanyName,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
-                                        <input asp-for="@Model.Ingredients[i].Name" class="form-control" />
-                                        <span asp-validation-for="@Model.Ingredients[i].Name" class="text-danger"></span>
-
-                                        @*<input asp-for="@item.CompanyName" class="form-control" />*@
-                                    </td>
-                                    <td>
-                                        @*@Html.EditorFor(x=>x.Experiences[i].Designation,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
-                                        <input asp-for="@Model.Ingredients[i].Amount" class="form-control" />
-
-                                        @*<input asp-for="@item.Designation" class="form-control" />*@
-                                    </td>
-                                    <td>
-                                       @* <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />*@
-                                        @*@Html.EditorFor(x=>x.Experiences[i].YearsWorked,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
-                                        <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted"/>
-                                        <select asp-for="@Model.Ingredients[i].MeasurementUnit" class="form-control" asp-items="Html.GetEnumSelectList<MeasurementType>()">
-                                             <option value="">Choose out of following options</option>
-                                            </select>
-                                         @*<input asp-for="@item.YearsWorked" class="form-control" />*@
-                                    </td>
-                                    <td style="width:60px">
-                                        @* <button id="btndummy-@i" type="button" class="btn btn-sm invisible">
-                                    Dummy
-                                    </button>*@
-
-                                        <button id="btnremove-@i" type="button" class="btn btn-sm btn-danger visible"
-                                            onclick="DeleteItem(this)">
-                                            Delete
+                                    <th>
+                                        Ingredient Name
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+                                    <th>
+                                        MeasurementType
+                                    </th>
+                                    <th style="width:75px;">
+                                        <button id="btnaddExperiences" type="button" class="btn btn-sm btn-secondary visible"
+                                                onclick="AddItem(this)">
+                                            Add
                                         </button>
-
-                                    </td>
+                                    </th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                        @*@foreach (var item in Model.Experiences)*@
+                        @for (int i = 0; i < Model.Ingredients.Count; i++)
+                        {
+                                    <tr>
+                                        <td>
+                                    @*@Html.EditorFor(x=>x.Experiences[i].CompanyName,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                            <input asp-for="@Model.Ingredients[i].Name" class="form-control" />
+                                            <span asp-validation-for="@Model.Ingredients[i].Name" class="text-danger"></span>
+
+                                    @*<input asp-for="@item.CompanyName" class="form-control" />*@
+                                        </td>
+                                        <td>
+                                    @*@Html.EditorFor(x=>x.Experiences[i].Designation,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                            <input asp-for="@Model.Ingredients[i].Amount" class="form-control" />
+
+                                    @*<input asp-for="@item.Designation" class="form-control" />*@
+                                        </td>
+                                        <td>
+                                    @* <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />*@
+                                    @*@Html.EditorFor(x=>x.Experiences[i].YearsWorked,new{AddHtmlAttributeValue=new{@class="form-control"}})*@
+                                            <input type="hidden" asp-for="@Model.Ingredients[i].IsDeleted" />
+                                            <select asp-for="@Model.Ingredients[i].MeasurementUnit" class="form-control" asp-items="Html.GetEnumSelectList<MeasurementType>()">
+                                                <option value="">Choose out of following options</option>
+                                            </select>
+                                    @*<input asp-for="@item.YearsWorked" class="form-control" />*@
+                                        </td>
+                                        <td style="width:60px">
+                                    @* <button id="btndummy-@i" type="button" class="btn btn-sm invisible">
+                                        Dummy
+                                        </button>*@
+
+                                            <button id="btnremove-@i" type="button" class="btn btn-sm btn-danger visible"
+                                                onclick="DeleteItem(this)">
+                                                Delete
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                        }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
+        @* add empty colum in the middle in order to have space in the middle*@
+                <div class="container col-1">
+                </div>
 
-                @*to fix issue that last column is cloned*@
-                @*here we will store the index of the last row*@
-
-                <input type="hidden" id="hdnLastIndex" value="0" />
-
-                <div class="col-12 btn-group">
-                    <div class="col-6 form-check-group text-right p-2">
-                        <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
+                <div class="container col-5">
+                    <div class="col-md-12 p-0 m-0 bg-light">
+                        <table id="InstructionTable" class="table table-sm CodesTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Step
+                                    </th>
+                                    <th>
+                                        Instruction
+                                    </th>
+                                    <th style="width:60px">
+                                        <button id="btnAddInstruction" type="button" class="btn btn-sm btn-secondary visible"
+                                                onclick="AddItem(this)">
+                                            Add
+                                        </button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        @for (int i = 0; i < Model.Instructions.Count; i++)
+                        {
+                                    <tr>
+                                        <td>
+                                            <div>0@(i + 1)</div>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" asp-for="@Model.Instructions[i].IsHidden" />
+                                            <input asp-for="@Model.Instructions[i].Step" class="form-control" />
+                                        </td>
+                                        <td style="width:60px">
+                                            <button id="btnRemoveInst-@i" type="button" class="btn btn-sm btn-danger visible"
+                                                onclick="DeleteItem(this)">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                        }
+                            </tbody>
+                        </table>
                     </div>
+                </div>
+
+            </div>
+
+
+    @*to fix issue that last column is cloned*@
+    @*here we will store the index of the last row*@
+
+            <input type="hidden" id="hdnLastIndex" value="0" />
+ 
+
+            <div class="col-12 btn-group p-0 m-0">
+                <div class="col-6 form-check-group text-right p-2">
+                    <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
                 </div>
                 <div class="col-6 form-check group text-left p-2">
                     <input type="submit" value="Save" class="btn btn-primary" />

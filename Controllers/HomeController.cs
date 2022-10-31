@@ -12,6 +12,7 @@ using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using static theFoodCampus.Models.Nutrient;
+using System.Diagnostics.Metrics;
 
 namespace theFoodCampus.Controllers
 {
@@ -33,28 +34,36 @@ namespace theFoodCampus.Controllers
             HebCalData.Root HebCal=ShowHoliday();
             WeatherData.Root Weather=ShowWeather();
             List<Recipe> recipes;
-            List<Recipe> WeatherRecipes = _context.Recipes
+            List<Recipe> WeatherRecipes=null;
+            if (Weather != null)
+            {
+                WeatherRecipes = _context.Recipes
     .Include(e => e.Ingredients)
     .Include(e => e.Instructions)
     .Include(e => e.Comments)
     .Where(e => e.RWeather == Weather.WeatherFeel).ToList();
+            }
             List<Recipe> HolidayRecipes;
-            List<Recipe> HeaderRecipes;
-            if (HebCal.Holiday!=Holiday.None)
+            List<Recipe> HeaderRecipes = null;
+            if (HebCal != null)
             {
-               HolidayRecipes= _context.Recipes
-               .Include(e => e.Ingredients)
-               .Include(e => e.Instructions)
-               .Include(e => e.Comments)
-               .Where(e => e.RHoliday == HebCal.Holiday).ToList();
-                HeaderRecipes = HolidayRecipes;
-            }
-            else
-            {
-                HeaderRecipes = WeatherRecipes;
-            }
+                if (HebCal.Holiday != Holiday.None)
+                {
+                    HolidayRecipes = _context.Recipes
+                    .Include(e => e.Ingredients)
+                    .Include(e => e.Instructions)
+                    .Include(e => e.Comments)
+                    .Where(e => e.RHoliday == HebCal.Holiday).ToList();
+                    HeaderRecipes = HolidayRecipes;
+                }
+                else
+                {
+                    HeaderRecipes = WeatherRecipes;
+                }
+                ViewBag.Hebdate = HebCal.HebrewDate;
+            }       
             recipes = _context.Recipes.ToList();
-            ViewBag.Hebdate=HebCal.HebrewDate;
+            ViewBag.list = _context.Recipes.Select(x => x.Name).ToArray();
             ViewBag.HeaderList=HeaderRecipes;
             return View(recipes);
         }
@@ -91,8 +100,9 @@ namespace theFoodCampus.Controllers
         {
             var HebCalModel = new HebCalAdapter();// this gets the string from the gateway.
             var holiday = HebCalModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            var result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
-            List<Recipe> HeaderRecipes;
+            HebCalData.Root result = null;
+            if(holiday!=null)
+                result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
             ViewBag.holiday = result;
             return result;
         }
@@ -101,7 +111,9 @@ namespace theFoodCampus.Controllers
         {
             var WeatherModel = new WeatherAdapter();
             var weather = WeatherModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            var result = JsonConvert.DeserializeObject<WeatherData.Root>(weather);
+            WeatherData.Root result = null;
+            if(weather!=null)
+                result = JsonConvert.DeserializeObject<WeatherData.Root>(weather);
             ViewBag.weather = result;
             return result;
         }
@@ -125,6 +137,30 @@ namespace theFoodCampus.Controllers
         public IActionResult Elements()
         {
             return View();
+        }
+
+        public IActionResult Recipes(string? category)
+        {
+            ViewBag.Holiday =(Holiday[])Enum.GetValues(typeof(Holiday));
+            ViewBag.Category = category;
+            List<Recipe> recipes = null;
+            if (category!=null)
+            {
+                string newCategory = category.Remove(category.Length - 1, 1);
+                Holiday categoryEnum = Enum.Parse<Holiday>(newCategory);
+
+                    ViewBag.Category = category;
+                    recipes = _context.Recipes
+                   .Where(x => x.RHoliday == categoryEnum)
+                   .Include(e => e.Comments).ToList();
+            }
+            else
+            {
+                recipes = _context.Recipes
+                .Include(e => e.Comments).OrderByDescending(x=>x.Rdifficulty).ToList();
+            }
+            //here I want to call the show weather and holiday funcitons so that I get a list from those functions.
+            return View(recipes);
         }
 
         [HttpGet]
