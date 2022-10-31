@@ -12,6 +12,7 @@ using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using static theFoodCampus.Models.Nutrient;
+using System.Text.RegularExpressions;
 
 namespace theFoodCampus.Controllers
 {
@@ -143,6 +144,18 @@ namespace theFoodCampus.Controllers
             var myJsonNutrients = UsdaModel.Check(recipe.Tag);// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
             var list = JsonConvert.DeserializeObject<List<Nutrient.Root>>(myJsonNutrients);
             ViewBag.Nutrients = list;
+
+            var bigMLModel = new BigMLAdapter();
+            BigMLData data = new BigMLData { LastCategory = recipe.RType.ToString(), Holiday = recipe.RHoliday.ToString(), Weather = recipe.RType.ToString()};
+            var nextCategory = Regex.Replace(bigMLModel.Check(data), @"[^0-9a-zA-Z\._]", string.Empty); // predict next category accordig to ML prediction
+            Category type=Enum.Parse<Category>(nextCategory);
+
+            List<Recipe> nextRecipes = _context.Recipes // retrieve only those recipes that are of wanted category
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
+                .Include(e => e.Comments)
+                .Where(e => e.RType == type).ToList();
+            ViewBag.nextRecipes = nextRecipes;
 
             var comments = recipe.Comments;
 
