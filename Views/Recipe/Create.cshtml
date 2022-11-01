@@ -38,7 +38,7 @@
         <div class=col-md-6>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <labe class="control-label">Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -46,7 +46,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RKashrut" class="control-label"></label>
+                <label class="control-label">Kashrut</label>
                 <select asp-for="RKashrut" class="form-control" asp-items="Html.GetEnumSelectList<Kashrut>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -56,7 +56,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Rdifficulty" class="control-label"></label>
+                <label class="control-label">Difficulty</label>
                 <select asp-for="Rdifficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -66,7 +66,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RPrepTime" class="control-label"></label>
+                <label class="control-label">Preper Time</label>
                 <select asp-for="RPrepTime" class="form-control" asp-items="Html.GetEnumSelectList<PrepTime>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -75,7 +75,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RHoliday" class="control-label"></label>
+                <label class="control-label">Holiday</label>
                 <select asp-for="RHoliday" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -84,7 +84,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="REvent" class="control-label"></label>
+                <label class="control-label">Event</label>
                 <select asp-for="REvent" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -93,7 +93,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RWeather" class="control-label"></label>
+                <label class="control-label">Weather</label>
                 <select asp-for="RWeather" class="form-control" asp-items="Html.GetEnumSelectList<Weather>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -102,7 +102,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RType" class="control-label"></label>
+                <label class="control-label">Type</label>
                 <select asp-for="RType" class="form-control" asp-items="Html.GetEnumSelectList<Category>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -112,7 +112,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RDiet" class="control-label"></label>
+                <label class="control-label">Diet</label>
                 <select asp-for="RDiet" class="form-control" asp-items="Html.GetEnumSelectList<Diet>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -122,7 +122,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RBudget" class="control-label"></label>
+                <label class="control-label">Budget</label>
                 <select asp-for="RBudget" class="form-control" asp-items="Html.GetEnumSelectList<Budget>()">
                     <option value="">Choose out of following options</option>
                 </select>
@@ -251,9 +251,6 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Step
-                                </th>
-                                <th>
                                     Instruction
                                 </th>
                                 <th style="width:60px">
@@ -268,9 +265,6 @@
                             @for (int i = 0; i < Model.Instructions.Count; i++)
                             {
                                 <tr>
-                                    <td>
-                                        <div>0@(i + 1)</div>
-                                    </td>
                                     <td>
                                         <input type="hidden" asp-for="@Model.Instructions[i].IsHidden" />
                                         <input asp-for="@Model.Instructions[i].Step" class="form-control" />
