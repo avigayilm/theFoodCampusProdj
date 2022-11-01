@@ -300,7 +300,7 @@ namespace theFoodCampus.Controllers
         /// </summary>
         /// <param name="path">path of image</param>
         /// <returns>the id of the image (for recognition in the Imagga cloud)</returns>
-        private string uploadImagga(string path)
+        public string uploadImagga(string path)
         {
             string apiKey = "acc_4858251230dcb88";
             string apiSecret = "c2f19534f3e9c73697368ef9cfe0cae1";
@@ -428,7 +428,7 @@ namespace theFoodCampus.Controllers
         /// </summary>
         /// <param name="image">image</param>
         /// <returns>the name of the image</returns>
-        private string uploadImage(IFormFile image)
+        public string uploadImage(IFormFile image)
         {
             string uploadsFolder = Path.Combine(_webHost.WebRootPath, "images");
             string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;

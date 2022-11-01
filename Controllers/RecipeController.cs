@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RestSharp;
 using theFoodCampus.Data;
 using theFoodCampus.Models;
+using theFoodCampus.Models.Adapter;
 
 namespace theFoodCampus.Controllers
 {
@@ -9,12 +11,13 @@ namespace theFoodCampus.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHost;
-
+        public HomeController _HM;
         public RecipeController(ApplicationDbContext context, IWebHostEnvironment webHost)
         {
             _context = context;
             _webHost = webHost;
-    }
+            _HM= new HomeController(_context, _webHost);
+        }
         public IActionResult Index()
         {
             List<Recipe> recipes;
@@ -23,8 +26,9 @@ namespace theFoodCampus.Controllers
         }
 
         [HttpGet]// emtpy structure so that the user can fill in the details
-        public IActionResult Create()
+        public IActionResult Create(string alert = "false")
         {
+            ViewBag.alert = alert;
             Recipe recipe = new Recipe();
             recipe.Ingredients.Add(new Ingredient() { IngredientId = 1 });
             recipe.Instructions.Add(new Instruction() { Id = 1, });
@@ -36,15 +40,26 @@ namespace theFoodCampus.Controllers
         public IActionResult Create(Recipe recipe)
         {
             recipe.Ingredients.RemoveAll(n => n.Name == "");
+            recipe.Instructions.RemoveAll(n => n.Step == "");
             recipe.Ingredients.RemoveAll(n => n.IsDeleted == true);
+            string pathToImagga = @"wwwroot/images/";
+            string nameImage = _HM.uploadImage(recipe.ProfilePhoto);            
+            string imageId = _HM.uploadImagga(pathToImagga + nameImage);
+            ImaggaData data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
+            var currentModel = new ImaggaAdapter();
+            string ImaggaResult = currentModel.Check(data);
+            if (ImaggaResult == "true")
+            {
+                recipe.PhotoUrl = nameImage;
 
-            string uniqueFileName = GetUploadedFileName(recipe);
-            recipe.PhotoUrl = uniqueFileName;
-
-            _context.Add(recipe);
-            _context.SaveChanges();
-            return RedirectToAction("index");
-
+                _context.Add(recipe);
+                _context.SaveChanges();
+                return RedirectToAction("index");
+            }               
+            else
+            {
+                return RedirectToAction("Create", "Recipe", new {alert = "true" });
+            }
         }
 
         // to upload the image to the wwwroot
@@ -105,7 +120,7 @@ namespace theFoodCampus.Controllers
             // get me the exprencies from the detail table together with header table.
             // thi is called eager loading
             // there is eager lazy and explicit loading.
-            Recipe recipe= _context.Recipes
+            Recipe recipe = _context.Recipes
                 .Include(e => e.Ingredients)
                 .Include(e => e.Instructions)
                 .Where(e => e.Id == Id).FirstOrDefault();
