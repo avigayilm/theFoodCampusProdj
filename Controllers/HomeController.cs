@@ -36,17 +36,18 @@ namespace theFoodCampus.Controllers
         {
             HebCalData.Root HebCal=ShowHoliday();
             WeatherData.Root Weather=ShowWeather();
-            List<Recipe> recipes;
+            List<Recipe> recipes = new();
             List<Recipe> WeatherRecipes=null;
             if (Weather != null)
             {
                 WeatherRecipes = _context.Recipes
-    .Include(e => e.Ingredients)
-    .Include(e => e.Instructions)
-    .Include(e => e.Comments)
-    .Where(e => e.RWeather == Weather.WeatherFeel).ToList();
-            }
-            List<Recipe> HolidayRecipes;
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
+                .Include(e => e.Comments)
+                .Where(e => e.RWeather == Weather.WeatherFeel).Take(3).ToList();
+                        }
+            List<Recipe> HolidayRecipes = new();
+            List<Recipe> EventRecipes = new();
             List<Recipe> HeaderRecipes = null;
             if (HebCal != null)
             {
@@ -56,17 +57,32 @@ namespace theFoodCampus.Controllers
                     .Include(e => e.Ingredients)
                     .Include(e => e.Instructions)
                     .Include(e => e.Comments)
-                    .Where(e => e.RHoliday == HebCal.Holiday).ToList();
+                    .Where(e => e.RHoliday == HebCal.Holiday).Take(3).ToList();
                     HeaderRecipes = HolidayRecipes;
+                    ViewBag.Hebdate = HebCal.HebrewDate;
+                    recipes = HolidayRecipes.Concat(WeatherRecipes).ToList();
                 }
                 else
                 {
                     HeaderRecipes = WeatherRecipes;
+                    recipes = _context.Recipes
+                    .Include(e => e.Ingredients)
+                    .Include(e => e.Instructions)
+                    .Include(e => e.Comments)
+                    .Where(e => e.RWeather == Weather.WeatherFeel).Take(6).ToList();
+                    var studentEve = calculateEvent();
+                    ViewBag.studentEvent = studentEve;
+                    //EventRecipes = _context.Recipes
+                    //    .Include(e => e.Ingredients)
+                    //    .Include(e => e.Instructions)
+                    //    .Include(e => e.Comments)
+                    //    .Where(e => e.REvent == studentEve).Take(3).ToList();
+                    //recipes = WeatherRecipes.Concat(EventRecipes).ToList();
                 }
-                ViewBag.Hebdate = HebCal.HebrewDate;
-            }       
-            recipes = _context.Recipes.ToList();
-            ViewBag.list = _context.Recipes.Select(x => x.Name).ToArray();
+               
+            }             
+            ViewBag.list =  recipes;
+                //_context.Recipes.Select(x => x.Name).ToArray();
             ViewBag.HeaderList=HeaderRecipes;
             return View(recipes);
         }
@@ -90,15 +106,8 @@ namespace theFoodCampus.Controllers
             var holiday = HebCalModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
             HebCalData.Root result = null;
             if (holiday != null)
-            {
                 result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
-                ViewBag.holiday = result;
-                if (result.Holiday == Holiday.None) // then go according to students schedule
-                {
-                    var studentEve = calculateEvent();
-                    ViewBag.studentEvent = studentEve;
-                }
-            }
+            ViewBag.holiday = result;
             return result;
         }
 
