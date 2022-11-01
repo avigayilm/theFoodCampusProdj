@@ -3,7 +3,7 @@
 namespace theFoodCampus.Models
 {
         public enum MeasurementType { Cup, TableSpoon, Teaspoon, Grams, Pinch,Ounces, None }
-        public enum Kashrut { Dairy, Pareve, Meaty }
+        public enum Kashrut {None, Dairy, Pareve, Meaty }
         public enum Difficulty { None,Easy, Intermediate, Difficult }
         public enum PrepTime {None, Quick, Medium, Long }
         public enum Holiday { None,RoshHashana, Yom_Kippur, Succot, Shmini_Atzeret, Hannuka, Tubishvat, Purim, Pesach, Shavouot, Lagbaomer }

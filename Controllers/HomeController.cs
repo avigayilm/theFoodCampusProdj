@@ -152,17 +152,30 @@ namespace theFoodCampus.Controllers
         public IActionResult Recipes(string? category)
         {
             ViewBag.Holiday =(Holiday[])Enum.GetValues(typeof(Holiday));
+            ViewBag.Difficulty= (Difficulty[])Enum.GetValues(typeof(Difficulty));
+            ViewBag.Category_List= (Category[])Enum.GetValues(typeof(Category));
+            ViewBag.Weather= (Weather[])Enum.GetValues(typeof(Weather));
             ViewBag.Category = category;
             List<Recipe> recipes = null;
             if (category!=null)
             {
-                string newCategory = category.Remove(category.Length - 1, 1);
-                Holiday categoryEnum = Enum.Parse<Holiday>(newCategory);
-
-                    ViewBag.Category = category;
+                string newCategory = category.Remove(category.Length - 1, 1); // for some reason it saves the string with ; at the end
+                ViewBag.Category = category;
+                if (Enum.IsDefined(typeof(Holiday), newCategory))
+                {
+                    Holiday categoryEnum = Enum.Parse<Holiday>(newCategory);
                     recipes = _context.Recipes
-                   .Where(x => x.RHoliday == categoryEnum)
-                   .Include(e => e.Comments).ToList();
+                      .Where(x => x.RHoliday == categoryEnum)
+                      .Include(e => e.Comments).ToList();
+                }
+
+                if (Enum.IsDefined(typeof(Weather), newCategory))
+                {
+                    Weather categoryEnum = Enum.Parse<Weather>(newCategory);
+                    recipes = _context.Recipes
+                       .Where(x => x.RWeather == categoryEnum)
+                       .Include(e => e.Comments).ToList();
+                }
             }
             else
             {
