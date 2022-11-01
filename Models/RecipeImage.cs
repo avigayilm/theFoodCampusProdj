@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace theFoodCampus.Models
 {
+    /// <summary>
+    /// this class is for a list of images that we gets from the user
+    /// </summary>
     public class RecipeImage
     {
         [Key]
@@ -17,9 +16,8 @@ namespace theFoodCampus.Models
         public virtual Recipe Recipes { get; private set; } //very important
         [Required]
         public string image { get; set; }
-
-        [NotMapped]
-        public IFormFile file { get; set; }
+        //this field used for a flag. is the image is from URL or from browse
+        public bool isUrl { get; set; }
 
     }
 }

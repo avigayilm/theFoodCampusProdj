@@ -7,13 +7,14 @@ namespace theFoodCampus.Models
     {
         public static void Intitialize(IServiceProvider serviceProvider)
         {
+            return;
             using (var context = new ApplicationDbContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<ApplicationDbContext>>()))
             {
                 if (context.Recipes.Any())
                 {
-                    return;
+                    
                     context.Recipes.AddRange(
                     new Recipe
                     {

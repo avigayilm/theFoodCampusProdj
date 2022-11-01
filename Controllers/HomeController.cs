@@ -70,21 +70,6 @@ namespace theFoodCampus.Controllers
             return View(recipes);
         }
 
-        [HttpPost]
-        public JsonResult AutoComplete(string Prefix)
-        {
-            //Note : you can bind same list from database  
-
-            //Searching records from list using LINQ query  
-            var Name = (from N in _context.Recipes
-                        where N.Name.Contains(Prefix)
-                        select new
-                        {
-                            label = N.Name,
-                            //val = N.FirstName
-                        }).ToList();
-            return Json(Name);
-        }
 
         [HttpPost]
         public ActionResult Index(string personName)
@@ -139,12 +124,11 @@ namespace theFoodCampus.Controllers
             return View(recipes);
         }
 
+        /// <summary>
+        /// this view is called after sending an email succesfully
+        /// </summary>
+        /// <returns></returns>
         public IActionResult thankyou()
-        {
-            return View();
-        }
-
-        public IActionResult Elements()
         {
             return View();
         }
@@ -239,9 +223,12 @@ namespace theFoodCampus.Controllers
             }
            ViewBag.alert = alert;
             return View(recipe);
-            // return View("RecipePost",recipe);
         }
-
+        /// <summary>
+        /// for Imagga api conection
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Imagga([Bind("Id,Name,Tag,ImageForm,ImageString")] Recipe recipe)
@@ -249,7 +236,7 @@ namespace theFoodCampus.Controllers
             ImaggaData data;
             if (recipe.ImageForm != null || recipe.ImageString != null)
             {
-                if (recipe.ImageForm != null)
+                if (recipe.ImageForm != null)//upload from browse
                 {
                     string pathToImagga = @"wwwroot/images/";
                     string nameImage = uploadImage(recipe.ImageForm);
@@ -258,7 +245,7 @@ namespace theFoodCampus.Controllers
                     data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
 
                 }
-                else
+                else//upload a url
                 {
                     data = new ImaggaData() { ImageUrl = recipe.ImageString, Title = recipe.Tag };
                 }
@@ -268,13 +255,22 @@ namespace theFoodCampus.Controllers
                     return RedirectToAction("AddImage", "Home", recipe);
                 else
                 {
+                    //alert = true mininigs we want to alertt the user that the image wasnt good enough
                     return RedirectToAction("RecipePost", "Home", new { recipe.Id, alert = "true" });
                 }
             }
+            //alert = true mininigs we want to alertt the user that the image wasnt good enough
             return RedirectToAction("RecipePost", "Home", new { recipe.Id, alert = "true" });
         }
-
-        private string uploadImagga(string path)
+        /// <summary>
+        /// This function is used to upload an image to the Imagga image cloud. 
+        /// Imagga allows you to upload an image directly from browse, 
+        /// but in order to have access to the image, it is not possible to save the image on a personal computer (security issues),
+        /// so we will upload the image to the Imagga database and perform the necessary tests from there. 
+        /// </summary>
+        /// <param name="path">path of image</param>
+        /// <returns>the id of the image (for recognition in the Imagga cloud)</returns>
+        public string uploadImagga(string path)
         {
             string apiKey = "acc_4858251230dcb88";
             string apiSecret = "c2f19534f3e9c73697368ef9cfe0cae1";
@@ -294,15 +290,19 @@ namespace theFoodCampus.Controllers
             return result[2];           
         }
 
+        /// <summary>
+        /// add an image to the list of images that we get from the user
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <returns></returns>
         public ActionResult AddImage(Recipe recipe)
         {
             RecipeImage image = new()
             {
                 RecipeId = recipe.Id,
                 image = recipe.ImageString
-                //file
-
             };
+            image.isUrl = recipe.ImageString.StartsWith("http");
             _context.Images.Add(image);
             _context.SaveChanges();
             return RedirectToAction("RecipePost", "Home", new { id = recipe.Id });
@@ -350,7 +350,6 @@ namespace theFoodCampus.Controllers
         [HttpPost]
         public IActionResult RecipePost(Recipe recipe)
         {
-
             //This is for editing
 
             //List<Ingredient> expDetials = _context.Ingredients.Where(d => d.RecipeId == recipe.Id).ToList();
@@ -378,10 +377,14 @@ namespace theFoodCampus.Controllers
             return RedirectToAction("index");
         }
 
-        // to upload the image to the wwwroot
+        /// <summary>
+        /// to add ProfilePhoto
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <returns>the name of the image after uploaded to wwwroot</returns>
         private string GetUploadedFileName(Recipe recipe)
         {
-            string uniqueFileName = null;
+            string? uniqueFileName = null;
 
             if (recipe.ProfilePhoto != null)
             {
@@ -390,11 +393,15 @@ namespace theFoodCampus.Controllers
             return uniqueFileName;
         }
 
-        private string uploadImage(IFormFile image)
+        /// <summary>
+        /// This function is used to upload an image to wwwroot
+        /// </summary>
+        /// <param name="image">image</param>
+        /// <returns>the name of the image</returns>
+        public string uploadImage(IFormFile image)
         {
-            string uniqueFileName;
             string uploadsFolder = Path.Combine(_webHost.WebRootPath, "images");
-            uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
             string filePath = Path.Combine(uploadsFolder, uniqueFileName);
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
@@ -425,9 +432,34 @@ namespace theFoodCampus.Controllers
             _context.Add(recipe);
             _context.SaveChanges();
             return RedirectToAction("index");
-
         }
 
+        /// <summary>
+        /// this function is for an autocomplete search
+        /// </summary>
+        /// <param name="Prefix"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult AutoComplete(string Prefix)
+        {
+            //Note : you can bind same list from database  
+
+            //Searching records from list using LINQ query  
+            var Name = (from N in _context.Recipes
+                        where N.Name.Contains(Prefix)
+                        select new
+                        {
+                            label = N.Name,
+                            //val = N.FirstName
+                        }).ToList();
+            return Json(Name);
+        }
+
+        //**
+        public IActionResult Elements()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

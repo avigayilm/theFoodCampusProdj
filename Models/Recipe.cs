@@ -36,11 +36,14 @@ namespace theFoodCampus.Models
         public virtual List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public virtual List<Instruction> Instructions { get; set; } = new List<Instruction>();
         public virtual List<Comment> Comments { get; set; } = new List<Comment>();
+        //list of images (we get this images from the user)
         public virtual List<RecipeImage> Images { get; set; } = new List<RecipeImage>();
-
-
         public string? PhotoUrl { get; set; }
+
         [Display(Name = "Profile Photo")]
+        //These fields are used by the HTML
+        //and are of-course not mapped -
+        //that is, they are not saved in the database
         [NotMapped]
         public IFormFile ProfilePhoto { get; set; }
 
