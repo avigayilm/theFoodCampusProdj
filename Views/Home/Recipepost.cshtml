@@ -195,53 +195,7 @@
                         </div>
                     }
 
-                    <!-- Custom Checkbox -->
-                    @*<div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
-                    </div>
 
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                    <label class="custom-control-label" for="customCheck2">2 large eggs</label>
-                    </div>
-
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck3">
-                    <label class="custom-control-label" for="customCheck3">2 yogurt containers granulated sugar</label>
-                    </div>
-
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck4">
-                    <label class="custom-control-label" for="customCheck4">1 vanilla or plain yogurt, 170g container</label>
-                    </div>
-
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck5">
-                    <label class="custom-control-label" for="customCheck5">2 yogurt containers unbleached white flour</label>
-                    </div>
-
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck6">
-                    <label class="custom-control-label" for="customCheck6">1.5 yogurt containers milk</label>
-                    </div>
-
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck7">
-                    <label class="custom-control-label" for="customCheck7">1/4 tsp cinnamon</label>
-                    </div>
-
-                    <!-- Custom Checkbox -->
-                    <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck8">
-                    <label class="custom-control-label" for="customCheck8">1 cup fresh blueberries </label>
-                    </div>*@
                 </div>
             </div>
         </div>
@@ -264,23 +218,23 @@
         </div>
         }
         </div>
+
+        <!-- Receipe Slider for next recipes according to bigml -->
+
         *@
-        <div class="container">
-            <div class="row">
-                <div class="col-60">
-                    <div class="receipe-slider owl-carousel">
-                        @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
+     <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="receipe-slider owl-carousel">
+                            @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
                         {
                             var a = ViewBag.nextRecipes[imgIndex].PhotoUrl;
-                            <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt="" width="20" height="20">
-                        }
-                        @*<img src="~/images/@Model.PhotoUrl" alt="">*@
-                        @*                    <img src="~/img/bg-img/bg5.jpg" alt=""> here i want to have the recommended recipes picture meanin take the model.PhotoUrl and display if clicked go to recipe post of pic- it will call the action of post
-                        <img src="~/img/bg-img/bg5.jpg" alt="">*@
+                            <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt="">
+                        }                         
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+     </div>
 
 
         <div class="col-12 col-lg-4">
@@ -436,7 +390,7 @@
             <div class="row">
             <div class="col-md-14">
                 <form asp-action="Imagga" asp-controller="Home" enctype="multipart/form-data" method="post">
-                        <p class="control-p">We would like u to add ur own image:))</p>
+                        <p class="control-p">We would like you to add your own image:))</p>
             
                     <div class="form-group" hidden>
                         <input asp-for="Name" />
