@@ -15,6 +15,7 @@ using static theFoodCampus.Models.Nutrient;
 using System.Text.RegularExpressions;
 using RestSharp;
 using FireSharp.Extensions;
+using System.Runtime.InteropServices;
 
 namespace theFoodCampus.Controllers
 {
@@ -88,10 +89,52 @@ namespace theFoodCampus.Controllers
             var HebCalModel = new HebCalAdapter();// this gets the string from the gateway.
             var holiday = HebCalModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
             HebCalData.Root result = null;
-            if(holiday!=null)
+            if (holiday != null)
+            {
                 result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
-            ViewBag.holiday = result;
+                ViewBag.holiday = result;
+                if (result.Holiday == Holiday.None) // then go according to students schedule
+                {
+                    var studentEve = calculateEvent();
+                    ViewBag.studentEvent = studentEve;
+                }
+            }
             return result;
+        }
+
+        private Event calculateEvent()
+        {
+            var dateTime = DateTime.Now;
+            switch (dateTime.Month)
+            {
+                case 8 or 9: // its vacation
+                    return Event.Vacation;// call fuction for rosh hashana receipes
+
+                case 5 or 12: // projects usually
+                    {
+                      
+                        //if (day > 17 & day < 22)
+                        //{
+                        //    holiday=Holiday.sim
+                        //    break;// call function for simchat torah
+                        //}
+                        // default function to calculate for the english date
+                        return Event.Project;
+                    }
+
+                case 1 or 6: // end of semester
+                    return Event.End_Of_Semester;
+
+                case 2 or 7: // exams time
+                  return Event.Exams;
+
+
+                case 3 or 4 or 10 or 11: // beginning of semester
+                   return Event.Beginning_Of_Semester;
+                default:
+                    return Event.Occasion;
+                 
+            }
         }
 
         public WeatherData.Root ShowWeather()
@@ -136,17 +179,30 @@ namespace theFoodCampus.Controllers
         public IActionResult Recipes(string? category)
         {
             ViewBag.Holiday =(Holiday[])Enum.GetValues(typeof(Holiday));
+            ViewBag.Difficulty= (Difficulty[])Enum.GetValues(typeof(Difficulty));
+            ViewBag.Category_List= (Category[])Enum.GetValues(typeof(Category));
+            ViewBag.Weather= (Weather[])Enum.GetValues(typeof(Weather));
             ViewBag.Category = category;
             List<Recipe> recipes = null;
             if (category!=null)
             {
-                string newCategory = category.Remove(category.Length - 1, 1);
-                Holiday categoryEnum = Enum.Parse<Holiday>(newCategory);
-
-                    ViewBag.Category = category;
+                string newCategory = category.Remove(category.Length - 1, 1); // for some reason it saves the string with ; at the end
+                ViewBag.Category = category;
+                if (Enum.IsDefined(typeof(Holiday), newCategory))
+                {
+                    Holiday categoryEnum = Enum.Parse<Holiday>(newCategory);
                     recipes = _context.Recipes
-                   .Where(x => x.RHoliday == categoryEnum)
-                   .Include(e => e.Comments).ToList();
+                      .Where(x => x.RHoliday == categoryEnum)
+                      .Include(e => e.Comments).ToList();
+                }
+
+                if (Enum.IsDefined(typeof(Weather), newCategory))
+                {
+                    Weather categoryEnum = Enum.Parse<Weather>(newCategory);
+                    recipes = _context.Recipes
+                       .Where(x => x.RWeather == categoryEnum)
+                       .Include(e => e.Comments).ToList();
+                }
             }
             else
             {
