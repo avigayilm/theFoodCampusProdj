@@ -45,7 +45,9 @@ namespace theFoodCampus.Models
         //and are of-course not mapped -
         //that is, they are not saved in the database
         [NotMapped]
-        public IFormFile ProfilePhoto { get; set; }
+        public IFormFile? ProfilePhoto { get; set; }
+        [NotMapped]
+        public string ProfileUrl { get; set; }
 
         // used to save the text just for the page
         [NotMapped]

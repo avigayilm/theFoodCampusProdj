@@ -4,7 +4,6 @@
     ViewData["Title"] = "Index";
 }
 
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -48,47 +47,55 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RKashrut)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rdifficulty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RPrepTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RHoliday)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.REvent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RWeather)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RDiet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RBudget)
-            </td>
-            <td>
-                <img src="~/Images/@item.PhotoUrl" alt="" class="avatar">
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RKashrut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rdifficulty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RPrepTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RHoliday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.REvent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RWeather)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RDiet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RBudget)
+                </td>
+                <td>
+                    @if (@item.PhotoUrl != null && @item.PhotoUrl.StartsWith("http") == true )
+                    {
+                        <img src=@item.PhotoUrl alt="" class="avatar" />
+                    }
+                    else
+                    {
+                         <img src="~/images/@item.PhotoUrl" alt="" class="avatar" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
