@@ -13,6 +13,7 @@ namespace theFoodCampus.Models
             {
                 if (context.Recipes.Any())
                 {
+                    return;
                     
                     context.Recipes.AddRange(
                     new Recipe

@@ -126,7 +126,15 @@
                     <img src="~/img/bg-img/bg2.jpg" alt="">
                     <!-- Content -->
                     <div class="top-cta-content">
-                        <h3>@ViewBag.holiday.Holiday</h3>
+                        @if (ViewBag.holiday.Holiday != Holiday.None)
+                        {
+                            <h3>@ViewBag.holiday.Holiday</h3>
+                        }
+                        else
+                        { 
+                            <h3>@ViewBag.studentEvent</h3>
+                        }
+                        
                         <h6>@ViewBag.Hebdate</h6>
                         <a href="@Url.Action("RecipePost", "Home")" class="btn delicious-btn">See Full Receipe</a>
                     </div>
