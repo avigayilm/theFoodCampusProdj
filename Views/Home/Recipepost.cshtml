@@ -76,7 +76,7 @@
                             {
                                 <span class="starFadeN"></span>
                             }
-                         
+
                         </div>
                     </div>
                 </div>
@@ -137,23 +137,23 @@
         <!-- Receipe Slider for next recipes according to bigml -->
 
         *@
-     <div class="container">
-                <div class="row">
-                    <div class="col-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-5">
                     <div class="centered">Recommended for you</div>
-                        <div class="receipe-slider owl-carousel">
-                            @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
+                    <div class="receipe-slider owl-carousel">
+                        @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
                         {
                             var a = ViewBag.nextRecipes[imgIndex].PhotoUrl;
                             <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt="">
-                           
 
-                        } 
-                       
-                        </div>
+
+                        }
+
                     </div>
                 </div>
-     </div>
+            </div>
+        </div>
 
 
         <div class="col-12 col-lg-4">
@@ -193,7 +193,7 @@
                                     {
                                         <b>@item.Name </b>
                                     }
-                                    
+
                                     @item.Value @item.UnitName
                                 </th>
                                 <td>
@@ -204,46 +204,27 @@
                                 </td>
                             </tr>
                         }
-                       
+
                     </tbody>
                 </table>
 
-               
+
             </section>
         </div>
-            <!-- users images Slider -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="receipe-slider owl-carousel">
-                            @foreach (var item in @Model.Images)
-                            {
-                                if(item.isUrl==true)
-                                {
-                                    <img src=@item.image>
-                                }
-                                else
-                                {
-                                    <img src="~/images/@item.image">
-                                }
-                            }                          
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
+      
+        <hr />
+        <div class="row">
             <div class="col-md-14">
                 <form asp-action="Imagga" asp-controller="Home" enctype="multipart/form-data" method="post">
-                        <p class="control-p">We would like you to add your own image:))</p>
-            
+                    <p class="control-p">We would like you to add your own image:))</p>
+
                     <div class="form-group" hidden>
                         <input asp-for="Name" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ImageString" class="control-label">Upload url</label>
-                        <input asp-for="ImageString" class="form-control" pattern="https?://.+[a-z0-9._%+-]+[.jpg/.png]$" title="The link must be in url form. Must be of jpg or png type only!"/>
+                        <input asp-for="ImageString" class="form-control" pattern="https?://.+[a-z0-9._%+-]+[.jpg/.png]$" title="The link must be in url form. Must be of jpg or png type only!" />
                         <span asp-validation-for="ImageString" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -264,13 +245,12 @@
                     </div>
                 </form>
             </div>
-            
-        @*</div>*@
-       
-        
+
+            @*</div>*@
+
+
         </div>
         <!--PICTURE OF CUSTOMER DISPLAY-->
-
         @foreach (var c in @Model.Comments)
         {
             <hr />
@@ -293,17 +273,37 @@
             </div>
         }
         <hr />
-
+       
         <dl class="dl-horizontal">
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading text-left">
-                        <h3>Leave a comment</h3>
+                        <h3>This recipe made by our students</h3>
                     </div>
                 </div>
             </div>
             <dt>
-                Comment
+                <!-- users images Slider -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="receipe-slider owl-carousel">
+                                @foreach (var item in @Model.Images)
+                                {
+                                    if (item.isUrl == true)
+                                    {
+                                        <img src=@item.image>
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/@item.image">
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Leave a comment</h3>
             </dt>
 
             <dd>
@@ -411,8 +411,8 @@
     }
 
     /* Override the default bootstrap behavior where horizontal description lists
-                           will truncate terms that are too long to fit in the left column
-                        */
+                               will truncate terms that are too long to fit in the left column
+                            */
     .dl-horizontal dt {
         white-space: normal;
     }
