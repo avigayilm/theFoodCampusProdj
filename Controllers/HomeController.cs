@@ -73,12 +73,6 @@ namespace theFoodCampus.Controllers
                     .Where(e => e.RWeather == Weather.WeatherFeel).Take(6).ToList(); // take recipes only according to the weather
                     var studentEve = calculateEvent();
                     ViewBag.studentEvent = studentEve; // display on home page the students event
-                    //EventRecipes = _context.Recipes
-                    //    .Include(e => e.Ingredients)
-                    //    .Include(e => e.Instructions)
-                    //    .Include(e => e.Comments)
-                    //    .Where(e => e.REvent == studentEve).Take(3).ToList();
-                    //recipes = WeatherRecipes.Concat(EventRecipes).ToList();
                 }
 
             }
@@ -107,6 +101,11 @@ namespace theFoodCampus.Controllers
             //ViewBag.Message = "Selected Person Name: " + personName;
             //return View();
         }
+        /// <summary>
+        /// shows the hebrew date and holdiay if there is one
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public HebCalData.Root ShowHoliday()
         {
             var HebCalModel = new HebCalAdapter();// this gets the string from the gateway.
@@ -128,7 +127,10 @@ namespace theFoodCampus.Controllers
        
             
         
-
+        /// <summary>
+        /// in case there is no holiday- goes by student event
+        /// </summary>
+        /// <returns></returns>
         private string calculateEvent()
         {
             var dateTime = DateTime.Now;
@@ -163,7 +165,10 @@ namespace theFoodCampus.Controllers
 
             }
         }
-
+        /// <summary>
+        /// displays weather currently feels like
+        /// </summary>
+        /// <returns></returns>
         public WeatherData.Root ShowWeather()
         {
             var WeatherModel = new WeatherAdapter();
@@ -181,6 +186,10 @@ namespace theFoodCampus.Controllers
             return View();
         }
 
+        /// <summary>
+        /// contact function for users
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Contact()
         {
             List<Recipe> recipes = _context.Recipes.ToList();
@@ -256,6 +265,13 @@ namespace theFoodCampus.Controllers
             //return View();
         }
 
+        /// <summary>
+        /// if a single recipe is clicked, will go to recipes page
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="alert"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         public IActionResult Recipepost(int Id, string alert = "false")
         {
@@ -412,7 +428,7 @@ namespace theFoodCampus.Controllers
             };
 
             //int totalrating;
-            // maybe better for runtime to keep extra field with amount of comments
+            
             recipe = _context.Recipes
                .Include(e => e.Ingredients)
                .Include(e => e.Instructions)
@@ -437,30 +453,6 @@ namespace theFoodCampus.Controllers
         [HttpPost]
         public IActionResult RecipePost(Recipe recipe)
         {
-            //This is for editing
-
-            //List<Ingredient> expDetials = _context.Ingredients.Where(d => d.RecipeId == recipe.Id).ToList();
-            //_context.Ingredients.RemoveRange(expDetials);
-            //_context.SaveChanges();
-
-            //// not to save double ingredients when editing
-            //recipe.Ingredients.RemoveAll(n => n.Name == "");
-            //// in order not to delete all lines when delteing lower rows
-            //recipe.Ingredients.RemoveAll(n => n.IsDeleted == true);
-            //if (recipe.ProfilePhoto != null) // he updates the image so therefore we update it to the root
-            //{
-
-
-            //    string uniqueFileName = GetUploadedFileName(recipe);
-
-            //    recipe.PhotoUrl = uniqueFileName;
-            //}
-            //// we just removed all the ingredients and now we save it again
-            //// this in is inorder not to save twice.
-            //_context.Attach(recipe);
-            //_context.Entry(recipe).State = EntityState.Modified;
-            //_context.Ingredients.AddRange(recipe.Ingredients);
-            //_context.SaveChanges();
             return RedirectToAction("index");
         }
 
