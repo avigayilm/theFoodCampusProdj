@@ -184,7 +184,7 @@
                 <div class="single-best-receipe-area mb-30">
                     <img src="~/images/@ViewBag.list[i].PhotoUrl" alt="">
                     <div class="receipe-content">
-                        <a href="@Url.Action("RecipePost", "Home",new {id = Model[i].Id})">
+                        <a href="@Url.Action("RecipePost", "Home",new {id = ViewBag.list[i].Id})">
                             <h5>@ViewBag.list[i].Name</h5>
                         </a>
                         <div class="ratings">

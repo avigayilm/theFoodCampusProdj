@@ -162,14 +162,35 @@ namespace theFoodCampus.Controllers
             recipe.Ingredients.RemoveAll(n => n.IsDeleted == true);
             recipe.Instructions.RemoveAll(n => n.IsHidden == true);
 
+            ImaggaData data;
+            string nameImage;
             if (recipe.ProfilePhoto != null) // he updates the image so therefore we update it to the root
             {
-                string uniqueFileName = GetUploadedFileName(recipe);
-                recipe.PhotoUrl = uniqueFileName;
+
+                string pathToImagga = @"wwwroot/images/";
+                nameImage = _HM.uploadImage(recipe.ProfilePhoto);
+                string imageId = _HM.uploadImagga(pathToImagga + nameImage);
+                data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
+                //string uniqueFileName = GetUploadedFileName(recipe);
+                var currentModel = new ImaggaAdapter();
+                string ImaggaResult = currentModel.Check(data);
+                //recipe.PhotoUrl = uniqueFileName;
+                if (ImaggaResult == "true")
+                {
+                    recipe.PhotoUrl = nameImage;
+                }
             }
             else if(recipe.ProfileUrl != null)
             {
-                recipe.PhotoUrl = recipe.ProfileUrl;
+                nameImage = recipe.ProfileUrl;
+                data = new ImaggaData() { ImageUrl = nameImage, Title = recipe.Tag };
+                //recipe.PhotoUrl = recipe.ProfileUrl;
+                var currentModel = new ImaggaAdapter();
+                string ImaggaResult = currentModel.Check(data);
+                if (ImaggaResult == "true")
+                {
+                    recipe.PhotoUrl = nameImage;
+                }
             }
             // we just removed all the ingredients and now we save it again
             // this in is inorder not to save twice.
