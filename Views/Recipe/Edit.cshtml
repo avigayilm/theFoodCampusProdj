@@ -128,10 +128,9 @@
                            placeholder="choose file" />
                     <label class="custome-file-label" for="customFile">ChooseFile</label>
                 </div>
-
-                <div class="form-group col-8 p-0">
-                    <input asp-for="ProfileUrl" id="customFile"
-                           placeholder="https://example.com"  />
+                <div class="form-group">
+                    <input asp-for="ProfileUrl" id="customFile" pattern="https?://.+[a-z0-9._%+-]+[.jpg/.png]$" title="The link must be in url form. Must be of jpg or png type only!"
+                           placeholder="https://example.com" />
                 </div>
 
             </div>
@@ -425,3 +424,27 @@
         }
 
     </script>
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+    </style>

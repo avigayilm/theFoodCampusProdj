@@ -37,6 +37,7 @@ namespace theFoodCampus.Controllers
             HebCalData.Root HebCal = ShowHoliday(); // calls the function to show hebrew date on home page
             WeatherData.Root Weather = ShowWeather(); // will show the weather on the home page
             List<Recipe> recipes = new();
+            List<Recipe> recipesToShow = new();
             List<Recipe>? WeatherRecipes = null;
             if (Weather != null) 
             {
@@ -60,12 +61,12 @@ namespace theFoodCampus.Controllers
                     .Include(e => e.Comments)
                     .Where(e => e.RHoliday == HebCal.Holiday).Take(3).ToList(); // create a list of recipes for coming holiday
                     HeaderRecipes = HolidayRecipes;
-                    recipes = HolidayRecipes.Concat(WeatherRecipes).ToList(); // these are the recipes to be displayed on home page
+                    recipesToShow = HolidayRecipes.Concat(WeatherRecipes).ToList(); // these are the recipes to be displayed on home page
                 }
                 else // there is no upcoming holiday
                 {
                     HeaderRecipes = WeatherRecipes; 
-                    recipes = _context.Recipes
+                    recipesToShow = _context.Recipes
                     .Include(e => e.Ingredients)
                     .Include(e => e.Instructions)
                     .Include(e => e.Comments)
@@ -81,7 +82,11 @@ namespace theFoodCampus.Controllers
                 }
 
             }
-            ViewBag.list = recipes;
+            recipes = _context.Recipes
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
+                .Include(e => e.Comments).ToList();
+            ViewBag.list = recipesToShow;
             //_context.Recipes.Select(x => x.Name).ToArray();
             ViewBag.HeaderList = HeaderRecipes;
             return View(recipes);
