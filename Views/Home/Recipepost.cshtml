@@ -81,7 +81,7 @@
     </div>
 *@
     <!-- Receipe Slider -->
-    <div class="container">
+@*    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="single-mega cn-col-4">
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     @* <div class="container">
     <div class="row">
     <!-- Top Catagory Area -->
@@ -118,9 +118,9 @@
                         <span>April 05, 2018</span>
                         <h2>@Model.Name</h2>
                         <div class="receipe-duration">
-                            <h6>Prep: @ViewBag.PrepTime</h6>
-                            <h6>Cook: @ViewBag.CookTime</h6>
-                            <h6>Yields: @ViewBag.Yields</h6>
+                            <h6>Difficulty: @Model.Rdifficulty</h6>
+                            <h6>Budget: @Model.RBudget</h6>
+                            <h6>Kashrut: @Model.RKashrut</h6>
                         </div>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
         *@
      <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-5">
                         <div class="receipe-slider owl-carousel">
                             @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
                         {
@@ -241,8 +241,10 @@
             <section class="performance-facts">
                 <header class="performance-facts__header">
                     <h1 class="performance-facts__title">Nutrition Facts</h1>
-                    <p>Serving Size 1/2 cup (about 82g)
-                    <p>Serving Per Container 8</p>
+                   @if (ViewBag.Nutrients[0].Value != 0)
+                   {
+                        <p>Serving Size  @ViewBag.Nutrients[0].Value @ViewBag.Nutrients[0].UnitName</p>
+                   }
                 </header>
                 <table class="performance-facts__table">
                     <thead>
@@ -258,29 +260,48 @@
                                 <b>% Daily Value*</b>
                             </td>
                         </tr>
-                        @foreach (Nutrient.Root item in ViewBag.Nutrients)
+
+@*                        <tr>
+                            @if (@ViewBag.Nutrients[0].Value != 0)
+                            {
+                                <th colspan="2">
+
+                                    <b>@ViewBag.Nutrients[0].Name </b>
+                                    @ViewBag.Nutrients[0].Value @ViewBag.Nutrients[0].UnitName
+                                </th>
+                                <td>
+                                    @if (ViewBag.Nutrients[0].DailyPercent != null)
+                                    {
+                                        <b>@ViewBag.Nutrients[0].DailyPercent %</b>
+                                    }
+                                </td>
+                            }
+                        </tr>*@
+
+                        @for (int i=1;i< ViewBag.Nutrients.Count;i++)
                         {
                             <tr>
                                 <th colspan="2">
-                                    @if (item.Name.IndexOf("Carbohydrate") > 0)
+                                    @if (ViewBag.Nutrients[i].Name.IndexOf("Carbohydrate") > 0)
                                     {
                                         <b>Carbohydrate</b>
                                     }
-                                    @if (item.Name.IndexOf("Sugar") > 0)
+                                    @if (ViewBag.Nutrients[i].Name.IndexOf("Sugar") > 0)
                                     {
                                         <b>Sugar</b>
                                     }
-                                    @if (!(item.Name.IndexOf("Sugar") > 0) && !(item.Name.IndexOf("Carbohydrate") > 0))
+                                    @if (!(ViewBag.Nutrients[i].Name.IndexOf("Sugar") > 0) && !(ViewBag.Nutrients[i].Name.IndexOf("Carbohydrate") > 0))
                                     {
-                                        <b>@item.Name </b>
+
+                                        <b>@ViewBag.Nutrients[i].Name </b>
                                     }
 
-                                    @item.Value @item.UnitName
+                                    @ViewBag.Nutrients[i].Value @ViewBag.Nutrients[i].UnitName
                                 </th>
                                 <td>
-                                    @if (item.DailyPercent != null)
+                                    @if (ViewBag.Nutrients[i].DailyPercent != null)
                                     {
-                                        <b>@item.DailyPercent %</b>
+                                        <b>@ViewBag.Nutrients[i].DailyPercent %</b>
                                     }
                                 </td>
                             </tr>
