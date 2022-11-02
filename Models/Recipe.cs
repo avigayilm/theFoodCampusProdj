@@ -47,7 +47,7 @@ namespace theFoodCampus.Models
         [NotMapped]
         public IFormFile? ProfilePhoto { get; set; }
         [NotMapped]
-        public string ProfileUrl { get; set; }
+        public string? ProfileUrl { get; set; }
 
         // used to save the text just for the page
         [NotMapped]
