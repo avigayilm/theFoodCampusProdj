@@ -83,13 +83,15 @@
                 <td>
                     @if (@item.PhotoUrl != null)
                     {
-                        @if ( @item.PhotoUrl.StartsWith("http") == true)
+                        @if (@item.PhotoUrl.StartsWith("http") == true)
                         {
-                            <img src=@item.PhotoUrl alt="" class="avatar" />
+                            <img src=@item.PhotoUrl alt="" class="avatar"
+                     width="50" height="50" style="border:1px; margin-top:20px; " />
                         }
                         else
                         {
-                            <img src="~/images/@item.PhotoUrl" alt="" class="avatar" />
+                            <img src="~/images/@item.PhotoUrl" alt="" class="avatar"
+                     width="50" height="50" style="border:1px; margin-top:20px; " />
                         }
                     }
                 </td>
