@@ -46,40 +46,7 @@
 
 <div class="receipe-post-area section-padding-80">
 
-   @* <!-- Receipe Post Search -->
-    <div class="receipe-post-search mb-80">
-        <div class="container">
-            <form action="#" method="post">
-                <div class="row">
-                    <div class="col-12 col-lg-3">
-                        <select name="select1" id="select1">
-                            <option value="1">All Receipies Categories</option>
-                            <option value="1">All Receipies Categories 2</option>
-                            <option value="1">All Receipies Categories 3</option>
-                            <option value="1">All Receipies Categories 4</option>
-                            <option value="1">All Receipies Categories 5</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <select name="select1" id="select2">
-                            <option value="1">All Receipies Categories</option>
-                            <option value="1">All Receipies Categories 2</option>
-                            <option value="1">All Receipies Categories 3</option>
-                            <option value="1">All Receipies Categories 4</option>
-                            <option value="1">All Receipies Categories 5</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-lg-3">
-                        <input type="search" name="search" placeholder="Search Receipies">
-                    </div>
-                    <div class="col-12 col-lg-3 text-right">
-                        <button type="submit" class="btn delicious-btn">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-*@
+ 
     <!-- Receipe Slider -->
     <div class="container">
         <div class="row">
@@ -93,20 +60,7 @@
             </div>
         </div>
     </div>
-    @* <div class="container">
-    <div class="row">
-    <!-- Top Catagory Area -->
-    <div class="col-12 col-lg-6">
-    <div class="single-top-catagory">
-    <img src="~/images/@Model.PhotoUrl" alt="">
-    <!-- Content -->
-    <div class="top-cta-content">
-    <h3>@Model.Name Recipe</h3>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>*@
+    
 
     <!-- Receipe Content Area -->
     <div class="receipe-content-area">
@@ -137,11 +91,7 @@
                             {
                                 <span class="starFadeN"></span>
                             }
-                            @* <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <i class="fa fa-star-o" aria-hidden="true"></i>*@
+                         
                         </div>
                     </div>
                 </div>
@@ -161,26 +111,6 @@
                     }
                 </div>
 
-                @* <!-- Single Preparation Step -->
-                <div class="single-preparation-step d-flex">
-                <h4>01.</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-                </div>
-                <!-- Single Preparation Step -->
-                <div class="single-preparation-step d-flex">
-                <h4>02.</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-                </div>
-                <!-- Single Preparation Step -->
-                <div class="single-preparation-step d-flex">
-                <h4>03.</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-                </div>
-                <!-- Single Preparation Step -->
-                <div class="single-preparation-step d-flex">
-                <h4>04.</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-                </div>*@
             </div>
 
             <!-- Ingredients -->
@@ -224,13 +154,17 @@
         *@
      <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-5">
+                    <div class="centered">Recommended for you</div>
                         <div class="receipe-slider owl-carousel">
                             @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
                         {
                             var a = ViewBag.nextRecipes[imgIndex].PhotoUrl;
                             <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt="">
-                        }                         
+                           
+
+                        } 
+                       
                         </div>
                     </div>
                 </div>
@@ -285,87 +219,13 @@
                                 </td>
                             </tr>
                         }
-                        @*<tr>
-                        <th colspan="2">
-                        <b>Calories</b>
-                        200
-                        </th>
-                        </tr>
-
-                        <tr>
-                        <th colspan="2">
-                        <b>Total Fat</b>
-                        14g
-                        </th>
-                        <td>
-                        <b>22%</b>
-                        </td>
-                        </tr>
-
-                        <tr>
-                        <th colspan="2">
-                        <b>Cholesterol</b>
-                        55mg
-                        </th>
-                        <td>
-                        <b>18%</b>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th colspan="2">
-                        <b>Sodium</b>
-                        40mg
-                        </th>
-                        <td>
-                        <b>2%</b>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th colspan="2">
-                        <b>Total Carbohydrate</b>
-                        17g
-                        </th>
-                        <td>
-                        <b>6%</b>
-                        </td>
-                        </tr>
-                        <tr class="thick-end">
-                        <th colspan="2">
-                        <b>Protein</b>
-                        3g
-                        </th>
-                        <td>
-                        </td>
-                        </tr>*@
+                       
                     </tbody>
                 </table>
 
-                @* <table class="performance-facts__table--grid">
-                <tbody>
-                <tr>
-                <td colspan="2">
-                Vitamin A
-                10%
-                </td>
-                <td>
-                Vitamin C
-                0%
-                </td>
-                </tr>
-                <tr class="thin-end">
-                <td colspan="2">
-                Calcium
-                10%
-                </td>
-                <td>
-                Iron
-                6%
-                </td>
-                </tr>
-                </tbody>
-                </table>*@
+               
             </section>
-
+        </div>
             <!-- users images Slider -->
             <div class="container">
                 <div class="row">
@@ -426,29 +286,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        @*        <div>
-        <span class="starFadeN" id="sRate1"></span>
-        <span class="starFadeN" id="sRate2"></span>
-        <span class="starFadeN" id="sRate3"></span>
-        <span class="starFadeN" id="sRate4"></span>
-        <span class="starFadeN" id="sRate5"></span>
-        </div>*@
-
-
-        @*        <div class="btn delicious-btn">
-        @using (Html.BeginForm("Imagga", "Home", FormMethod.Post))
-        {
-        @Html.AntiForgeryToken()
-        <p>we would love u to upload ur Campuse-Made :))</p>
-        <input asp-for="ImageString" type="url" placeholder="enter image url" required />
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="Name" />
-        <input type="hidden" asp-for="Tag" />
-        <input type="submit" id="btnImagga" />
-        }
-        </div>
-        *@
+        @*</div>*@
+       
         
         </div>
         <!--PICTURE OF CUSTOMER DISPLAY-->
