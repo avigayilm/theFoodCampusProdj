@@ -94,7 +94,17 @@
                 </div>
 
                 <div class="col-md-6 group">
-                    <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                    @if (@Model.PhotoUrl != null)
+                    {
+                        @if (@Model.PhotoUrl.StartsWith("http") == true)
+                        {
+                            <img src=@Model.PhotoUrl class="img-fluid" />
+                        }
+                        else
+                        {
+                            <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                        }
+                    }
                 </div>
 
      @*       <div class="form-group">

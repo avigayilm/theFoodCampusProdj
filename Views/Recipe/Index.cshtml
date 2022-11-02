@@ -81,13 +81,16 @@
                     @Html.DisplayFor(modelItem => item.RBudget)
                 </td>
                 <td>
-                    @if (@item.PhotoUrl != null && @item.PhotoUrl.StartsWith("http") == true)
+                    @if (@item.PhotoUrl != null)
                     {
-                        <img src=@item.PhotoUrl alt="" class="avatar" />
-                    }
-                    else
-                    {
-                        <img src="~/images/@item.PhotoUrl" alt="" class="avatar" />
+                        @if ( @item.PhotoUrl.StartsWith("http") == true)
+                        {
+                            <img src=@item.PhotoUrl alt="" class="avatar" />
+                        }
+                        else
+                        {
+                            <img src="~/images/@item.PhotoUrl" alt="" class="avatar" />
+                        }
                     }
                 </td>
                 <td>

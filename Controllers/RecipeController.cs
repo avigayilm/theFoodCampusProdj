@@ -160,11 +160,12 @@ namespace theFoodCampus.Controllers
 
             if (recipe.ProfilePhoto != null) // he updates the image so therefore we update it to the root
             {
-
-
                 string uniqueFileName = GetUploadedFileName(recipe);
-
                 recipe.PhotoUrl = uniqueFileName;
+            }
+            if(recipe.ProfileUrl != null)
+            {
+                recipe.PhotoUrl = recipe.ProfileUrl;
             }
             // we just removed all the ingredients and now we save it again
             // this in is inorder not to save twice.
