@@ -31,7 +31,7 @@
     </div>
 }
 <!-- ##### Breadcumb Area Start ##### -->
-<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/images/@Model.PhotoUrl);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
@@ -46,21 +46,6 @@
 
 <div class="receipe-post-area section-padding-80">
 
- 
-    <!-- Receipe Slider -->
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="single-mega cn-col-4">
-                    <div class="receipe-slider owl-carousel">
-                        <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
-                        <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
 
     <!-- Receipe Content Area -->
     <div class="receipe-content-area">
@@ -208,7 +193,7 @@
                                     {
                                         <b>@item.Name </b>
                                     }
-
+                                    
                                     @item.Value @item.UnitName
                                 </th>
                                 <td>
@@ -279,18 +264,13 @@
                     </div>
                 </form>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading text-left">
-                        <h3>Leave a comment</h3>
-                    </div>
-                </div>
-            </div>
+            
         @*</div>*@
        
         
         </div>
         <!--PICTURE OF CUSTOMER DISPLAY-->
+
         @foreach (var c in @Model.Comments)
         {
             <hr />
@@ -315,6 +295,13 @@
         <hr />
 
         <dl class="dl-horizontal">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading text-left">
+                        <h3>Leave a comment</h3>
+                    </div>
+                </div>
+            </div>
             <dt>
                 Comment
             </dt>
