@@ -7,18 +7,26 @@
 
 
 <div class="col-11 mx-auto pt-0">
-    <div class="text-center bg-danger">
+  @*  <div class="text-center bg-danger">
         <h1>Are you sure you want to delete this?</h1>
-    </div>
+    </div>*@
     <div class="card">
-        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
+@*        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
             <h4>View Recipe</h4>
-        </div>
+        </div>*@
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-text text-center">
+                        <h2>Recipe</h2>
+                    </div>
+                </div>
+            </div>
 
         <form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Delete">
 
-            <input type="hidden" asp-for="Id"/> @*very importatn line*@
-          <div class="row">
+            <input type="hidden" asp-for="Id" /> @*very importatn line*@
+            <div class="row">
                 <div class=col-md-6>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
@@ -27,64 +35,64 @@
                     </div>
                 </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label">Kashrut</label>
-                    <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Kashrut</label>
+                        <input asp-for="RKashrut" class="form-control-plaintext" readonly />
+                    </div>
                 </div>
-            </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Difficulty</label>
-                <input asp-for="Rdifficulty" class="form-control-plaintext" readonly />
-            </div>
-           </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Difficulty</label>
+                        <input asp-for="Rdifficulty" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Preper Time</label>
-                <input asp-for="RPrepTime" class="form-control-plaintext" readonly />
-            </div>
-           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="RHoliday" class="control-label"></label>
-                <input asp-for="RHoliday" class="form-control-plaintext" readonly />
-            </div>
-           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Event</label>
-                <input asp-for="REvent" class="form-control-plaintext" readonly />
-            </div>
-        </div>
-          <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Weather</label>
-                <input asp-for="RWeather" class="form-control-plaintext" readonly />
-            </div>
-        </div>
-         <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Type</label>
-                <input asp-for="RType" class="form-control-plaintext" readonly />
-            </div>
-        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Preper Time</label>
+                        <input asp-for="RPrepTime" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="RHoliday" class="control-label"></label>
+                        <input asp-for="RHoliday" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Event</label>
+                        <input asp-for="REvent" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Weather</label>
+                        <input asp-for="RWeather" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Type</label>
+                        <input asp-for="RType" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Diet</label>
-                <input asp-for="RDiet" class="form-control-plaintext" readonly />
-            </div>
-        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Diet</label>
+                        <input asp-for="RDiet" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">Budget</label>
-                <input asp-for="RBudget" class="form-control-plaintext" readonly />
-            </div>
-        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Budget</label>
+                        <input asp-for="RBudget" class="form-control-plaintext" readonly />
+                    </div>
+                </div>
 
                 <div class=col-md-6>
                     <div class="form-group">
@@ -98,20 +106,22 @@
                     {
                         @if (@Model.PhotoUrl.StartsWith("http") == true)
                         {
-                            <img src=@Model.PhotoUrl class="img-fluid" />
+                            <img src=@Model.PhotoUrl class="img-fluid"
+                         width="200" height="200" style="border:1px; margin-top:20px; " />
                         }
                         else
                         {
-                            <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                            <img src="~/images/@Model.PhotoUrl" class="img-fluid"
+                         width="200" height="200" style="border:1px; margin-top:20px; " />
                         }
                     }
                 </div>
 
-     @*       <div class="form-group">
+                @*       <div class="form-group">
                 <label asp-for="PhotoUrl" class="control-label"></label>
                 <input asp-for="PhotoUrl" class="form-control" />
                 <span asp-validation-for="PhotoUrl" class="text-danger"></span>
-            </div>*@
+                </div>*@
 
                 <div class="container col-12 btn-group">
                     <div class="container col-6 pl-0 lm-0">
@@ -220,19 +230,24 @@
                         <a asp-action="Index" class="btn btn-secondary">&nbsp;Back&nbsp;</a>
                     </div>
                 </div>
-                <div class="col-6 form-check group text-left p-2">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                </div>
+
+                    <div class="col-6 form-check-group text-right p-2">
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" />
+                    </div>
+                
             </div>
         </form>
     </div>
 </div>
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
+@*
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -13,8 +13,8 @@
     <br />
     <br />
     @ViewBag.Message
-}*@
-@*@section scripts{
+}
+@section scripts{
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -45,9 +45,8 @@
             });
         });
     </script>
-}
-*@
-<!-- ##### Hero Area Start ##### -->
+}*@
+@*<!-- ##### Hero Area Start ##### -->
 <section class="hero-area">
 @*    <div class="hero-slides owl-carousel">
         <!-- Single Hero Slide -->
@@ -114,7 +113,7 @@
             </div>
         </div>
     </div>*@
-</section>
+@*</section>*@
 <!-- ##### Hero Area End ##### -->
 <!-- ##### Top Catagory Area Start ##### -->
 <section class="top-catagory-area section-padding-80-0">
@@ -136,7 +135,15 @@
                         }
                         
                         <h6>@ViewBag.Hebdate</h6>
-                        <a href="@Url.Action("RecipePost", "Home")" class="btn delicious-btn">See Full Receipe</a>
+                        @if (ViewBag.holiday.Holiday != Holiday.None)
+                        {
+
+                            <a href=@Url.Action("Recipes","Home",new{ category = ViewBag.holiday.Holiday}) class="btn delicious-btn">See Full Receipe</a>
+                        }
+                        else
+                        {
+                            <a href=@Url.Action("Recipes","Home") class="btn delicious-btn">See Full Receipe</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -148,7 +155,7 @@
                     <div class="top-cta-content">
                         <h3>Recipes for @ViewBag.weather.WeatherFeel weather</h3>
                         <h6>It's @ViewBag.weather.Temp ° </h6>
-                        <a href="@Url.Action("RecipePost", "Home")" class="btn delicious-btn">See Full Receipe</a>
+                        <a href=@Url.Action("Recipes","Home",new{ category = @ViewBag.weather.WeatherFeel}) class="btn delicious-btn">See Recipes for @ViewBag.weather.WeatherFeel weather</a>
                     </div>
                 </div>
             </div>
@@ -321,20 +328,18 @@
 </section>
 <!-- ##### Best Receipe Area End ##### -->
 <!-- ##### CTA Area Start ##### -->
-<section class="cta-area bg-img bg-overlay" style="background-image: url(img/bg-img/bg4.jpg);">
+<!-- ##### Breadcumb Area Start ##### -->
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/images/BeatTheClock.jpeg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
-                <!-- Cta Content -->
-                <div class="cta-content text-center">
-                    <h2>Gluten Free Receipies</h2>
-                    <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh</p>
-                    <a href="#" class="btn delicious-btn">Discover all the receipies</a>
+                <div class="breadcumb-text text-center">
+                    <h2>Beat the clock recipes</h2>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 <!-- ##### CTA Area End ##### -->
 <!-- ##### Small Receipe Area Start ##### -->
 
@@ -342,7 +347,7 @@
     <div class="container">
         <div class="row">
             <p>@ViewBag.Category</p>
-            @for (int i = 0; i < @Model.Count(); i++)
+            @for (int i = 0; i < 1; i++)
             {
                 <!-- Small Receipe Area -->
                 <div class="col-12 col-sm-6 col-lg-4">
@@ -374,6 +379,7 @@
             }
         </div>
     </div>
+    <a href=@Url.Action("Recipes","Home",new{ category = ""}) >See all recipes</a>
 </section>
 @*<section class="small-receipe-area section-padding-80-0">
     <div class="container">

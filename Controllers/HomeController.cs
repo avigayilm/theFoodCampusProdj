@@ -94,7 +94,7 @@ namespace theFoodCampus.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(string personName)
+        public ActionResult Index(string personName, string unusedValue = "")
         {
             Recipe? recipe = _context.Recipes
             .Include(e => e.Ingredients)
@@ -203,29 +203,32 @@ namespace theFoodCampus.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Recipes(string? category)
         {
-            ViewBag.Holiday = (Holiday[])Enum.GetValues(typeof(Holiday));
-            ViewBag.Difficulty = (Difficulty[])Enum.GetValues(typeof(Difficulty));
-            ViewBag.Category_List = (Category[])Enum.GetValues(typeof(Category));
-            ViewBag.Weather = (Weather[])Enum.GetValues(typeof(Weather));
-            ViewBag.Category = category;
-            List<Recipe>? recipes = null;
-            if (category != null)
+            ViewBag.Holiday =(Holiday[])Enum.GetValues(typeof(Holiday));
+            ViewBag.Difficulty= (Difficulty[])Enum.GetValues(typeof(Difficulty));
+            ViewBag.Category_List= (Category[])Enum.GetValues(typeof(Category));
+            ViewBag.Weather= (Weather[])Enum.GetValues(typeof(Weather));
+            ViewBag.Category = null;
+            List<Recipe> recipes = null;
+            if (category!=null && category!="None")
             {
-                string newCategory = category.Remove(category.Length - 1, 1); // for some reason it saves the string with ; at the end
-                ViewBag.Category = category;
-                if (Enum.IsDefined(typeof(Holiday), newCategory))
+                //string newCategory = category.Remove(category.Length - 1, 1); // for some reason it saves the string with ; at the end
+                
+                if (Enum.IsDefined(typeof(Holiday), category))
                 {
-                    Holiday categoryEnum = Enum.Parse<Holiday>(newCategory);
+                    Holiday categoryEnum = Enum.Parse<Holiday>(category);
+                    ViewBag.Category = categoryEnum;
                     recipes = _context.Recipes
                       .Where(x => x.RHoliday == categoryEnum)
                       .Include(e => e.Comments).ToList();
                 }
 
-                if (Enum.IsDefined(typeof(Weather), newCategory))
+                if (Enum.IsDefined(typeof(Weather), category))
                 {
-                    Weather categoryEnum = Enum.Parse<Weather>(newCategory);
+                    Weather categoryEnum = Enum.Parse<Weather>(category);
+                    ViewBag.Category = categoryEnum;
                     recipes = _context.Recipes
                        .Where(x => x.RWeather == categoryEnum)
                        .Include(e => e.Comments).ToList();
@@ -238,6 +241,19 @@ namespace theFoodCampus.Controllers
             }
             //here I want to call the show weather and holiday funcitons so that I get a list from those functions.
             return View(recipes);
+        }
+
+        [HttpPost]
+        public ActionResult Recipes(string personName, string unusedValue = "")
+        {
+            Recipe? recipe = _context.Recipes
+    .Include(e => e.Ingredients)
+    .Include(e => e.Instructions)
+    .Include(e => e.Comments)
+    .Where(e => e.Name == personName).FirstOrDefault();
+            return RedirectToAction("RecipePost", "Home", new { recipe.Id });
+            //ViewBag.Message = "Selected Person Name: " + personName;
+            //return View();
         }
 
         [HttpGet]
@@ -512,7 +528,7 @@ namespace theFoodCampus.Controllers
         /// <returns></returns>
         [HttpPost]
         public JsonResult AutoComplete(string Prefix)
-        {
+      {
             //Note : you can bind same list from database  
 
             //Searching records from list using LINQ query  
