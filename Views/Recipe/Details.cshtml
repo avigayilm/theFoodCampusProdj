@@ -8,10 +8,13 @@
 
 <div class="col-11 mx-auto pt-0">
     <div class="card">
-        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
-            <h4>Details</h4>
-        </div>
-
+                <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-text text-center">
+                        <h2>Recipe</h2>
+                    </div>
+                </div>
+            </div>
         <form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Details">
             <div class="row">
                 <div class=col-md-6>
@@ -94,11 +97,13 @@
                     {
                         @if (@Model.PhotoUrl.StartsWith("http") == true)
                         {
-                            <img src=@Model.PhotoUrl class="img-fluid" />
+                            <img src=@Model.PhotoUrl class="img-fluid"
+                         width="200" height="200" style="border:1px; margin-top:20px; "/>
                         }
                         else
                         {
-                            <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                            <img src="~/images/@Model.PhotoUrl" class="img-fluid"
+                         width="200" height="200" style="border:1px; margin-top:20px; "/>
                         }
                     }
                    
@@ -221,9 +226,9 @@
 </div>
 
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{

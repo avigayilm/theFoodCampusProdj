@@ -52,10 +52,14 @@ namespace theFoodCampus.Controllers
                 string imageId = _HM.uploadImagga(pathToImagga + nameImage);
                 data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
             }
-            else//upload a url
+            else if(recipe.ProfileUrl != null)//upload a url
             {
                 nameImage = recipe.ProfileUrl;
                 data = new ImaggaData() { ImageUrl = nameImage, Title = recipe.Tag };
+            }
+            else
+            {
+                return RedirectToAction("Create", "Recipe", new { alert = "true" });
             }
             var currentModel = new ImaggaAdapter();
             string ImaggaResult = currentModel.Check(data);
@@ -163,7 +167,7 @@ namespace theFoodCampus.Controllers
                 string uniqueFileName = GetUploadedFileName(recipe);
                 recipe.PhotoUrl = uniqueFileName;
             }
-            if(recipe.ProfileUrl != null)
+            else if(recipe.ProfileUrl != null)
             {
                 recipe.PhotoUrl = recipe.ProfileUrl;
             }

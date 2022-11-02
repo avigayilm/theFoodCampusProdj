@@ -6,8 +6,12 @@
 }
 <div class="col-11 mx-auto pt-0">
     <div class="card">
-        <div class="card-header bg-primary text-uppercase text-white" style="height:45px">
-            <h4>Edit Recipe</h4>
+       <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcumb-text text-center">
+                    <h2>Recipe</h2>
+                </div>
+            </div>
         </div>
 
         <form ID="ApplicantForm" enctype="multipart/form-data" asp-action="Edit">
@@ -121,17 +125,22 @@
             </div>
 
             <div class="col-md-6 group">
-
-                <div class="form-group col-8 p-0">
+                <div class="hover-text col-md-6">
                     <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile"
                            onchange="document.getElementById('PreviewPhoto').src=window.URL.createObjectURL(this.files[0])"
                            placeholder="choose file" />
-                    <label class="custome-file-label" for="customFile">ChooseFile</label>
+                    <span class="tooltip-text" id="left">click here to choose a file</span>
+                    <label class="custome-file-label" for="customFile">Choose File 🖇️</label>
                 </div>
 
-                <div class="form-group col-8 p-0">
+                <div class="form-group">
                     <input asp-for="ProfileUrl" id="customFile"
-                           placeholder="https://example.com"  />
+                           placeholder="https://example.com" />
+                </div>
+
+                <div class="form-group col-4">
+                    <img id="PreviewPhoto" src="~/Images/noimage.png" alt="Logo Image"
+                         width="200" height="200" style="border:1px; margin-top:20px; " />
                 </div>
 
             </div>
@@ -287,9 +296,9 @@
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{
@@ -425,3 +434,77 @@
         }
 
     </script>
+
+    <style>
+        .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            z-index: 2;
+            width: 100px;
+            color: white;
+            font-size: 12px;
+            background-color: #192733;
+            border-radius: 10px;
+            padding: 10px 15px 10px 15px;
+        }
+
+            .tooltip-text::before {
+                content: "";
+                position: absolute;
+                transform: rotate(45deg);
+                background-color: #192733;
+                padding: 5px;
+                z-index: 1;
+            }
+
+        .hover-text:hover .tooltip-text {
+            visibility: visible;
+        }
+
+        #top {
+            top: -40px;
+            left: -50%;
+        }
+
+            #top::before {
+                top: 80%;
+                left: 45%;
+            }
+
+        #bottom {
+            top: 25px;
+            left: -50%;
+        }
+
+            #bottom::before {
+                top: -5%;
+                left: 45%;
+            }
+
+        #left {
+            top: -8px;
+            right: 120%;
+        }
+
+            #left::before {
+                top: 35%;
+                left: 94%;
+            }
+
+        #right {
+            top: -8px;
+            left: 120%;
+        }
+
+            #right::before {
+                top: 35%;
+                left: -2%;
+            }
+
+        .hover-text {
+        position: relative;
+        margin: 40px;
+        /* font-family: ui-sans-serif; */
+        text-align: initial;
+        }
+    </style>
