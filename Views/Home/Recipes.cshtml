@@ -1,12 +1,59 @@
 ﻿@model List<theFoodCampus.Models.Recipe>
 @{
-    ViewData["Title"] = "Recipes";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Recipes";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	//Layout = null;
 }
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://fontawesome.com/v4.7.0/assets/font-awesome/css/font-awesome.css">
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
+
+@*@using (Html.BeginForm("Recipes", "Home", FormMethod.Post))
+{
+    <input type="text" id="textPerson" name="personName" />
+
+    <br />
+    <input type="submit" id="btnSubmit" value="Submit" />
+    <br />
+    <br />
+    @ViewBag.Message
+}*@
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#textPerson").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Home/AutoComplete/',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    //get selected value
+                    //$("#personNameValue").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+}
 
 
 <h1>Recipes</h1>
@@ -26,20 +73,23 @@
 		</header>
 		<div class="filter-content collapse show" id="collapse_1" style="">
 			<div class="card-body">
-				<form class="pb-3">
-				<div class="input-group">
-				  <input type="text" class="form-control" placeholder="Search">
+@*		@using (Html.BeginForm("Recipes", "Home", FormMethod.Post))
+				{
+					<div class="input-group">
+					<input type="text" class="form-control" name="personName" id="textPerson" placeholder="Search">
+					<input type="submit" id="btnSubmit" value="Submit" />
 				  <div class="input-group-append">
 				    <button class="btn btn-light" type="button"><i class="fa fa-search"></i></button>
 				  </div>
 				</div>
-				</form>
+				}*@
+				<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
                 <ul class="list-menu">
                     @foreach (Holiday item in ViewBag.Holiday)
                     {
                         <li>
-                            <a href=@Url.Action("Recipes","Home",new{ Category = @item });>@item </a>
+                            <a href=@Url.Action("Recipes","Home",new{ Category = @item })>@item </a>
                         </li>
                     }
                 </ul>
@@ -109,7 +159,7 @@
 
 		@foreach (Weather item in ViewBag.Weather)
 			{
-				<a href=@Url.Action("Recipes","Home",new{ Category = @item });>@item </a>
+				<a href=@Url.Action("Recipes","Home",new{ Category = @item })>@item </a>
 				@*<label class="custom-control custom-radio">
 				  <input type="radio" name="myfilter_radio" checked="" class="custom-control-input">
 				  <div class="custom-control-label">Any condition</div>
@@ -126,10 +176,12 @@
 		<main class="col-md-9">
 
 @*<div class="row">*@
-	<div class="container">
+	<ul id="myUL">
+@*	<div class="container">*@
 	 @for (int i = 0; i < @Model.Count(); i++)
      {
-		<div class="col-md-4">
+		 <li>
+		<div class="col-md-6">
 		<div class="filterDiv @Model[i].Rdifficulty @Model[i].RHoliday @Model[i].RWeather @Model[i].RType @Model[i].RKashrut">
 		
 		<figure class="card card-product-grid">
@@ -159,8 +211,10 @@
 		</figure>
 	</div>
 	</div> <!-- col.// -->
+</li>
 	}
-</div> <!-- row end.// -->
+	</ul>
+@*</div>*@ <!-- row end.// -->
 @*</div>*@
 
 
@@ -263,6 +317,46 @@
 		@*	background-color: #666;
 			color: white;*@
 		}
+
+
+		 * {
+            box-sizing: border-box;
+        }
+
+        #myInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            #myUL li a {
+              @*  border: 1px solid #ddd;
+                margin-top: -1px; /* Prevent double borders */
+                background-color: #f6f6f6;
+                padding: 12px;
+                text-decoration: none;
+                font-size: 18px;
+                color: black;
+                display: block*@
+            }
+
+                #myUL li a:hover:not(.header) {
+                    background-color: #eee;
+                }
+
+
+
 </style>
 
 
@@ -314,4 +408,22 @@
 			this.className += " active";
 		});
 	}
+
+				function myFunction() {
+					var input, filter, ul, li, a, i, txtValue;
+					input = document.getElementById("myInput");
+					filter = input.value.toUpperCase();
+					ul = document.getElementById("myUL");
+					li = ul.getElementsByTagName("li");
+					for (i = 0; i < li.length; i++) {
+						a = li[i].getElementsByTagName("a")[0];
+						txtValue = a.textContent || a.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							li[i].style.display = "";
+						} else {
+							li[i].style.display = "none";
+						}
+					}
+				}
+
 </script>

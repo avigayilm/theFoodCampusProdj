@@ -67,7 +67,7 @@
           <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="REvent" class="control-label"></label>
-                <select asp-for="REvent" class="form-control" asp-items="Html.GetEnumSelectList<Holiday>()">
+                <select asp-for="REvent" class="form-control" asp-items="Html.GetEnumSelectList<Event>()">
                     <option value="">Choose out of following options</option>
                 </select>
                 <span asp-validation-for="REvent" class="text-danger"></span>

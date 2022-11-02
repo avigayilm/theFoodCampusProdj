@@ -1,13 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using theFoodCampus.Data;
 using theFoodCampus.Models;
 
 namespace theFoodCampus.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        // GET: CommentController
+        public LoginController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Check()
+        {
+            var recipes = _context.Recipes.ToList();
+            return View(recipes);
         }
 
         public List<UserLogin> PutValue()
