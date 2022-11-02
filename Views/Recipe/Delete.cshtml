@@ -29,21 +29,21 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label asp-for="RKashrut" class="control-label"></label>
+                    <label class="control-label">Kashrut</label>
                     <input asp-for="RKashrut" class="form-control-plaintext" readonly />
                 </div>
             </div>
 
           <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="Rdifficulty" class="control-label"></label>
+                <label class="control-label">Difficulty</label>
                 <input asp-for="Rdifficulty" class="form-control-plaintext" readonly />
             </div>
            </div>
 
           <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RPrepTime" class="control-label"></label>
+                <label class="control-label">Preper Time</label>
                 <input asp-for="RPrepTime" class="form-control-plaintext" readonly />
             </div>
            </div>
@@ -55,33 +55,33 @@
            </div>
           <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="REvent" class="control-label"></label>
+                <label class="control-label">Event</label>
                 <input asp-for="REvent" class="form-control-plaintext" readonly />
             </div>
         </div>
           <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RWeather" class="control-label"></label>
+                <label class="control-label">Weather</label>
                 <input asp-for="RWeather" class="form-control-plaintext" readonly />
             </div>
         </div>
          <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RType" class="control-label"></label>
-                        <input asp-for="RType" class="form-control-plaintext" readonly />
+                <label class="control-label">Type</label>
+                <input asp-for="RType" class="form-control-plaintext" readonly />
             </div>
         </div>
 
           <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RDiet" class="control-label"></label>
+                <label class="control-label">Diet</label>
                 <input asp-for="RDiet" class="form-control-plaintext" readonly />
             </div>
         </div>
 
           <div class="col-md-6">
             <div class="form-group">
-                <label asp-for="RBudget" class="control-label"></label>
+                <label class="control-label">Budget</label>
                 <input asp-for="RBudget" class="form-control-plaintext" readonly />
             </div>
         </div>
@@ -94,7 +94,17 @@
                 </div>
 
                 <div class="col-md-6 group">
-                    <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                    @if (@Model.PhotoUrl != null)
+                    {
+                        @if (@Model.PhotoUrl.StartsWith("http") == true)
+                        {
+                            <img src=@Model.PhotoUrl class="img-fluid" />
+                        }
+                        else
+                        {
+                            <img src="~/images/@Model.PhotoUrl" class="img-fluid" />
+                        }
+                    }
                 </div>
 
      @*       <div class="form-group">
@@ -174,9 +184,6 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Step
-                                        </th>
-                                        <th>
                                             Instruction
                                         </th>
                                         <th style="width:60px">
@@ -188,11 +195,8 @@
                                     {
                                         <tr>
                                             <td>
-                                                <div>0@(i + 1)</div>
-                                            </td>
-                                            <td>
                                                 <input type="hidden" asp-for="@Model.Instructions[i].IsHidden" />
-                                                <input asp-for="@Model.Instructions[i].Step" class="form-control-plaintext" readonly />
+                                                <p class="form-control-plaintext" readonly>@Model.Instructions[i].Step"</p>
                                             </td>
                                             <td style="width:60px">
                                             </td>

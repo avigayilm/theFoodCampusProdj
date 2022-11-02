@@ -7,7 +7,7 @@ namespace theFoodCampus.Models.Adapter
     {
         public string Check()
         {
-            string Url = $"http://localhost:5202/api/HebCal";
+            string Url = $"http://localhost:5202/api/HebCal?currentDate={DateTime.Now}";
 
             var client = new RestClient(Url);
 

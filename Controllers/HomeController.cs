@@ -34,40 +34,56 @@ namespace theFoodCampus.Controllers
 
         public IActionResult Index()
         {
-            HebCalData.Root HebCal=ShowHoliday();
-            WeatherData.Root Weather=ShowWeather();
-            List<Recipe> recipes;
-            List<Recipe> WeatherRecipes=null;
-            if (Weather != null)
+            HebCalData.Root HebCal = ShowHoliday(); // calls the function to show hebrew date on home page
+            WeatherData.Root Weather = ShowWeather(); // will show the weather on the home page
+            List<Recipe> recipes = new();
+            List<Recipe>? WeatherRecipes = null;
+            if (Weather != null) 
             {
-                WeatherRecipes = _context.Recipes
-    .Include(e => e.Ingredients)
-    .Include(e => e.Instructions)
-    .Include(e => e.Comments)
-    .Where(e => e.RWeather == Weather.WeatherFeel).ToList();
+                WeatherRecipes = _context.Recipes // creates a list of some of the recipes for current weather
+                .Include(e => e.Ingredients)
+                .Include(e => e.Instructions)
+                .Include(e => e.Comments)
+                .Where(e => e.RWeather == Weather.WeatherFeel).Take(3).ToList();
             }
-            List<Recipe> HolidayRecipes;
+            List<Recipe> HolidayRecipes = new();
+            List<Recipe> EventRecipes = new();
             List<Recipe> HeaderRecipes = null;
             if (HebCal != null)
             {
-                if (HebCal.Holiday != Holiday.None)
+                ViewBag.Hebdate = HebCal.HebrewDate; // display hebrew date on home page
+                if (HebCal.Holiday != Holiday.None) // if there is a holiday coming up soon
                 {
                     HolidayRecipes = _context.Recipes
                     .Include(e => e.Ingredients)
                     .Include(e => e.Instructions)
                     .Include(e => e.Comments)
-                    .Where(e => e.RHoliday == HebCal.Holiday).ToList();
+                    .Where(e => e.RHoliday == HebCal.Holiday).Take(3).ToList(); // create a list of recipes for coming holiday
                     HeaderRecipes = HolidayRecipes;
+                    recipes = HolidayRecipes.Concat(WeatherRecipes).ToList(); // these are the recipes to be displayed on home page
                 }
-                else
+                else // there is no upcoming holiday
                 {
-                    HeaderRecipes = WeatherRecipes;
+                    HeaderRecipes = WeatherRecipes; 
+                    recipes = _context.Recipes
+                    .Include(e => e.Ingredients)
+                    .Include(e => e.Instructions)
+                    .Include(e => e.Comments)
+                    .Where(e => e.RWeather == Weather.WeatherFeel).Take(6).ToList(); // take recipes only according to the weather
+                    var studentEve = calculateEvent();
+                    ViewBag.studentEvent = studentEve; // display on home page the students event
+                    //EventRecipes = _context.Recipes
+                    //    .Include(e => e.Ingredients)
+                    //    .Include(e => e.Instructions)
+                    //    .Include(e => e.Comments)
+                    //    .Where(e => e.REvent == studentEve).Take(3).ToList();
+                    //recipes = WeatherRecipes.Concat(EventRecipes).ToList();
                 }
-                ViewBag.Hebdate = HebCal.HebrewDate;
-            }       
-            recipes = _context.Recipes.ToList();
-            ViewBag.list = _context.Recipes.Select(x => x.Name).ToArray();
-            ViewBag.HeaderList=HeaderRecipes;
+
+            }
+            ViewBag.list = recipes;
+            //_context.Recipes.Select(x => x.Name).ToArray();
+            ViewBag.HeaderList = HeaderRecipes;
             return View(recipes);
         }
 
@@ -75,11 +91,13 @@ namespace theFoodCampus.Controllers
         [HttpPost]
         public ActionResult Index(string personName, string unusedValue = "")
         {
-            Recipe recipe = _context.Recipes
-    .Include(e => e.Ingredients)
-    .Include(e => e.Instructions)
-    .Include(e => e.Comments)
-    .Where(e => e.Name == personName).FirstOrDefault();
+            Recipe? recipe = _context.Recipes
+            .Include(e => e.Ingredients)
+            .Include(e => e.Instructions)
+            .Include(e => e.Comments)
+            .Where(e => e.Name == personName).FirstOrDefault();
+            if (recipe == null)
+                throw new Exception();
             return RedirectToAction("RecipePost", "Home", new { id = recipe.Id });
             //ViewBag.Message = "Selected Person Name: " + personName;
             //return View();
@@ -88,52 +106,56 @@ namespace theFoodCampus.Controllers
         {
             var HebCalModel = new HebCalAdapter();// this gets the string from the gateway.
             var holiday = HebCalModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            HebCalData.Root result = null;
+            HebCalData.Root? result = null;
             if (holiday != null)
-            {
                 result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
-                ViewBag.holiday = result;
-                if (result.Holiday == Holiday.None) // then go according to students schedule
-                {
-                    var studentEve = calculateEvent();
-                    ViewBag.studentEvent = studentEve;
-                }
+            ViewBag.holiday = result;
+            if (result == null)
+                throw new Exception();
+            if (result.Holiday == Holiday.None) // then go according to students schedule
+            {
+                var studentEve = calculateEvent();
+                ViewBag.studentEvent = studentEve;
             }
+            ViewBag.holiday = result;
             return result;
         }
+       
+            
+        
 
-        private Event calculateEvent()
+        private string calculateEvent()
         {
             var dateTime = DateTime.Now;
             switch (dateTime.Month)
             {
                 case 8 or 9: // its vacation
-                    return Event.Vacation;// call fuction for rosh hashana receipes
+                    return "Its vacation!!!!\n" +
+                        "Vacation is having nothing to do and all day to do it:)";// call fuction for rosh hashana receipes
 
                 case 5 or 12: // projects usually
                     {
-                      
-                        //if (day > 17 & day < 22)
-                        //{
-                        //    holiday=Holiday.sim
-                        //    break;// call function for simchat torah
-                        //}
-                        // default function to calculate for the english date
-                        return Event.Project;
+                        return "Get going now its project time!\n" +
+                            "and remember- Done is better then perfect:)";
+                       
                     }
 
                 case 1 or 6: // end of semester
-                    return Event.End_Of_Semester;
+                    return "find some cool and easy recipes for the end of semester\n" +
+                        "remember- it always seems impossible until it is done:)" ;
 
                 case 2 or 7: // exams time
-                  return Event.Exams;
+                    return "check out some quick and nutritious recipes for exam time\n" +
+                        "remember- if you believe in yourself anything is possible!" +
+                        "Best of luck on exams:)";
 
 
                 case 3 or 4 or 10 or 11: // beginning of semester
-                   return Event.Beginning_Of_Semester;
+                    return "Recipes to get you started this semester\n" +
+                        "remember- The future belongs to those who believe in their dreams:)" ;
                 default:
-                    return Event.Occasion;
-                 
+                    return "Check out our student oriented recipes";
+
             }
         }
 
@@ -141,8 +163,8 @@ namespace theFoodCampus.Controllers
         {
             var WeatherModel = new WeatherAdapter();
             var weather = WeatherModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            WeatherData.Root result = null;
-            if(weather!=null)
+            WeatherData.Root? result = null;
+            if (weather != null)
                 result = JsonConvert.DeserializeObject<WeatherData.Root>(weather);
             ViewBag.weather = result;
             return result;
@@ -210,7 +232,7 @@ namespace theFoodCampus.Controllers
             else
             {
                 recipes = _context.Recipes
-                .Include(e => e.Comments).OrderByDescending(x=>x.Rdifficulty).ToList();
+                .Include(e => e.Comments).OrderByDescending(x => x.Rdifficulty).ToList();
             }
             //here I want to call the show weather and holiday funcitons so that I get a list from those functions.
             return View(recipes);
@@ -230,12 +252,12 @@ namespace theFoodCampus.Controllers
         }
 
         [HttpGet]
-        public IActionResult Recipepost(int Id, string alert="false")
+        public IActionResult Recipepost(int Id, string alert = "false")
         {
             // get me the exprencies from the detail table together with header table.
             // thi is called eager loading
             // there is eager lazy and explicit loading.
-            Recipe recipe = _context.Recipes
+            Recipe? recipe = _context.Recipes
                 .Include(e => e.Ingredients)
                 .Include(e => e.Instructions)
                 .Include(e => e.Comments)
@@ -243,16 +265,17 @@ namespace theFoodCampus.Controllers
                 .Where(e => e.Id == Id).FirstOrDefault();
 
             var UsdaModel = new UsdaAdapter();
+            if (recipe == null) throw new Exception();
             var myJsonNutrients = UsdaModel.Check(recipe.Tag);// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
-            List<Nutrient.Root> list = null;
+            List<Nutrient.Root>? list = null;
             if (myJsonNutrients != null)
                 list = JsonConvert.DeserializeObject<List<Nutrient.Root>>(myJsonNutrients);
             ViewBag.Nutrients = list;
 
             var bigMLModel = new BigMLAdapter();
-            BigMLData data = new BigMLData { LastCategory = recipe.RType.ToString(), Holiday = recipe.RHoliday.ToString(), Weather = recipe.RType.ToString()};
+            BigMLData data = new BigMLData { LastCategory = recipe.RType.ToString(), Holiday = recipe.RHoliday.ToString(), Weather = recipe.RType.ToString() };
             var nextCategory = Regex.Replace(bigMLModel.Check(data), @"[^0-9a-zA-Z\._]", string.Empty); // predict next category accordig to ML prediction
-            Category type=Enum.Parse<Category>(nextCategory);
+            Category type = Enum.Parse<Category>(nextCategory);
 
             List<Recipe> nextRecipes = _context.Recipes // retrieve only those recipes that are of wanted category
                 .Include(e => e.Ingredients)
@@ -280,7 +303,7 @@ namespace theFoodCampus.Controllers
                 ViewBag.RatingSum = 0;
                 ViewBag.RatingCount = 0;
             }
-           ViewBag.alert = alert;
+            ViewBag.alert = alert;
             return View(recipe);
         }
         /// <summary>
@@ -299,7 +322,7 @@ namespace theFoodCampus.Controllers
                 {
                     string pathToImagga = @"wwwroot/images/";
                     string nameImage = uploadImage(recipe.ImageForm);
-                    recipe.ImageString =nameImage;
+                    recipe.ImageString = nameImage;
                     string imageId = uploadImagga(pathToImagga + nameImage);
                     data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
 
@@ -343,10 +366,10 @@ namespace theFoodCampus.Controllers
             request.AddFile("image", path);
 
             RestResponse response = client.Execute(request);
-            String[] spearator = { "{", "}", "," ,":{", "},","}}",":",@"\" ,@"'\","\""};
+            String[] spearator = { "{", "}", ",", ":{", "},", "}}", ":", @"\", @"'\", "\"" };
             var json = response.Content.ToJson();
             var result = json.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
-            return result[2];           
+            return result[2];
         }
 
         /// <summary>
@@ -369,12 +392,12 @@ namespace theFoodCampus.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(Recipe recipe)
+        public ActionResult Add(Recipe? recipe)
         {
             //var comment = vm.Comments;
             //var articleId = vm.ArticleId;
             //var rating = vm.Rating;
-
+            if (recipe == null) throw new Exception();
             Comment artComment = new Comment()
             {
                 RecipeId = recipe.Id,
@@ -390,7 +413,7 @@ namespace theFoodCampus.Controllers
                .Include(e => e.Instructions)
                .Include(e => e.Comments)
                .Where(e => e.Id == recipe.Id).FirstOrDefault();
-
+            if (recipe == null) throw new Exception();
             // should actuallu mae field so we don't have to do this again.
             var sum = recipe.Comments.Sum(d => d.Rating);
             var count = recipe.Comments.Count();

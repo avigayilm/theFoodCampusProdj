@@ -16,7 +16,7 @@ namespace theFoodCampus.Controllers
         {
             _context = context;
             _webHost = webHost;
-            _HM= new HomeController(_context, _webHost);
+            _HM = new HomeController(_context, _webHost);
         }
         public IActionResult Index()
         {
@@ -42,10 +42,21 @@ namespace theFoodCampus.Controllers
             recipe.Ingredients.RemoveAll(n => n.Name == "");
             recipe.Instructions.RemoveAll(n => n.Step == "");
             recipe.Ingredients.RemoveAll(n => n.IsDeleted == true);
-            string pathToImagga = @"wwwroot/images/";
-            string nameImage = _HM.uploadImage(recipe.ProfilePhoto);            
-            string imageId = _HM.uploadImagga(pathToImagga + nameImage);
-            ImaggaData data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
+            ImaggaData data;
+            string nameImage;
+            if (recipe.ProfilePhoto != null)
+            {
+
+                string pathToImagga = @"wwwroot/images/";
+                nameImage = _HM.uploadImage(recipe.ProfilePhoto);
+                string imageId = _HM.uploadImagga(pathToImagga + nameImage);
+                data = new ImaggaData() { ImageUrl = imageId, Title = recipe.Tag };
+            }
+            else//upload a url
+            {
+                nameImage = recipe.ProfileUrl;
+                data = new ImaggaData() { ImageUrl = nameImage, Title = recipe.Tag };
+            }
             var currentModel = new ImaggaAdapter();
             string ImaggaResult = currentModel.Check(data);
             if (ImaggaResult == "true")
@@ -55,10 +66,10 @@ namespace theFoodCampus.Controllers
                 _context.Add(recipe);
                 _context.SaveChanges();
                 return RedirectToAction("index");
-            }               
+            }
             else
             {
-                return RedirectToAction("Create", "Recipe", new {alert = "true" });
+                return RedirectToAction("Create", "Recipe", new { alert = "true" });
             }
         }
 
@@ -149,11 +160,12 @@ namespace theFoodCampus.Controllers
 
             if (recipe.ProfilePhoto != null) // he updates the image so therefore we update it to the root
             {
-
-
                 string uniqueFileName = GetUploadedFileName(recipe);
-
                 recipe.PhotoUrl = uniqueFileName;
+            }
+            if(recipe.ProfileUrl != null)
+            {
+                recipe.PhotoUrl = recipe.ProfileUrl;
             }
             // we just removed all the ingredients and now we save it again
             // this in is inorder not to save twice.
