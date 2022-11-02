@@ -49,7 +49,7 @@
 *@
 <!-- ##### Hero Area Start ##### -->
 <section class="hero-area">
-    <div class="hero-slides owl-carousel">
+@*    <div class="hero-slides owl-carousel">
         <!-- Single Hero Slide -->
         @foreach (Recipe item in @ViewBag.HeaderList)
         {
@@ -66,7 +66,7 @@
                 </div>
             </div>
          </div>
-        }
+        }*@
 
    @* <div class="hero-slides owl-carousel">
         <!-- Single Hero Slide -->
@@ -123,7 +123,7 @@
             <!-- Top Catagory Area -->
             <div class="col-12 col-lg-6">
                 <div class="single-top-catagory">
-                    <img src="~/img/bg-img/bg2.jpg" alt="">
+                    <img src="~/img/bg-img/bg2.jpg" alt="" >
                     <!-- Content -->
                     <div class="top-cta-content">
                         @if (ViewBag.holiday.Holiday != Holiday.None)
@@ -162,7 +162,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-heading">
-                    <h3>The best Receipies</h3>
+                    <h3>The best Recipes</h3>
                 </div>
             </div>
         </div>

@@ -34,40 +34,55 @@ namespace theFoodCampus.Controllers
 
         public IActionResult Index()
         {
-            HebCalData.Root HebCal = ShowHoliday();
-            WeatherData.Root Weather = ShowWeather();
-            List<Recipe> recipes;
+            HebCalData.Root HebCal = ShowHoliday(); // calls the function to show hebrew date on home page
+            WeatherData.Root Weather = ShowWeather(); // will show the weather on the home page
+            List<Recipe> recipes = new();
             List<Recipe>? WeatherRecipes = null;
-            if (Weather != null)
+            if (Weather != null) 
             {
-                WeatherRecipes = _context.Recipes
-                .Include(e => e.Ingredients)
+                WeatherRecipes = _context.Recipes // creates a list of some of the recipes for current weather
                 .Include(e => e.Ingredients)
                 .Include(e => e.Instructions)
                 .Include(e => e.Comments)
-                .Where(e => e.RWeather == Weather.WeatherFeel).ToList();
+                .Where(e => e.RWeather == Weather.WeatherFeel).Take(3).ToList();
             }
-            List<Recipe> HolidayRecipes;
-            List<Recipe>? HeaderRecipes = null;
+            List<Recipe> HolidayRecipes = new();
+            List<Recipe> EventRecipes = new();
+            List<Recipe> HeaderRecipes = null;
             if (HebCal != null)
             {
-                if (HebCal.Holiday != Holiday.None)
+                ViewBag.Hebdate = HebCal.HebrewDate; // display hebrew date on home page
+                if (HebCal.Holiday != Holiday.None) // if there is a holiday coming up soon
                 {
                     HolidayRecipes = _context.Recipes
                     .Include(e => e.Ingredients)
                     .Include(e => e.Instructions)
                     .Include(e => e.Comments)
-                    .Where(e => e.RHoliday == HebCal.Holiday).ToList();
+                    .Where(e => e.RHoliday == HebCal.Holiday).Take(3).ToList(); // create a list of recipes for coming holiday
                     HeaderRecipes = HolidayRecipes;
+                    recipes = HolidayRecipes.Concat(WeatherRecipes).ToList(); // these are the recipes to be displayed on home page
                 }
-                else
+                else // there is no upcoming holiday
                 {
-                    HeaderRecipes = WeatherRecipes;
+                    HeaderRecipes = WeatherRecipes; 
+                    recipes = _context.Recipes
+                    .Include(e => e.Ingredients)
+                    .Include(e => e.Instructions)
+                    .Include(e => e.Comments)
+                    .Where(e => e.RWeather == Weather.WeatherFeel).Take(6).ToList(); // take recipes only according to the weather
+                    var studentEve = calculateEvent();
+                    ViewBag.studentEvent = studentEve; // display on home page the students event
+                    //EventRecipes = _context.Recipes
+                    //    .Include(e => e.Ingredients)
+                    //    .Include(e => e.Instructions)
+                    //    .Include(e => e.Comments)
+                    //    .Where(e => e.REvent == studentEve).Take(3).ToList();
+                    //recipes = WeatherRecipes.Concat(EventRecipes).ToList();
                 }
-                ViewBag.Hebdate = HebCal.HebrewDate;
+
             }
-            recipes = _context.Recipes.ToList();
-            ViewBag.list = _context.Recipes.Select(x => x.Name).ToArray();
+            ViewBag.list = recipes;
+            //_context.Recipes.Select(x => x.Name).ToArray();
             ViewBag.HeaderList = HeaderRecipes;
             return View(recipes);
         }
@@ -81,7 +96,7 @@ namespace theFoodCampus.Controllers
             .Include(e => e.Instructions)
             .Include(e => e.Comments)
             .Where(e => e.Name == personName).FirstOrDefault();
-            if(recipe == null)
+            if (recipe == null)
                 throw new Exception();
             return RedirectToAction("RecipePost", "Home", new { id = recipe.Id });
             //ViewBag.Message = "Selected Person Name: " + personName;
@@ -93,51 +108,53 @@ namespace theFoodCampus.Controllers
             var holiday = HebCalModel.Check();// if you have parameters  you put the parameters in check, best ot have it in models as an object the parameters you need
             HebCalData.Root? result = null;
             if (holiday != null)
-            {
                 result = JsonConvert.DeserializeObject<HebCalData.Root>(holiday);
-                ViewBag.holiday = result;
-                if (result == null)
-                    throw new Exception();
-                if (result.Holiday == Holiday.None) // then go according to students schedule
-                {
-                    var studentEve = calculateEvent();
-                    ViewBag.studentEvent = studentEve;
-                }
+            ViewBag.holiday = result;
+            if (result == null)
+                throw new Exception();
+            if (result.Holiday == Holiday.None) // then go according to students schedule
+            {
+                var studentEve = calculateEvent();
+                ViewBag.studentEvent = studentEve;
             }
+            ViewBag.holiday = result;
             return result;
         }
+       
+            
+        
 
-        private Event calculateEvent()
+        private string calculateEvent()
         {
             var dateTime = DateTime.Now;
             switch (dateTime.Month)
             {
                 case 8 or 9: // its vacation
-                    return Event.Vacation;// call fuction for rosh hashana receipes
+                    return "Its vacation!!!!\n" +
+                        "Vacation is having nothing to do and all day to do it:)";// call fuction for rosh hashana receipes
 
                 case 5 or 12: // projects usually
                     {
-
-                        //if (day > 17 & day < 22)
-                        //{
-                        //    holiday=Holiday.sim
-                        //    break;// call function for simchat torah
-                        //}
-                        // default function to calculate for the english date
-                        return Event.Project;
+                        return "Get going now its project time!\n" +
+                            "and remember- Done is better then perfect:)";
+                       
                     }
 
                 case 1 or 6: // end of semester
-                    return Event.End_Of_Semester;
+                    return "find some cool and easy recipes for the end of semester\n" +
+                        "remember- it always seems impossible until it is done:)" ;
 
                 case 2 or 7: // exams time
-                    return Event.Exams;
+                    return "check out some quick and nutritious recipes for exam time\n" +
+                        "remember- if you believe in yourself anything is possible!" +
+                        "Best of luck on exams:)";
 
 
                 case 3 or 4 or 10 or 11: // beginning of semester
-                    return Event.Beginning_Of_Semester;
+                    return "Recipes to get you started this semester\n" +
+                        "remember- The future belongs to those who believe in their dreams:)" ;
                 default:
-                    return Event.Occasion;
+                    return "Check out our student oriented recipes";
 
             }
         }
