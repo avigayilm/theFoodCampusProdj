@@ -6,7 +6,7 @@
 }
 <div class="col-11 mx-auto pt-0">
     <div class="card">
-       <div class="row h-100 align-items-center">
+        <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="breadcumb-text text-center">
                     <h2>Recipe</h2>
@@ -123,20 +123,29 @@
                     <span asp-validation-for="Tag" class="text-danger"></span>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-14">
+                    @* <div class="col-md-6 group">*@
+                    <div class="hover-text col-md-6">
+                        <label class="custome-file-label" for="customFile">Choose File 🖇️</label>
+                        <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile"
+                               onchange="document.getElementById('PreviewPhoto').src=window.URL.createObjectURL(this.files[0])"
+                               placeholder="choose file" />
+                        <span class="tooltip-text" id="left">click here to choose a file</span>
+                    </div>
 
-            <div class="col-md-6 group">
-                <div class="hover-text col-md-6">
-                    <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile"
-                           onchange="document.getElementById('PreviewPhoto').src=window.URL.createObjectURL(this.files[0])"
-                           placeholder="choose file" />
-                    <span class="tooltip-text" id="left">click here to choose a file</span>
-                    <label class="custome-file-label" for="customFile">Choose File 🖇️</label>
+                    <div class="form-group">
+                        <label asp-for="ProfileUrl" class="control-label" hidden></label>
+                        <input asp-for="ProfileUrl" class="form-control" id="customFile" placeholder="https://example.com"
+                        pattern="https?://.+[a-z0-9._%+-]+[.jpg/.png]$" title="The link must be in url form. Must be of jpg or png type only!" />
+                        <span asp-validation-for="ProfileUrl" class="text-danger"></span>
+                    </div>
                 </div>
-
+                @*
                 <div class="form-group">
-                    <input asp-for="ProfileUrl" id="customFile"
-                           placeholder="https://example.com" />
-                </div>
+                <input asp-for="ProfileUrl" id="customFile"
+                placeholder="https://example.com" />
+                </div>*@
 
                 <div class="form-group col-4">
                     <img id="PreviewPhoto" src="~/Images/noimage.png" alt="Logo Image"
@@ -502,9 +511,9 @@
             }
 
         .hover-text {
-        position: relative;
-        margin: 40px;
-        /* font-family: ui-sans-serif; */
-        text-align: initial;
+            position: relative;
+            margin: 40px;
+            /* font-family: ui-sans-serif; */
+            text-align: initial;
         }
     </style>
