@@ -31,7 +31,8 @@
     </div>
 }
 <!-- ##### Breadcumb Area Start ##### -->
-<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/images/@Model.PhotoUrl);">
+
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb2.jpg)">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
@@ -46,7 +47,7 @@
 
 <div class="receipe-post-area section-padding-80">
 
-    
+
 
     <!-- Receipe Content Area -->
     <div class="receipe-content-area">
@@ -116,28 +117,7 @@
             </div>
         </div>
 
-        @*         <div class="row">
-        <div class="col-12">
-        <div class="section-heading text-left">
-        <h3>Nutrients</h3>
-        </div>
-        </div>
-        </div>
 
-        This is if we would do a for loop for the nutrients table
-        <div class="row">
-        <div class="col-12 col-lg-8">
-        @for (int i = 1; i < @ViewBag.Nutrients.Count; i++)
-        {
-        <div class="single-preparation-step d-flex">
-        <p>@ViewBag.Nutrients[i].Value @ViewBag.Nutrients[i].UnitName @ViewBag.Nutrients[i].Name  </p>
-        </div>
-        }
-        </div>
-
-        <!-- Receipe Slider for next recipes according to bigml -->
-
-        *@
         <div class="container">
             <div class="row">
                 <div class="col-5">
@@ -145,10 +125,16 @@
                     <div class="receipe-slider owl-carousel">
                         @for (int imgIndex = 0; imgIndex < ViewBag.nextRecipes.Count; imgIndex++)
                         {
-                            var a = ViewBag.nextRecipes[imgIndex].PhotoUrl;
-                            <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt="">
-
-
+                            @if (@Model.PhotoUrl.StartsWith("http") == true)
+                            {
+                                <img src=@Model.PhotoUrl alt=""
+                             width="800" height="604" style="border:1px; margin-top:20px; " />
+                            }
+                            else
+                            {
+                                <img src="~/images/@ViewBag.nextRecipes[imgIndex].PhotoUrl" alt=""
+                             width="200" height="200" style="border:1px; margin-top:20px; " />
+                            }
                         }
 
                     </div>
@@ -161,10 +147,10 @@
             <section class="performance-facts">
                 <header class="performance-facts__header">
                     <h1 class="performance-facts__title">Nutrition Facts</h1>
-                   @if (ViewBag.Nutrients[0].Value != 0)
-                   {
+                    @if (ViewBag.Nutrients[0].Value != 0)
+                    {
                         <p>Serving Size  @ViewBag.Nutrients[0].Value @ViewBag.Nutrients[0].UnitName</p>
-                   }
+                    }
                 </header>
                 <table class="performance-facts__table">
                     <thead>
@@ -181,24 +167,24 @@
                             </td>
                         </tr>
 
-@*                        <tr>
-                            @if (@ViewBag.Nutrients[0].Value != 0)
-                            {
-                                <th colspan="2">
+                        @*                        <tr>
+                        @if (@ViewBag.Nutrients[0].Value != 0)
+                        {
+                        <th colspan="2">
 
-                                    <b>@ViewBag.Nutrients[0].Name </b>
-                                    @ViewBag.Nutrients[0].Value @ViewBag.Nutrients[0].UnitName
-                                </th>
-                                <td>
-                                    @if (ViewBag.Nutrients[0].DailyPercent != null)
-                                    {
-                                        <b>@ViewBag.Nutrients[0].DailyPercent %</b>
-                                    }
-                                </td>
-                            }
+                        <b>@ViewBag.Nutrients[0].Name </b>
+                        @ViewBag.Nutrients[0].Value @ViewBag.Nutrients[0].UnitName
+                        </th>
+                        <td>
+                        @if (ViewBag.Nutrients[0].DailyPercent != null)
+                        {
+                        <b>@ViewBag.Nutrients[0].DailyPercent %</b>
+                        }
+                        </td>
+                        }
                         </tr>*@
 
-                        @for (int i=1;i< ViewBag.Nutrients.Count;i++)
+                        @for (int i = 1; i < ViewBag.Nutrients.Count; i++)
                         {
                             <tr>
                                 <th colspan="2">
@@ -233,7 +219,7 @@
 
             </section>
         </div>
-      
+
         <hr />
         <div class="row">
             <div class="col-md-14">
@@ -295,7 +281,7 @@
             </div>
         }
         <hr />
-       
+
         <dl class="dl-horizontal">
             <div class="row">
                 <div class="col-12">
@@ -433,8 +419,8 @@
     }
 
     /* Override the default bootstrap behavior where horizontal description lists
-                               will truncate terms that are too long to fit in the left column
-                            */
+                                       will truncate terms that are too long to fit in the left column
+                                    */
     .dl-horizontal dt {
         white-space: normal;
     }
