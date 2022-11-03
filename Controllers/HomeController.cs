@@ -149,17 +149,15 @@ namespace theFoodCampus.Controllers
 
                 case 1 or 6: // end of semester
                     return "find some cool and easy recipes for the end of semester\n" +
-                        "remember- it always seems impossible until it is done:)" ;
+                        "almoste there:)" ;
 
                 case 2 or 7: // exams time
                     return "check out some quick and nutritious recipes for exam time\n" +
-                        "remember- if you believe in yourself anything is possible!" +
                         "Best of luck on exams:)";
 
 
                 case 3 or 4 or 10 or 11: // beginning of semester
-                    return "Recipes to get you started this semester\n" +
-                        "remember- The future belongs to those who believe in their dreams:)" ;
+                    return "Recipes to get you started this semester"  ;
                 default:
                     return "Check out our student oriented recipes";
 
