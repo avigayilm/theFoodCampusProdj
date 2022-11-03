@@ -1,8 +1,8 @@
 ﻿@model List<theFoodCampus.Models.Recipe>
 @{
-	ViewData["Title"] = "Recipes";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	//Layout = null;
+    ViewData["Title"] = "Recipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
 }
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -12,418 +12,358 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
 
-@*@using (Html.BeginForm("Recipes", "Home", FormMethod.Post))
-{
-    <input type="text" id="textPerson" name="personName" />
-
-    <br />
-    <input type="submit" id="btnSubmit" value="Submit" />
-    <br />
-    <br />
-    @ViewBag.Message
-}*@
-@section scripts{
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#textPerson").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: '/Home/AutoComplete/',
-                        data: { "prefix": request.term },
-                        type: "POST",
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return item;
-                            }))
-                        },
-                        error: function (response) {
-                            alert(response.responseText);
-                        },
-                        failure: function (response) {
-                            alert(response.responseText);
-                        }
-                    });
-                },
-                select: function (e, i) {
-                    //get selected value
-                    //$("#personNameValue").val(i.item.val);
-                },
-                minLength: 1
-            });
-        });
-    </script>
-}
-
 
 <h1>Recipes</h1>
 <h2>@ViewBag.Category</h2>
 
 <div class="container">
-	<div class="row">
-	<aside class="col-md-3">
-		
-<div class="card">
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Holidays</h6>
-			</a>
-		</header>
-		<div class="filter-content collapse show" id="collapse_1" style="">
-			<div class="card-body">
-@*		@using (Html.BeginForm("Recipes", "Home", FormMethod.Post))
-				{
-					<div class="input-group">
-					<input type="text" class="form-control" name="personName" id="textPerson" placeholder="Search">
-					<input type="submit" id="btnSubmit" value="Submit" />
-				  <div class="input-group-append">
-				    <button class="btn btn-light" type="button"><i class="fa fa-search"></i></button>
-				  </div>
-				</div>
-				}*@
-				<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <div class="row">
+        <aside class="col-md-3">
 
-                <ul class="list-menu">
-                    @foreach (Holiday item in ViewBag.Holiday)
-                    {
-                        <li>
-                            <a href=@Url.Action("Recipes","Home",new{ Category = @item })>@item </a>
-                        </li>
-                    }
-                </ul>
-           </div> <!-- card-body.// -->
-       </div>
+            <div class="card">
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title">Holidays</h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse show" id="collapse_1" style="">
+                        <div class="card-body">
+                            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-       </article> <!-- filter-group  .// -->
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Categories </h6>
-			</a>
-		</header>
-		<div class="filter-content collapse show" id="collapse_2" style="">
-			<div class="card-body">
-			<div id="myBtnContainer">
-			<button class="btn active" onclick="filterSelection('all')"> Show all</button>
-			@foreach (Category item in ViewBag.Category_List)
-			{
-				@*<label class="custom-control custom-checkbox">
-				  <input type="checkbox" checked="" class="custom-control-input">
-				  <div class="custom-control-label">@item  
-				  	<b class="badge badge-pill badge-light float-right">120</b>  </div>
-				</label>*@
-			<button class="btn" onclick="filterSelection('@item')"> @item</button>
-			}
+                            <ul class="list-menu">
+                                @foreach (Holiday item in ViewBag.Holiday)
+                                {
+                                    <li>
+                                        <a href=@Url.Action("Recipes","Home",new{ Category = @item })>@item </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div> <!-- card-body.// -->
+                    </div>
 
-							</div>
-						</div> <!-- card-body.// -->
-		</div>
-	</article> <!-- filter-group .// -->
+                </article> <!-- filter-group  .// -->
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title">Categories </h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse show" id="collapse_2" style="">
+                        <div class="card-body">
+                            <div id="myBtnContainer">
+                                <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+                                @foreach (Category item in ViewBag.Category_List)
+                                {
 
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Difficulty </h6>
-			</a>
-		</header>
-		<div class="filter-content collapse show" id="collapse_4" style="">
-			<div class="card-body">
-			<div id="myBtnContainer">
-			<button class="btn active" onclick="filterSelection('all')"> Show all</button>
-		@foreach (Difficulty item in ViewBag.Difficulty)
-			{
-			 @* <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> @item </span>
-			  </label>*@
-			<button class="btn" onclick="filterSelection('@item')"> @item</button>
-			}
-			</div>
+                                    <button class="btn" onclick="filterSelection('@item')"> @item</button>
+                                }
 
-		</div><!-- card-body.// -->
-		</div>
-	</article> <!-- filter-group .// -->
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_5" aria-expanded="false" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Weather filter </h6>
-			</a>
-		</header>
-		<div class="filter-content collapse in" id="collapse_5" style="">
-			<div class="card-body">
+                            </div>
+                        </div> <!-- card-body.// -->
+                    </div>
+                </article> <!-- filter-group .// -->
 
-		@foreach (Weather item in ViewBag.Weather)
-			{
-				<a href=@Url.Action("Recipes","Home",new{ Category = @item })>@item </a>
-				@*<label class="custom-control custom-radio">
-				  <input type="radio" name="myfilter_radio" checked="" class="custom-control-input">
-				  <div class="custom-control-label">Any condition</div>
-				</label>*@
-			}
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title">Difficulty </h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse show" id="collapse_4" style="">
+                        <div class="card-body">
+                            <div id="myBtnContainer">
+                                <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+                                @foreach (Difficulty item in ViewBag.Difficulty)
+                                {
+                                    @* <label class="checkbox-btn">
+                                <input type="checkbox">
+                                <span class="btn btn-light"> @item </span>
+                                </label>*@
+                                    <button class="btn" onclick="filterSelection('@item')"> @item</button>
+                                }
+                            </div>
+
+                        </div><!-- card-body.// -->
+                    </div>
+                </article> <!-- filter-group .// -->
+                <article class="filter-group">
+                    <header class="card-header">
+                        <a href="#" data-toggle="collapse" data-target="#collapse_5" aria-expanded="false" class="">
+                            <i class="icon-control fa fa-chevron-down"></i>
+                            <h6 class="title">Weather filter </h6>
+                        </a>
+                    </header>
+                    <div class="filter-content collapse in" id="collapse_5" style="">
+                        <div class="card-body">
+
+                            @foreach (Weather item in ViewBag.Weather)
+                            {
+                                <a href=@Url.Action("Recipes","Home",new{ Category = @item })>@item </a>
+                                @*<label class="custom-control custom-radio">
+                            <input type="radio" name="myfilter_radio" checked="" class="custom-control-input">
+                            <div class="custom-control-label">Any condition</div>
+                            </label>*@
+                            }
 
 
-			</div><!-- card-body.// -->
-		</div>
-	</article> <!-- filter-group .// -->
-</div> <!-- card.// -->
+                        </div><!-- card-body.// -->
+                    </div>
+                </article> <!-- filter-group .// -->
+            </div> <!-- card.// -->
 
-		</aside>
-		<main class="col-md-9">
+        </aside>
+        <main class="col-md-9">
 
-@*<div class="row">*@
-	<ul id="myUL">
-@*	<div class="container">*@
-	 @for (int i = 0; i < @Model.Count(); i++)
-     {
-		 <li>
-		<div class="col-md-6">
-		<div class="filterDiv @Model[i].Rdifficulty @Model[i].RHoliday @Model[i].RWeather @Model[i].RType @Model[i].RKashrut">
-		
-		<figure class="card card-product-grid">
-			<div class="img-wrap"> 
-				<span class="badge badge-danger"> NEW </span>
-							<img src="~/images/@Model[i].PhotoUrl" alt="" class="img-fluid">
-				@*<a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>*@
-			</div> <!-- img-wrap.// -->
-			<figcaption class="info-wrap">
-				<div class="fix-height">
-								<a href="@Url.Action("RecipePost", "Home",new {id = Model[i].Id})" class="title">@Model[i].Name</a>
-					<div class="price-wrap mt-2">
-									<p>@Model[i].Comments.Count() Comments</p>
-					</div> <!-- price-wrap.// -->
-				</div>
-							<div class="ratings">
-								@for (var j = 1; j <= @Model[i].Rating; j++)
-								{
-									<i class="fa fa-star" aria-hidden="true"></i>
-								}
-								@for (var j = (@Model[i].Rating + 1); j <= 5; j++)
-								{
-									<i class="fa fa-star-o" aria-hidden="true"></i>
-								}
-							</div>
-			</figcaption>
-		</figure>
-	</div>
-	</div> <!-- col.// -->
-</li>
-	}
-	</ul>
-@*</div>*@ <!-- row end.// -->
-@*</div>*@
+            @*<div class="row">*@
+            <ul id="myUL">
+                @*	<div class="container">*@
+                @for (int i = 0; i < @Model.Count(); i++)
+                {
+                    <li>
+                        <div class="col-md-6">
+                            <div class="filterDiv @Model[i].Rdifficulty @Model[i].RHoliday @Model[i].RWeather @Model[i].RType @Model[i].RKashrut">
+
+                                <figure class="card card-product-grid">
+                                    <div class="img-wrap">
+                                        <span class="badge badge-danger"> @Model[i].Rdifficulty </span>
 
 
-<style>
-    .icon-control {
-        margin-top: 5px;
-        float: right;
-        font-size: 80%;
-    }
+                                        @if (@Model[i].PhotoUrl != null)
+                                        {
+                                            @if (@Model[i].PhotoUrl.StartsWith("http") == true)
+                                            {
+                                                <img src=@Model[i].PhotoUrl alt="" class="img-fluid" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/@Model[i].PhotoUrl" alt="" class="img-fluid" />
+                                            }
+                                        }
 
 
-
-    .btn-light {
-        background-color: #fff;
-        border-color: #e4e4e4;
-    }
-
-    .list-menu {
-        list-style: none;
-        margin: 0;
-        padding-left: 0;
-    }
-
-        .list-menu a {
-            color: #343a40;
-        }
-
-    .card-product-grid .info-wrap {
-        overflow: hidden;
-        padding: 18px 20px;
-    }
-
-    [class*='card-product'] a.title {
-        color: #212529;
-        display: block;
-    }
-
-    .card-product-grid:hover .btn-overlay {
-        opacity: 1;
-    }
-
-    .card-product-grid .btn-overlay {
-        -webkit-transition: .5s;
-        transition: .5s;
-        opacity: 0;
-        left: 0;
-        bottom: 0;
-        color: #fff;
-        width: 100%;
-        padding: 5px 0;
-        text-align: center;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    .img-wrap {
-        overflow: hidden;
-        position: relative;
-    }
+                                        @*<img src="~/images/@Model[i].PhotoUrl" alt="" class="img-fluid">*@
+                                        @*<a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>*@
+                                    </div> <!-- img-wrap.// -->
+                                    <figcaption class="info-wrap">
+                                        <div class="fix-height">
+                                            <a href="@Url.Action("RecipePost", "Home",new {id = Model[i].Id})" class="title">@Model[i].Name</a>
+                                            <div class="price-wrap mt-2">
+                                                <p>@Model[i].Comments.Count() Comments</p>
+                                            </div> <!-- price-wrap.// -->
+                                        </div>
+                                        <div class="ratings">
+                                            @for (var j = 1; j <= @Model[i].Rating; j++)
+                                            {
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            }
+                                            @for (var j = (@Model[i].Rating + 1); j <= 5; j++)
+                                            {
+                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            }
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div> <!-- col.// -->
+                    </li>
+                }
+            </ul>
+            @*</div>*@ <!-- row end.// -->
+            @*</div>*@
 
 
-
-				.container {
-				  margin-top: 20px;
-				  overflow: hidden;
-				  display: table;
-				}
-	.filterDiv {
-@*		float: left;*@
-@*		background-color: #2196F3;*@
-@*		color: #ffffff;*@
-@*		width: 100px;*@
-@*		line-height: 100px;*@
-@*		text-align: center;*@
-@*		margin: 2px;*@
-		display: none; /* Hidden by default */
-	}
-
-	/* The "show" class is added to the filtered elements */
-	.show {
-		display: block;
-	}
-
-	/* Style the buttons */
-	.btn {
-		border: none;
-		outline: none;
-		@*padding: 12px 16px;
-		background-color: #f1f1f1;*@
-		cursor: pointer;
-	}
-
-		/* Add a light grey background on mouse-over */
-		.btn:hover {
-			background-color: #ddd;
-		}
-
-		/* Add a dark background to the active button */
-		.btn.active {
-		@*	background-color: #666;
-			color: white;*@
-		}
-
-
-		 * {
-            box-sizing: border-box;
-        }
-
-        #myInput {
-            background-image: url('/css/searchicon.png');
-            background-position: 10px 12px;
-            background-repeat: no-repeat;
-            width: 100%;
-            font-size: 16px;
-            padding: 12px 20px 12px 40px;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
-        }
-
-        #myUL {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-            #myUL li a {
-              @*  border: 1px solid #ddd;
-                margin-top: -1px; /* Prevent double borders */
-                background-color: #f6f6f6;
-                padding: 12px;
-                text-decoration: none;
-                font-size: 18px;
-                color: black;
-                display: block*@
-            }
-
-                #myUL li a:hover:not(.header) {
-                    background-color: #eee;
+            <style>
+                .icon-control {
+                    margin-top: 5px;
+                    float: right;
+                    font-size: 80%;
                 }
 
 
 
-</style>
+                .btn-light {
+                    background-color: #fff;
+                    border-color: #e4e4e4;
+                }
+
+                .list-menu {
+                    list-style: none;
+                    margin: 0;
+                    padding-left: 0;
+                }
+
+                    .list-menu a {
+                        color: #343a40;
+                    }
+
+                .card-product-grid .info-wrap {
+                    overflow: hidden;
+                    padding: 18px 20px;
+                }
+
+                [class*='card-product'] a.title {
+                    color: #212529;
+                    display: block;
+                }
+
+                .card-product-grid:hover .btn-overlay {
+                    opacity: 1;
+                }
+
+                .card-product-grid .btn-overlay {
+                    -webkit-transition: .5s;
+                    transition: .5s;
+                    opacity: 0;
+                    left: 0;
+                    bottom: 0;
+                    color: #fff;
+                    width: 100%;
+                    padding: 5px 0;
+                    text-align: center;
+                    position: absolute;
+                    background: rgba(0, 0, 0, 0.5);
+                }
+
+                .img-wrap {
+                    overflow: hidden;
+                    position: relative;
+                }
 
 
-<script>
-	filterSelection("all")
-	function filterSelection(c) {
-		var x, i;
-		x = document.getElementsByClassName("filterDiv");
-		if (c == "all") c = "";
-		// Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
-		for (i = 0; i < x.length; i++) {
-			w3RemoveClass(x[i], "show");
-			if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-		}
-	}
 
-	// Show filtered elements
-	function w3AddClass(element, name) {
-		var i, arr1, arr2;
-		arr1 = element.className.split(" ");
-		arr2 = name.split(" ");
-		for (i = 0; i < arr2.length; i++) {
-			if (arr1.indexOf(arr2[i]) == -1) {
-				element.className += " " + arr2[i];
-			}
-		}
-	}
+                .container {
+                    margin-top: 20px;
+                    overflow: hidden;
+                    display: table;
+                }
 
-	// Hide elements that are not selected
-	function w3RemoveClass(element, name) {
-		var i, arr1, arr2;
-		arr1 = element.className.split(" ");
-		arr2 = name.split(" ");
-		for (i = 0; i < arr2.length; i++) {
-			while (arr1.indexOf(arr2[i]) > -1) {
-				arr1.splice(arr1.indexOf(arr2[i]), 1);
-			}
-		}
-		element.className = arr1.join(" ");
-	}
+                .filterDiv {
+                @* float: left;*@ @* background-color: #2196F3;*@ @* color: #ffffff;*@ @* width: 100px;*@ @* line-height: 100px;*@ @* text-align: center;*@ @* margin: 2px;*@ display: none; /* Hidden by default */
+                }
 
-	// Add active class to the current control button (highlight it)
-	var btnContainer = document.getElementById("myBtnContainer");
-	var btns = btnContainer.getElementsByClassName("btn");
-	for (var i = 0; i < btns.length; i++) {
-		btns[i].addEventListener("click", function () {
-			var current = document.getElementsByClassName("active");
-			current[0].className = current[0].className.replace(" active", "");
-			this.className += " active";
-		});
-	}
+                /* The "show" class is added to the filtered elements */
+                .show {
+                    display: block;
+                }
 
-				function myFunction() {
-					var input, filter, ul, li, a, i, txtValue;
-					input = document.getElementById("myInput");
-					filter = input.value.toUpperCase();
-					ul = document.getElementById("myUL");
-					li = ul.getElementsByTagName("li");
-					for (i = 0; i < li.length; i++) {
-						a = li[i].getElementsByTagName("a")[0];
-						txtValue = a.textContent || a.innerText;
-						if (txtValue.toUpperCase().indexOf(filter) > -1) {
-							li[i].style.display = "";
-						} else {
-							li[i].style.display = "none";
-						}
-					}
-				}
+                /* Style the buttons */
+                .btn {
+                    border: none;
+                    outline: none;
+                @*padding: 12px 16px; background-color: #f1f1f1;*@ cursor: pointer;
+                }
 
-</script>
+                    /* Add a light grey background on mouse-over */
+                    .btn:hover {
+                        background-color: #ddd;
+                    }
+
+                    /* Add a dark background to the active button */
+                    .btn.active {
+                @* background-color: #666; color: white;*@
+                    }
+
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                #myInput {
+                    background-image: url('/css/searchicon.png');
+                    background-position: 10px 12px;
+                    background-repeat: no-repeat;
+                    width: 100%;
+                    font-size: 16px;
+                    padding: 12px 20px 12px 40px;
+                    border: 1px solid #ddd;
+                    margin-bottom: 12px;
+                }
+
+                #myUL {
+                    list-style-type: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                    #myUL li a {
+                @* border: 1px solid #ddd; margin-top: -1px; /* Prevent double borders */ background-color: #f6f6f6; padding: 12px; text-decoration: none; font-size: 18px; color: black; display: block*@
+                    }
+
+                        #myUL li a:hover:not(.header) {
+                            background-color: #eee;
+                        }
+
+            </style>
+
+
+            <script>
+                filterSelection("all")
+                function filterSelection(c) {
+                    var x, i;
+                    x = document.getElementsByClassName("filterDiv");
+                    if (c == "all") c = "";
+                    // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+                    for (i = 0; i < x.length; i++) {
+                        w3RemoveClass(x[i], "show");
+                        if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+                    }
+                }
+
+                // Show filtered elements
+                function w3AddClass(element, name) {
+                    var i, arr1, arr2;
+                    arr1 = element.className.split(" ");
+                    arr2 = name.split(" ");
+                    for (i = 0; i < arr2.length; i++) {
+                        if (arr1.indexOf(arr2[i]) == -1) {
+                            element.className += " " + arr2[i];
+                        }
+                    }
+                }
+
+                // Hide elements that are not selected
+                function w3RemoveClass(element, name) {
+                    var i, arr1, arr2;
+                    arr1 = element.className.split(" ");
+                    arr2 = name.split(" ");
+                    for (i = 0; i < arr2.length; i++) {
+                        while (arr1.indexOf(arr2[i]) > -1) {
+                            arr1.splice(arr1.indexOf(arr2[i]), 1);
+                        }
+                    }
+                    element.className = arr1.join(" ");
+                }
+
+                // Add active class to the current control button (highlight it)
+                var btnContainer = document.getElementById("myBtnContainer");
+                var btns = btnContainer.getElementsByClassName("btn");
+                for (var i = 0; i < btns.length; i++) {
+                    btns[i].addEventListener("click", function () {
+                        var current = document.getElementsByClassName("active");
+                        current[0].className = current[0].className.replace(" active", "");
+                        this.className += " active";
+                    });
+                }
+
+                function myFunction() {
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("myUL");
+                    li = ul.getElementsByTagName("li");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+
+            </script>
