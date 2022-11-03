@@ -244,7 +244,7 @@ namespace theFoodCampus.Controllers
             else
             {
                 recipes = _context.Recipes
-                .Include(e => e.Comments).OrderByDescending(x => x.Rdifficulty).ToList();
+                .Include(e => e.Comments).OrderBy(x => x.Rdifficulty).ToList();
             }
             //here I want to call the show weather and holiday funcitons so that I get a list from those functions.
             return View(recipes);
@@ -436,7 +436,7 @@ namespace theFoodCampus.Controllers
             // should actuallu mae field so we don't have to do this again.
             var sum = recipe.Comments.Sum(d => d.Rating);
             var count = recipe.Comments.Count();
-            sum = sum + recipe.Rating;
+            sum = sum + artComment.Rating;
             count++;
             recipe.Rating = sum / count;
             _context.Attach(recipe);
